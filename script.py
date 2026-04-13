@@ -23,30 +23,30 @@ FEEDS = {
     "Tecnologia": "https://br.ign.com/feed.xml"
 }
 
-# CSS COM MODAL E IMAGENS AJUSTADAS
+# CSS TURBINADO (Imagens controladas com !important)
 CSS = """
 <style>
-    body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; margin: 0; color: #1c1e21; }
-    header { background: #fff; padding: 20px; text-align: center; border-bottom: 3px solid #d93025; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; color: #1c1e21; }
+    header { background: #fff; padding: 20px; text-align: center; border-bottom: 3px solid #d93025; }
     
     .main-wrapper { display: flex; max-width: 1100px; margin: 20px auto; gap: 20px; padding: 0 20px; }
     .content-area { flex: 3; }
     .sidebar { flex: 1; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 10px; }
     
+    /* CARD DA HOME */
     .noticia-card { background: #fff; margin-bottom: 20px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; transition: 0.3s; }
-    .noticia-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
-    
-    .noticia-img { width: 100%; height: 200px; object-fit: cover; background: #eee; border-bottom: 1px solid #eee; }
+    .noticia-img { width: 100% !important; height: 180px !important; object-fit: cover !important; display: block; }
     .noticia-body { padding: 15px; }
-    .noticia-body h2 { margin: 10px 0; font-size: 1.3em; line-height: 1.2; color: #1a73e8; }
+    .noticia-body h2 { margin: 10px 0; font-size: 1.2em; line-height: 1.2; color: #1a73e8; }
     
-    /* MODAL (JANELA DA NOTÍCIA COMPLETA) */
-    .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); overflow-y: auto; }
-    .modal-content { background: #fff; margin: 5% auto; padding: 30px; width: 90%; max-width: 700px; border-radius: 12px; position: relative; line-height: 1.8; }
-    .fechar-modal { position: absolute; right: 20px; top: 10px; font-size: 30px; cursor: pointer; color: #aaa; }
-    .modal-img { width: 100%; height: 300px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; }
+    /* MODAL (NOTÍCIA COMPLETA) */
+    .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow-y: auto; padding-top: 40px; }
+    .modal-content { background: #fff; margin: 0 auto 50px auto; padding: 30px; width: 90%; max-width: 700px; border-radius: 12px; position: relative; }
+    .modal-img { width: 100% !important; max-height: 350px !important; object-fit: cover !important; border-radius: 8px; margin-bottom: 20px; display: block; }
     
+    .fechar-modal { position: absolute; right: 20px; top: 10px; font-size: 35px; cursor: pointer; color: #aaa; }
     .historico-item { font-size: 0.8em; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+    
     @media (max-width: 800px) { .main-wrapper { flex-direction: column; } .sidebar { position: static; } }
 </style>
 """
@@ -72,8 +72,7 @@ window.onclick = function(event) {
 
 def processar_noticia(titulo, resumo):
     if model:
-        # Pedimos agora uma manchete curta e uma matéria completa em 3 parágrafos
-        prompt = f"Aja como jornalista. Título: {titulo}. Resumo: {resumo}. Gere: [MANCHETE] (Curta) [MATERIA] (3 parágrafos detalhados) [FIM]"
+        prompt = f"Aja como jornalista. Título: {titulo}. Resumo: {resumo}. Gere: [MANCHETE] (Curta) [MATERIA] (3 parágrafos) [FIM]"
         try:
             response = model.generate_content(prompt)
             return response.text
@@ -91,7 +90,7 @@ def atualizar_portal():
                 area_news = soup.find(class_='content-area')
                 area_hist = soup.find(class_='sidebar-list')
                 if area_news:
-                    # Mantém os últimos 10 cards no histórico visual
+                    # Persistência: Mantém os últimos 10 cards e modais
                     cards = area_news.find_all(lambda tag: tag.name == 'div' and 'noticia-card' in tag.get('class', []))[:10]
                     modais = area_news.find_all(class_='modal')[:10]
                     antigas_noticias = "".join([str(c) for c in cards]) + "".join([str(m) for m in modais])
@@ -113,21 +112,19 @@ def atualizar_portal():
                 manchete = texto_ia.split("[MANCHETE]")[1].split("[MATERIA]")[0].strip()
                 materia = texto_ia.split("[MATERIA]")[1].split("[FIM]")[0].strip()
             except:
-                manchete = entry.title
-                materia = entry.summary
+                manchete, materia = entry.title, entry.summary
 
             id_noticia = int(time.time() * 1000)
             img = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"
             if 'media_content' in entry: img = entry.media_content[0]['url']
 
-            # CARD (O QUE APARECE NA HOME)
             novas_noticias += f'''
             <div class="noticia-card" onclick="abrirMateria('{id_noticia}')">
                 <img src="{img}" class="noticia-img">
                 <div class="noticia-body">
                     <small style="color:#d93025; font-weight:bold;">{cat.upper()} • {agora_str}</small>
                     <h2>{manchete}</h2>
-                    <p style="color:#666; font-size:0.9em;">Clique para ler a matéria completa...</p>
+                    <p style="color:#666; font-size:0.85em;">Clique para ler a matéria completa...</p>
                 </div>
             </div>
             
@@ -135,10 +132,10 @@ def atualizar_portal():
                 <div class="modal-content">
                     <span class="fechar-modal" onclick="fecharMateria('{id_noticia}')">&times;</span>
                     <img src="{img}" class="modal-img">
-                    <small style="color:#d93025;">{cat.upper()} • {agora_str}</small>
-                    <h1 style="margin-top:10px; line-height:1.2;">{manchete}</h1>
+                    <small style="color:#d93025; font-weight:bold;">{cat.upper()} • {agora_str}</small>
+                    <h1 style="margin-top:10px; line-height:1.2; font-size:1.8em;">{manchete}</h1>
                     <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
-                    <div style="font-size:1.1em; color:#333;">{materia.replace(chr(10), '<br><br>')}</div>
+                    <div style="font-size:1.1em; color:#333; line-height:1.6;">{materia.replace(chr(10), '<br><br>')}</div>
                 </div>
             </div>
             '''
