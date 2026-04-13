@@ -1,128 +1,161 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head><meta charset="UTF-8"><title>Portal IA News</title>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Portal IA News</title>
 <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; color: #1c1e21; }
-    header { background: #fff; padding: 20px; text-align: center; border-bottom: 3px solid #d93025; }
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; margin: 0; color: #1c1e21; }
+    header { background: #fff; padding: 25px; text-align: center; border-bottom: 3px solid #d93025; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
     
     .main-wrapper { display: flex; max-width: 1100px; margin: 20px auto; gap: 20px; padding: 0 20px; }
     .content-area { flex: 3; }
     .sidebar { flex: 1; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 10px; }
     
-    /* CARD DA HOME */
-    .noticia-card { background: #fff; margin-bottom: 20px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; transition: 0.3s; }
-    .noticia-img { width: 100% !important; height: 180px !important; object-fit: cover !important; display: block; }
-    .noticia-body { padding: 15px; }
-    .noticia-body h2 { margin: 10px 0; font-size: 1.2em; line-height: 1.2; color: #1a73e8; }
+    /* CARD DA HOME - Proporção 16:9 */
+    .noticia-card { background: #fff; margin-bottom: 25px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; transition: 0.3s; }
+    .noticia-card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+    
+    .noticia-img { 
+        width: 100% !important; 
+        aspect-ratio: 16 / 9 !important; 
+        object-fit: cover !important; 
+        display: block;
+        max-height: 250px !important; 
+    }
+    
+    .noticia-body { padding: 20px; }
+    .noticia-body h2 { margin: 10px 0; font-size: 1.4em; line-height: 1.3; color: #1a73e8; font-weight: bold; }
+    .noticia-body p { color: #555; font-size: 0.95em; line-height: 1.5; }
     
     /* MODAL (NOTÍCIA COMPLETA) */
-    .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow-y: auto; padding-top: 40px; }
-    .modal-content { background: #fff; margin: 0 auto 50px auto; padding: 30px; width: 90%; max-width: 700px; border-radius: 12px; position: relative; }
-    .modal-img { width: 100% !important; max-height: 350px !important; object-fit: cover !important; border-radius: 8px; margin-bottom: 20px; display: block; }
+    .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow-y: auto; padding: 20px; }
+    .modal-content { background: #fff; margin: 20px auto; padding: 30px; width: 95%; max-width: 800px; border-radius: 12px; position: relative; box-shadow: 0 5px 30px rgba(0,0,0,0.5); }
+    .modal-img { width: 100% !important; aspect-ratio: 16 / 9 !important; object-fit: cover !important; border-radius: 8px; margin-bottom: 20px; display: block; }
     
-    .fechar-modal { position: absolute; right: 20px; top: 10px; font-size: 35px; cursor: pointer; color: #aaa; }
-    .historico-item { font-size: 0.8em; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+    .fechar-modal { position: absolute; right: 20px; top: 10px; font-size: 40px; cursor: pointer; color: #aaa; font-weight: bold; }
+    .sidebar-list { margin-top: 15px; }
+    .historico-item { font-size: 0.85em; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; color: #444; }
+    .historico-item b { color: #d93025; }
     
     @media (max-width: 800px) { .main-wrapper { flex-direction: column; } .sidebar { position: static; } }
 </style>
 </head>
 <body>
-    <header><h1>Portal IA News</h1><p>Clique nas notícias para ler a matéria completa</p></header>
+    <header><h1>Portal IA News</h1><p>Volume de notícias acumulado • Atualizado às 13/04/2026 00:44</p></header>
     <div class="main-wrapper">
         <div class="content-area">
-            <div class="noticia-card" onclick="abrirMateria('1776051711731')">
+            <div class="noticia-card" onclick="abrirMateria('5510048349462965055')">
                 <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img">
                 <div class="noticia-body">
-                    <small style="color:#d93025; font-weight:bold;">MUNDO • 13/04/2026 00:41</small>
+                    <small style="color:#d93025; font-weight:bold;">MUNDO • 13/04/2026 00:44</small>
                     <h2>'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</h2>
                     <p style="color:#666; font-size:0.85em;">Clique para ler a matéria completa...</p>
                 </div>
             </div>
             
-            <div id="modal-1776051711731" class="modal">
+            <div id="modal-5510048349462965055" class="modal">
                 <div class="modal-content">
-                    <span class="fechar-modal" onclick="fecharMateria('1776051711731')">&times;</span>
+                    <span class="fechar-modal" onclick="fecharMateria('5510048349462965055')">&times;</span>
                     <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="modal-img">
-                    <small style="color:#d93025; font-weight:bold;">MUNDO • 13/04/2026 00:41</small>
+                    <small style="color:#d93025; font-weight:bold;">MUNDO • 13/04/2026 00:44</small>
                     <h1 style="margin-top:10px; line-height:1.2; font-size:1.8em;">'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</h1>
                     <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
-                    <div style="font-size:1.1em; color:#333; line-height:1.6;">Em um discurso aos apoiadores, Órban reconheceu a derrota e disse: "O resultado da eleição é claro e doloroso". Nos últimos anos, ele transformou a Hungria em um destino internacional para a direita, inclusive para o ex-presidente Jair Bolsonaro</div>
+                    <div style="font-size:1.15em; color:#333; line-height:1.6;">Em um discurso aos apoiadores, Órban reconheceu a derrota e disse: "O resultado da eleição é claro e doloroso". Nos últimos anos, ele transformou a Hungria em um destino internacional para a direita, inclusive para o ex-presidente Jair Bolsonaro</div>
                 </div>
             </div>
             
-            <div class="noticia-card" onclick="abrirMateria('1776051715430')">
+            <div class="noticia-card" onclick="abrirMateria('2636542641214124289')">
                 <img src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg" class="noticia-img">
                 <div class="noticia-body">
-                    <small style="color:#d93025; font-weight:bold;">ESPORTES • 13/04/2026 00:41</small>
+                    <small style="color:#d93025; font-weight:bold;">ESPORTES • 13/04/2026 00:44</small>
                     <h2>Rodrigo César lamenta empate e Rio Branco-ES segue sem vencer na Série D</h2>
                     <p style="color:#666; font-size:0.85em;">Clique para ler a matéria completa...</p>
                 </div>
             </div>
             
-            <div id="modal-1776051715430" class="modal">
+            <div id="modal-2636542641214124289" class="modal">
                 <div class="modal-content">
-                    <span class="fechar-modal" onclick="fecharMateria('1776051715430')">&times;</span>
+                    <span class="fechar-modal" onclick="fecharMateria('2636542641214124289')">&times;</span>
                     <img src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg" class="modal-img">
-                    <small style="color:#d93025; font-weight:bold;">ESPORTES • 13/04/2026 00:41</small>
+                    <small style="color:#d93025; font-weight:bold;">ESPORTES • 13/04/2026 00:44</small>
                     <h1 style="margin-top:10px; line-height:1.2; font-size:1.8em;">Rodrigo César lamenta empate e Rio Branco-ES segue sem vencer na Série D</h1>
                     <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
-                    <div style="font-size:1.1em; color:#333; line-height:1.6;"><img src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg" /><br />     Rodrigo César, do Rio Branco-ES, fala após empate com Democrata, pela Série D<br><br>O Rio Branco-ES deixou o gramado do estádio Engenheiro Araripe com a sensação de que a vitória escapou. No encerramento da segunda rodada do Grupo 12 do Campeonato Brasileiro Série D 2026, o Capa-Preta ficou no empate em 1 a 1 com o Democrata GV (assista), resultado que foi tratado como “amargo” pelo técnico Rodrigo César.<br><br>Veja mais notícias no ge.globo/es<br><br>Confira a agenda de jogos do Capa-Preta<br><br>Tabela atualizada da Série D do Brasileirão<br><br>+ 📱​ Siga o Globo Esporte Espírito Santo no Instagram<br><br>O roteiro da partida reforçou a avaliação do treinador. Depois de um primeiro tempo mais travado e com poucas chances claras, o Rio Branco-ES voltou mais agressivo na etapa final. Logo nos primeiros minutos, Gui Mendes acertou a trave, dando o tom da pressão capixaba. Pouco depois, Rafael Pacheco sofreu pênalti, convertido por Breno Melo, colocando o time da casa em vantagem.<br><br>Mesmo com o controle das ações, o Capa-Preta viu o adversário aproveitar uma das raras investidas para empatar, com Ivan, em jogada pela direita. Ainda assim, o Rio Branco-ES manteve a pressão até os minutos finais, acumulando boas oportunidades e mantendo o volume ofensivo.<br><br>— Lamento o empate, a gente sabia que dava para vencer o jogo, tivemos uma boa partida, pela gente, ao meu ver. Criamos inúmeras oportunidades, como você bem disse, mas futebol é bola na rede. Tem que criar e tem que botar para dentro, ainda mais na Série D, o campeonato competitivo que é - lamentou o treinador Rodrigo César.<br><br>Rio Branco-ES x Democrata GV, pela Série D do Brasileirão 2026<br><br>Alef Jordan/Capixaba News<br><br>+ 📺 Assista aos vídeos da edição capixaba do programa Globo Esporte!<br><br>Com o empate, o Capa-Preta soma seu primeiro ponto e aparece na vice-lanterna do Grupo 12. A Série D segue no próximo sábado, e o Rio Branco-ES terá pela frente o Vitória-ES, no estádio Salvador Costa, em Vitória, em clássico importante para buscar a recuperação na competição.<br><br>Leia mais notícias do Rio Branco-ES<br><br>Assista: tudo sobre o Rio Branco-ES no ge.globo, na TV Gazeta e no sportv<br><br>Veja mais notícias no ge.globo/es e siga os perfis do site no Instagram, Threads, Facebook e no WhatsApp.</div>
+                    <div style="font-size:1.15em; color:#333; line-height:1.6;"><img src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg" /><br />     Rodrigo César, do Rio Branco-ES, fala após empate com Democrata, pela Série D<br><br>O Rio Branco-ES deixou o gramado do estádio Engenheiro Araripe com a sensação de que a vitória escapou. No encerramento da segunda rodada do Grupo 12 do Campeonato Brasileiro Série D 2026, o Capa-Preta ficou no empate em 1 a 1 com o Democrata GV (assista), resultado que foi tratado como “amargo” pelo técnico Rodrigo César.<br><br>Veja mais notícias no ge.globo/es<br><br>Confira a agenda de jogos do Capa-Preta<br><br>Tabela atualizada da Série D do Brasileirão<br><br>+ 📱​ Siga o Globo Esporte Espírito Santo no Instagram<br><br>O roteiro da partida reforçou a avaliação do treinador. Depois de um primeiro tempo mais travado e com poucas chances claras, o Rio Branco-ES voltou mais agressivo na etapa final. Logo nos primeiros minutos, Gui Mendes acertou a trave, dando o tom da pressão capixaba. Pouco depois, Rafael Pacheco sofreu pênalti, convertido por Breno Melo, colocando o time da casa em vantagem.<br><br>Mesmo com o controle das ações, o Capa-Preta viu o adversário aproveitar uma das raras investidas para empatar, com Ivan, em jogada pela direita. Ainda assim, o Rio Branco-ES manteve a pressão até os minutos finais, acumulando boas oportunidades e mantendo o volume ofensivo.<br><br>— Lamento o empate, a gente sabia que dava para vencer o jogo, tivemos uma boa partida, pela gente, ao meu ver. Criamos inúmeras oportunidades, como você bem disse, mas futebol é bola na rede. Tem que criar e tem que botar para dentro, ainda mais na Série D, o campeonato competitivo que é - lamentou o treinador Rodrigo César.<br><br>Rio Branco-ES x Democrata GV, pela Série D do Brasileirão 2026<br><br>Alef Jordan/Capixaba News<br><br>+ 📺 Assista aos vídeos da edição capixaba do programa Globo Esporte!<br><br>Com o empate, o Capa-Preta soma seu primeiro ponto e aparece na vice-lanterna do Grupo 12. A Série D segue no próximo sábado, e o Rio Branco-ES terá pela frente o Vitória-ES, no estádio Salvador Costa, em Vitória, em clássico importante para buscar a recuperação na competição.<br><br>Leia mais notícias do Rio Branco-ES<br><br>Assista: tudo sobre o Rio Branco-ES no ge.globo, na TV Gazeta e no sportv<br><br>Veja mais notícias no ge.globo/es e siga os perfis do site no Instagram, Threads, Facebook e no WhatsApp.</div>
                 </div>
             </div>
             
-            <div class="noticia-card" onclick="abrirMateria('1776051716654')">
+            <div class="noticia-card" onclick="abrirMateria('-4795144344922882239')">
                 <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img">
                 <div class="noticia-body">
-                    <small style="color:#d93025; font-weight:bold;">TECNOLOGIA • 13/04/2026 00:41</small>
+                    <small style="color:#d93025; font-weight:bold;">TECNOLOGIA • 13/04/2026 00:44</small>
                     <h2>Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</h2>
                     <p style="color:#666; font-size:0.85em;">Clique para ler a matéria completa...</p>
                 </div>
             </div>
             
-            <div id="modal-1776051716654" class="modal">
+            <div id="modal--4795144344922882239" class="modal">
                 <div class="modal-content">
-                    <span class="fechar-modal" onclick="fecharMateria('1776051716654')">&times;</span>
+                    <span class="fechar-modal" onclick="fecharMateria('-4795144344922882239')">&times;</span>
                     <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="modal-img">
-                    <small style="color:#d93025; font-weight:bold;">TECNOLOGIA • 13/04/2026 00:41</small>
+                    <small style="color:#d93025; font-weight:bold;">TECNOLOGIA • 13/04/2026 00:44</small>
                     <h1 style="margin-top:10px; line-height:1.2; font-size:1.8em;">Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</h1>
                     <hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
-                    <div style="font-size:1.1em; color:#333; line-height:1.6;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/blob_3316.640.png" vspace="5" width="120" /><br><br>O elenco principal da série é composto por Jamie Bell, Charlie Heaton e Jessica Brown Findlay, entre outros</div>
+                    <div style="font-size:1.15em; color:#333; line-height:1.6;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/blob_3316.640.png" vspace="5" width="120" /><br><br>O elenco principal da série é composto por Jamie Bell, Charlie Heaton e Jessica Brown Findlay, entre outros</div>
                 </div>
             </div>
-            <div class="noticia-card" onclick="abrirMateria('1776051476930')">
+            <div class="noticia-card" onclick="abrirMateria('1776051711731')">
 <img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
+<div class="noticia-body">
+<small style="color:#d93025; font-weight:bold;">MUNDO • 13/04/2026 00:41</small>
+<h2>'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</h2>
+<p style="color:#666; font-size:0.85em;">Clique para ler a matéria completa...</p>
+</div>
+</div><div class="noticia-card" onclick="abrirMateria('1776051715430')">
+<img class="noticia-img" src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg"/>
+<div class="noticia-body">
+<small style="color:#d93025; font-weight:bold;">ESPORTES • 13/04/2026 00:41</small>
+<h2>Rodrigo César lamenta empate e Rio Branco-ES segue sem vencer na Série D</h2>
+<p style="color:#666; font-size:0.85em;">Clique para ler a matéria completa...</p>
+</div>
+</div><div class="noticia-card" onclick="abrirMateria('1776051716654')">
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
+<div class="noticia-body">
+<small style="color:#d93025; font-weight:bold;">TECNOLOGIA • 13/04/2026 00:41</small>
+<h2>Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</h2>
+<p style="color:#666; font-size:0.85em;">Clique para ler a matéria completa...</p>
+</div>
+</div><div class="noticia-card" onclick="abrirMateria('1776051476930')">
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800">
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">MUNDO • 13/04/2026 00:37</small>
 <h2>'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</h2>
 <p style="color:#666; font-size:0.9em;">Clique para ler a matéria completa...</p>
 </div>
-</div><div class="noticia-card" onclick="abrirMateria('1776051479005')">
-<img class="noticia-img" src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg"/>
+</img></div><div class="noticia-card" onclick="abrirMateria('1776051479005')">
+<img class="noticia-img" src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg">
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">ESPORTES • 13/04/2026 00:37</small>
 <h2>Rodrigo César lamenta empate e Rio Branco-ES segue sem vencer na Série D</h2>
 <p style="color:#666; font-size:0.9em;">Clique para ler a matéria completa...</p>
 </div>
-</div><div class="noticia-card" onclick="abrirMateria('1776051480316')">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
+</img></div><div class="noticia-card" onclick="abrirMateria('1776051480316')">
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800">
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">TECNOLOGIA • 13/04/2026 00:37</small>
 <h2>Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</h2>
 <p style="color:#666; font-size:0.9em;">Clique para ler a matéria completa...</p>
 </div>
-</div><div class="noticia-card">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800">
+</img></div><div class="noticia-card">
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">MUNDO • 13/04/2026 00:35</small>
 <h2 style="margin: 10px 0;">'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</h2>
 <p>Em um discurso aos apoiadores, Órban reconheceu a derrota e disse: "O resultado da eleição é claro e doloroso". Nos últimos anos, ele transformou a Hungria em um destino internacional para a direita, inclusive para o ex-presidente Jair Bolsonaro</p>
 </div>
-</img></div><div class="noticia-card">
-<img class="noticia-img" src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg">
+</div><div class="noticia-card">
+<img class="noticia-img" src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg"/>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">ESPORTES • 13/04/2026 00:35</small>
 <h2 style="margin: 10px 0;">Rodrigo César lamenta empate e Rio Branco-ES segue sem vencer na Série D</h2>
-<p><img src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg"/><br>     Rodrigo César, do Rio Branco-ES, fala após empate com Democrata, pela Série D
+<p><img src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg"><br/>     Rodrigo César, do Rio Branco-ES, fala após empate com Democrata, pela Série D
 O Rio Branco-ES deixou o gramado do estádio Engenheiro Araripe com a sensação de que a vitória escapou. No encerramento da segunda rodada do Grupo 12 do Campeonato Brasileiro Série D 2026, o Capa-Preta ficou no empate em 1 a 1 com o Democrata GV (assista), resultado que foi tratado como “amargo” pelo técnico Rodrigo César.
 Veja mais notícias no ge.globo/es
 Confira a agenda de jogos do Capa-Preta
@@ -137,17 +170,17 @@ Alef Jordan/Capixaba News
 Com o empate, o Capa-Preta soma seu primeiro ponto e aparece na vice-lanterna do Grupo 12. A Série D segue no próximo sábado, e o Rio Branco-ES terá pela frente o Vitória-ES, no estádio Salvador Costa, em Vitória, em clássico importante para buscar a recuperação na competição.
 Leia mais notícias do Rio Branco-ES
 Assista: tudo sobre o Rio Branco-ES no ge.globo, na TV Gazeta e no sportv
-Veja mais notícias no ge.globo/es e siga os perfis do site no Instagram, Threads, Facebook e no WhatsApp.</br></p>
+Veja mais notícias no ge.globo/es e siga os perfis do site no Instagram, Threads, Facebook e no WhatsApp.</img></p>
 </div>
-</img></div><div class="noticia-card">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800">
+</div><div class="noticia-card">
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">TECNOLOGIA • 13/04/2026 00:35</small>
 <h2 style="margin: 10px 0;">Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</h2>
-<p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/blob_3316.640.png" vspace="5" width="120"/>
-O elenco principal da série é composto por Jamie Bell, Charlie Heaton e Jessica Brown Findlay, entre outros</p>
+<p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/blob_3316.640.png" vspace="5" width="120">
+O elenco principal da série é composto por Jamie Bell, Charlie Heaton e Jessica Brown Findlay, entre outros</img></p>
 </div>
-</img></div><div class="noticia-card">
+</div><div class="noticia-card">
 <img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">MUNDO • 13/04/2026 00:33</small>
@@ -155,11 +188,11 @@ O elenco principal da série é composto por Jamie Bell, Charlie Heaton e Jessic
 <p style="line-height:1.6; color:#444;">Em um discurso aos apoiadores, Órban reconheceu a derrota e disse: "O resultado da eleição é claro e doloroso". Nos últimos anos, ele transformou a Hungria em um destino internacional para a direita, inclusive para o ex-presidente Jair Bolsonaro</p>
 </div>
 </div><div class="noticia-card">
-<img class="noticia-img" src="https://s2-ge.glbimg.com/iVy5qSsRBCsMD9de6mIf3C_ixzA=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/L/E/YRsplhT7eCO0JcwV1Kcw/rib6803.jpg">
+<img class="noticia-img" src="https://s2-ge.glbimg.com/iVy5qSsRBCsMD9de6mIf3C_ixzA=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/L/E/YRsplhT7eCO0JcwV1Kcw/rib6803.jpg"/>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">ESPORTES • 13/04/2026 00:33</small>
 <h2 style="margin: 10px 0;">Palmeiras diz  que Carlos Miguel foi alvo de racismo; Corinthians afirma que busca identificar autor</h2>
-<p style="line-height:1.6; color:#444;"><img src="https://s2-ge.glbimg.com/iVy5qSsRBCsMD9de6mIf3C_ixzA=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/L/E/YRsplhT7eCO0JcwV1Kcw/rib6803.jpg"/><br>     Corinthians 0 x 0 Palmeiras | Melhores momentos | 11ª rodada | Brasileirão
+<p style="line-height:1.6; color:#444;"><img src="https://s2-ge.glbimg.com/iVy5qSsRBCsMD9de6mIf3C_ixzA=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/L/E/YRsplhT7eCO0JcwV1Kcw/rib6803.jpg"><br/>     Corinthians 0 x 0 Palmeiras | Melhores momentos | 11ª rodada | Brasileirão
 O Palmeiras publicou uma nota na noite deste domingo em que se solidariza com o goleiro Carlos Miguel, que teria sido alvo de ofensas racistas no jogo contra o Corinthians, em Itaquera. 
 A denúncia se baseia em um vídeo que circulas nas redes sociais. Nele, torcedores do Corinthians reagem a um lance do ataque do time. Em certo momento, é possível ouvir o termo "macaco" ser gritado. 
 No comunicado, o Palmeiras pede que as autoridades tomem as medidas necessárias para identificar e punir o torcedor que teria proferido a palavra de cunho racista. 
@@ -178,9 +211,9 @@ Não há espaço para o racismo no futebol e na sociedade".
 + Veja mais notícias do Palmeiras
 Mais Lidas
 🎧 Ouça o podcast ge Palmeiras🎧
-+ Assista a tudo do Palmeiras na Globo, sportv e ge</br></p>
++ Assista a tudo do Palmeiras na Globo, sportv e ge</img></p>
 </div>
-</img></div><div class="noticia-card">
+</div><div class="noticia-card">
 <img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">TECNOLOGIA • 13/04/2026 00:33</small>
@@ -188,35 +221,62 @@ Mais Lidas
 <p style="line-height:1.6; color:#444;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/blob_3316.640.png" vspace="5" width="120"/>
 O elenco principal da série é composto por Jamie Bell, Charlie Heaton e Jessica Brown Findlay, entre outros</p>
 </div>
+</div><div class="modal" id="modal-1776051711731">
+<div class="modal-content">
+<span class="fechar-modal" onclick="fecharMateria('1776051711731')">×</span>
+<img class="modal-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
+<small style="color:#d93025; font-weight:bold;">MUNDO • 13/04/2026 00:41</small>
+<h1 style="margin-top:10px; line-height:1.2; font-size:1.8em;">'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</h1>
+<hr style="border:0; border-top:1px solid #eee; margin:20px 0;"/>
+<div style="font-size:1.1em; color:#333; line-height:1.6;">Em um discurso aos apoiadores, Órban reconheceu a derrota e disse: "O resultado da eleição é claro e doloroso". Nos últimos anos, ele transformou a Hungria em um destino internacional para a direita, inclusive para o ex-presidente Jair Bolsonaro</div>
+</div>
+</div><div class="modal" id="modal-1776051715430">
+<div class="modal-content">
+<span class="fechar-modal" onclick="fecharMateria('1776051715430')">×</span>
+<img class="modal-img" src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg"/>
+<small style="color:#d93025; font-weight:bold;">ESPORTES • 13/04/2026 00:41</small>
+<h1 style="margin-top:10px; line-height:1.2; font-size:1.8em;">Rodrigo César lamenta empate e Rio Branco-ES segue sem vencer na Série D</h1>
+<hr style="border:0; border-top:1px solid #eee; margin:20px 0;"/>
+<div style="font-size:1.1em; color:#333; line-height:1.6;"><img src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg"><br/>     Rodrigo César, do Rio Branco-ES, fala após empate com Democrata, pela Série D<br/><br/>O Rio Branco-ES deixou o gramado do estádio Engenheiro Araripe com a sensação de que a vitória escapou. No encerramento da segunda rodada do Grupo 12 do Campeonato Brasileiro Série D 2026, o Capa-Preta ficou no empate em 1 a 1 com o Democrata GV (assista), resultado que foi tratado como “amargo” pelo técnico Rodrigo César.<br/><br/>Veja mais notícias no ge.globo/es<br/><br/>Confira a agenda de jogos do Capa-Preta<br/><br/>Tabela atualizada da Série D do Brasileirão<br/><br/>+ 📱​ Siga o Globo Esporte Espírito Santo no Instagram<br/><br/>O roteiro da partida reforçou a avaliação do treinador. Depois de um primeiro tempo mais travado e com poucas chances claras, o Rio Branco-ES voltou mais agressivo na etapa final. Logo nos primeiros minutos, Gui Mendes acertou a trave, dando o tom da pressão capixaba. Pouco depois, Rafael Pacheco sofreu pênalti, convertido por Breno Melo, colocando o time da casa em vantagem.<br/><br/>Mesmo com o controle das ações, o Capa-Preta viu o adversário aproveitar uma das raras investidas para empatar, com Ivan, em jogada pela direita. Ainda assim, o Rio Branco-ES manteve a pressão até os minutos finais, acumulando boas oportunidades e mantendo o volume ofensivo.<br/><br/>— Lamento o empate, a gente sabia que dava para vencer o jogo, tivemos uma boa partida, pela gente, ao meu ver. Criamos inúmeras oportunidades, como você bem disse, mas futebol é bola na rede. Tem que criar e tem que botar para dentro, ainda mais na Série D, o campeonato competitivo que é - lamentou o treinador Rodrigo César.<br/><br/>Rio Branco-ES x Democrata GV, pela Série D do Brasileirão 2026<br/><br/>Alef Jordan/Capixaba News<br/><br/>+ 📺 Assista aos vídeos da edição capixaba do programa Globo Esporte!<br/><br/>Com o empate, o Capa-Preta soma seu primeiro ponto e aparece na vice-lanterna do Grupo 12. A Série D segue no próximo sábado, e o Rio Branco-ES terá pela frente o Vitória-ES, no estádio Salvador Costa, em Vitória, em clássico importante para buscar a recuperação na competição.<br/><br/>Leia mais notícias do Rio Branco-ES<br/><br/>Assista: tudo sobre o Rio Branco-ES no ge.globo, na TV Gazeta e no sportv<br/><br/>Veja mais notícias no ge.globo/es e siga os perfis do site no Instagram, Threads, Facebook e no WhatsApp.</img></div>
+</div>
+</div><div class="modal" id="modal-1776051716654">
+<div class="modal-content">
+<span class="fechar-modal" onclick="fecharMateria('1776051716654')">×</span>
+<img class="modal-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
+<small style="color:#d93025; font-weight:bold;">TECNOLOGIA • 13/04/2026 00:41</small>
+<h1 style="margin-top:10px; line-height:1.2; font-size:1.8em;">Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</h1>
+<hr style="border:0; border-top:1px solid #eee; margin:20px 0;"/>
+<div style="font-size:1.1em; color:#333; line-height:1.6;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/blob_3316.640.png" vspace="5" width="120"><br/><br/>O elenco principal da série é composto por Jamie Bell, Charlie Heaton e Jessica Brown Findlay, entre outros</img></div>
+</div>
 </div><div class="modal" id="modal-1776051476930">
 <div class="modal-content">
 <span class="fechar-modal" onclick="fecharMateria('1776051476930')">×</span>
 <img class="modal-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
 <small style="color:#d93025;">MUNDO • 13/04/2026 00:37</small>
 <h1 style="margin-top:10px; line-height:1.2;">'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</h1>
-<hr style="border:0; border-top:1px solid #eee; margin:20px 0;"/>
+<hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
 <div style="font-size:1.1em; color:#333;">Em um discurso aos apoiadores, Órban reconheceu a derrota e disse: "O resultado da eleição é claro e doloroso". Nos últimos anos, ele transformou a Hungria em um destino internacional para a direita, inclusive para o ex-presidente Jair Bolsonaro</div>
-</div>
+</hr></div>
 </div><div class="modal" id="modal-1776051479005">
 <div class="modal-content">
 <span class="fechar-modal" onclick="fecharMateria('1776051479005')">×</span>
 <img class="modal-img" src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg"/>
 <small style="color:#d93025;">ESPORTES • 13/04/2026 00:37</small>
 <h1 style="margin-top:10px; line-height:1.2;">Rodrigo César lamenta empate e Rio Branco-ES segue sem vencer na Série D</h1>
-<hr style="border:0; border-top:1px solid #eee; margin:20px 0;"/>
-<div style="font-size:1.1em; color:#333;"><img src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg"><br/>     Rodrigo César, do Rio Branco-ES, fala após empate com Democrata, pela Série D<br/><br/>O Rio Branco-ES deixou o gramado do estádio Engenheiro Araripe com a sensação de que a vitória escapou. No encerramento da segunda rodada do Grupo 12 do Campeonato Brasileiro Série D 2026, o Capa-Preta ficou no empate em 1 a 1 com o Democrata GV (assista), resultado que foi tratado como “amargo” pelo técnico Rodrigo César.<br/><br/>Veja mais notícias no ge.globo/es<br/><br/>Confira a agenda de jogos do Capa-Preta<br/><br/>Tabela atualizada da Série D do Brasileirão<br/><br/>+ 📱​ Siga o Globo Esporte Espírito Santo no Instagram<br/><br/>O roteiro da partida reforçou a avaliação do treinador. Depois de um primeiro tempo mais travado e com poucas chances claras, o Rio Branco-ES voltou mais agressivo na etapa final. Logo nos primeiros minutos, Gui Mendes acertou a trave, dando o tom da pressão capixaba. Pouco depois, Rafael Pacheco sofreu pênalti, convertido por Breno Melo, colocando o time da casa em vantagem.<br/><br/>Mesmo com o controle das ações, o Capa-Preta viu o adversário aproveitar uma das raras investidas para empatar, com Ivan, em jogada pela direita. Ainda assim, o Rio Branco-ES manteve a pressão até os minutos finais, acumulando boas oportunidades e mantendo o volume ofensivo.<br/><br/>— Lamento o empate, a gente sabia que dava para vencer o jogo, tivemos uma boa partida, pela gente, ao meu ver. Criamos inúmeras oportunidades, como você bem disse, mas futebol é bola na rede. Tem que criar e tem que botar para dentro, ainda mais na Série D, o campeonato competitivo que é - lamentou o treinador Rodrigo César.<br/><br/>Rio Branco-ES x Democrata GV, pela Série D do Brasileirão 2026<br/><br/>Alef Jordan/Capixaba News<br/><br/>+ 📺 Assista aos vídeos da edição capixaba do programa Globo Esporte!<br/><br/>Com o empate, o Capa-Preta soma seu primeiro ponto e aparece na vice-lanterna do Grupo 12. A Série D segue no próximo sábado, e o Rio Branco-ES terá pela frente o Vitória-ES, no estádio Salvador Costa, em Vitória, em clássico importante para buscar a recuperação na competição.<br/><br/>Leia mais notícias do Rio Branco-ES<br/><br/>Assista: tudo sobre o Rio Branco-ES no ge.globo, na TV Gazeta e no sportv<br/><br/>Veja mais notícias no ge.globo/es e siga os perfis do site no Instagram, Threads, Facebook e no WhatsApp.</img></div>
-</div>
+<hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
+<div style="font-size:1.1em; color:#333;"><img src="https://s2-ge.glbimg.com/P3KPjvrdL-sy7yJnFK29Bc_Addg=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/b/Y/uf4c76TK2jylbV7dIFGQ/whatsapp-image-2026-04-12-at-17.59.35.jpg"/><br>     Rodrigo César, do Rio Branco-ES, fala após empate com Democrata, pela Série D<br><br>O Rio Branco-ES deixou o gramado do estádio Engenheiro Araripe com a sensação de que a vitória escapou. No encerramento da segunda rodada do Grupo 12 do Campeonato Brasileiro Série D 2026, o Capa-Preta ficou no empate em 1 a 1 com o Democrata GV (assista), resultado que foi tratado como “amargo” pelo técnico Rodrigo César.<br><br>Veja mais notícias no ge.globo/es<br><br>Confira a agenda de jogos do Capa-Preta<br><br>Tabela atualizada da Série D do Brasileirão<br><br>+ 📱​ Siga o Globo Esporte Espírito Santo no Instagram<br><br>O roteiro da partida reforçou a avaliação do treinador. Depois de um primeiro tempo mais travado e com poucas chances claras, o Rio Branco-ES voltou mais agressivo na etapa final. Logo nos primeiros minutos, Gui Mendes acertou a trave, dando o tom da pressão capixaba. Pouco depois, Rafael Pacheco sofreu pênalti, convertido por Breno Melo, colocando o time da casa em vantagem.<br><br>Mesmo com o controle das ações, o Capa-Preta viu o adversário aproveitar uma das raras investidas para empatar, com Ivan, em jogada pela direita. Ainda assim, o Rio Branco-ES manteve a pressão até os minutos finais, acumulando boas oportunidades e mantendo o volume ofensivo.<br><br>— Lamento o empate, a gente sabia que dava para vencer o jogo, tivemos uma boa partida, pela gente, ao meu ver. Criamos inúmeras oportunidades, como você bem disse, mas futebol é bola na rede. Tem que criar e tem que botar para dentro, ainda mais na Série D, o campeonato competitivo que é - lamentou o treinador Rodrigo César.<br><br>Rio Branco-ES x Democrata GV, pela Série D do Brasileirão 2026<br><br>Alef Jordan/Capixaba News<br><br>+ 📺 Assista aos vídeos da edição capixaba do programa Globo Esporte!<br><br>Com o empate, o Capa-Preta soma seu primeiro ponto e aparece na vice-lanterna do Grupo 12. A Série D segue no próximo sábado, e o Rio Branco-ES terá pela frente o Vitória-ES, no estádio Salvador Costa, em Vitória, em clássico importante para buscar a recuperação na competição.<br><br>Leia mais notícias do Rio Branco-ES<br><br>Assista: tudo sobre o Rio Branco-ES no ge.globo, na TV Gazeta e no sportv<br><br>Veja mais notícias no ge.globo/es e siga os perfis do site no Instagram, Threads, Facebook e no WhatsApp.</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></div>
+</hr></div>
 </div><div class="modal" id="modal-1776051480316">
 <div class="modal-content">
 <span class="fechar-modal" onclick="fecharMateria('1776051480316')">×</span>
 <img class="modal-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
 <small style="color:#d93025;">TECNOLOGIA • 13/04/2026 00:37</small>
 <h1 style="margin-top:10px; line-height:1.2;">Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</h1>
-<hr style="border:0; border-top:1px solid #eee; margin:20px 0;"/>
-<div style="font-size:1.1em; color:#333;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/blob_3316.640.png" vspace="5" width="120"><br/><br/>O elenco principal da série é composto por Jamie Bell, Charlie Heaton e Jessica Brown Findlay, entre outros</img></div>
-</div>
+<hr style="border:0; border-top:1px solid #eee; margin:20px 0;">
+<div style="font-size:1.1em; color:#333;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/blob_3316.640.png" vspace="5" width="120"/><br><br/>O elenco principal da série é composto por Jamie Bell, Charlie Heaton e Jessica Brown Findlay, entre outros</br></div>
+</hr></div>
 </div></div>
-        <div class="sidebar"><h3>Histórico</h3><div class="sidebar-list"><div class="historico-item"><b>13/04/2026 00:41</b><br>'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</div><div class="historico-item"><b>13/04/2026 00:41</b><br>Rodrigo César lamenta empate e Rio Branco-ES segue sem vencer na Série D</div><div class="historico-item"><b>13/04/2026 00:41</b><br>Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</div><div class="historico-item"><b>13/04/2026 00:37</b><br/>'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</div><div class="historico-item"><b>13/04/2026 00:37</b><br/>Rodrigo César lamenta empate e Rio Branco-ES segue sem vencer na Série D</div><div class="historico-item"><b>13/04/2026 00:37</b><br/>Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</div><div class="historico-item"><b>13/04/2026 00:35</b><br>'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</br></div><div class="historico-item"><b>13/04/2026 00:35</b><br>Rodrigo César lamenta empate e Rio Branco-ES segue sem vencer na Série D</br></div><div class="historico-item"><b>13/04/2026 00:35</b><br>Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</br></div><div class="historico-item"><b>13/04/2026 00:33</b><br/>'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</div><div class="historico-item"><b>13/04/2026 00:33</b><br/>Palmeiras diz  que Carlos Miguel foi alvo de racismo; Corinthians afirma que busca identificar autor</div><div class="historico-item"><b>13/04/2026 00:33</b><br/>Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</div></div></div>
+        <div class="sidebar"><h3>Histórico do Dia</h3><div class="sidebar-list"><div class="historico-item"><b>13/04/2026 00:44</b><br>'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</div><div class="historico-item"><b>13/04/2026 00:44</b><br>Rodrigo César lamenta empate e Rio Branco-ES segue sem vencer na Série D</div><div class="historico-item"><b>13/04/2026 00:44</b><br>Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</div><div class="historico-item"><b>13/04/2026 00:41</b><br/>'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</div><div class="historico-item"><b>13/04/2026 00:41</b><br/>Rodrigo César lamenta empate e Rio Branco-ES segue sem vencer na Série D</div><div class="historico-item"><b>13/04/2026 00:41</b><br/>Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</div><div class="historico-item"><b>13/04/2026 00:37</b><br>'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</br></div><div class="historico-item"><b>13/04/2026 00:37</b><br>Rodrigo César lamenta empate e Rio Branco-ES segue sem vencer na Série D</br></div><div class="historico-item"><b>13/04/2026 00:37</b><br>Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</br></div><div class="historico-item"><b>13/04/2026 00:35</b><br/>'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</div><div class="historico-item"><b>13/04/2026 00:35</b><br/>Rodrigo César lamenta empate e Rio Branco-ES segue sem vencer na Série D</div><div class="historico-item"><b>13/04/2026 00:35</b><br/>Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</div><div class="historico-item"><b>13/04/2026 00:33</b><br/>'Irmão' de Bolsonaro e inspiração para a direita radical, Orbán perde eleição após 16 anos na Hungria</div><div class="historico-item"><b>13/04/2026 00:33</b><br/>Palmeiras diz  que Carlos Miguel foi alvo de racismo; Corinthians afirma que busca identificar autor</div><div class="historico-item"><b>13/04/2026 00:33</b><br/>Pouco mais de um mês após o lançamento de Peaky Blinders: O Homem Imortal, a Netflix revela como será a série sequência com um novo Duke Shelby</div></div></div>
     </div>
     
 <script>
@@ -228,6 +288,7 @@ function fecharMateria(id) {
     document.getElementById('modal-' + id).style.display = 'none';
     document.body.style.overflow = 'auto';
 }
+// Fecha ao clicar fora do modal
 window.onclick = function(event) {
     if (event.target.className === 'modal') {
         event.target.style.display = 'none';
