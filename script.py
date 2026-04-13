@@ -38,7 +38,12 @@ CSS = """
     .content-area { flex: 3; }
     .sidebar { flex: 1; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 10px; }
     .noticia-card { background: #fff; margin-bottom: 25px; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 1px solid #eee; }
-    .noticia-img { width: 100%; height: 280px; object-fit: cover; background: #eee; }
+    .noticia-img { 
+    width: 100%; 
+    height: 200px; /* Reduzi de 280px para 200px */
+    object-fit: cover; 
+    background: #eee; 
+}
     .noticia-body { padding: 20px; }
     .historico-item { font-size: 0.85em; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
     @media (max-width: 850px) { .main-wrapper { flex-direction: column; } .sidebar { position: static; } }
