@@ -1,12 +1,17 @@
 name: Atualizar Site de Notícias
+
 on:
   schedule:
-    - cron: '0 * * * *' # Roda a cada 60 minutos (hora em hora)
-  workflow_dispatch: # Permite-te rodar manualmente para testar
+    - cron: '0 * * * *' # Roda exatamente no minuto 0 de cada hora
+  workflow_dispatch: # Mantém o botão de rodar manual
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    # ESSA LINHA ABAIXO É A MAIS IMPORTANTE PARA O VOLUME
+    permissions:
+      contents: write 
+
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3
@@ -21,7 +26,7 @@ jobs:
 
       - name: Rodar Script de Notícias
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }} # Puxa a chave secreta
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python script.py
 
       - name: Publicar alterações
@@ -29,5 +34,5 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
           git add index.html
-          git commit -m "Notícias atualizadas automaticamente" || exit 0
+          git commit -m "Auto-update: Volume e Histórico [$(date)]" || exit 0
           git push
