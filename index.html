@@ -9,78 +9,44 @@
         body { font-family: 'Segoe UI', sans-serif; background-color: #0f111a; color: #e0e0e0; margin: 0; padding: 0; }
         header { background: linear-gradient(90deg, #1a1c2c, #4a192c); padding: 40px 20px; text-align: center; border-bottom: 3px solid #ff4b2b; }
         header h1 { margin: 0; font-size: 2.5em; letter-spacing: 2px; text-transform: uppercase; }
-        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        header p { color: #b0b3b8; font-size: 0.9em; margin-top: 10px; }
         
-        /* Estilos das Categorias */
-        .categoria-titulo { color: #ff4b2b; border-bottom: 2px solid #30334a; padding-bottom: 10px; margin-top: 40px; margin-bottom: 20px; font-size: 1.8em; text-transform: uppercase;}
+        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+        .categoria-titulo { color: #ff4b2b; border-bottom: 2px solid #30334a; padding-bottom: 10px; margin-top: 40px; margin-bottom: 20px; font-size: 1.8em; text-transform: uppercase; }
         
-        /* Estilos dos Cards */
-        .grid-noticias { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .noticia-card { background: #1e2030; padding: 25px; border-radius: 12px; border-top: 4px solid #ff4b2b; box-shadow: 0 8px 15px rgba(0,0,0,0.4); display: flex; flex-direction: column; justify-content: space-between;}
-        .noticia-card h2 { margin-top: 0; color: #fff; line-height: 1.3; font-size: 1.3em; }
-        .noticia-card p { line-height: 1.6; color: #b0b3b8; font-size: 1em; flex-grow: 1;}
+        .grid-noticias { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        
+        .noticia-card { background: #1e2030; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 15px rgba(0,0,0,0.4); display: flex; flex-direction: column; transition: transform 0.3s; border-bottom: 4px solid #ff4b2b; }
+        .noticia-card:hover { transform: translateY(-5px); }
+        
+        .noticia-img { width: 100%; height: 200px; object-fit: cover; background-color: #2a2d3e; }
+        
+        .noticia-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .noticia-card h2 { margin-top: 0; color: #fff; font-size: 1.25em; line-height: 1.3; }
+        .noticia-card p { line-height: 1.5; color: #b0b3b8; font-size: 0.95em; flex-grow: 1; }
+        
         .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
-        .tag { background: #30334a; padding: 4px 10px; border-radius: 15px; font-size: 0.75em; color: #03dac6; font-weight: bold; }
+        .tag { background: #30334a; padding: 4px 10px; border-radius: 15px; font-size: 0.7em; color: #03dac6; font-weight: bold; }
         
-        footer { text-align: center; padding: 20px; font-size: 0.9em; color: #666; margin-top: 50px; background: #0a0b10;}
+        footer { text-align: center; padding: 30px; font-size: 0.8em; color: #666; margin-top: 50px; background: #0a0b10; }
     </style>
 </head>
 <body>
     <header>
         <h1>Portal IA News</h1>
-        <p>Notícias processadas de forma 100% autônoma pelo Gemini</p>
+        <p>Última atualização: 13/04/2026 00:00:12</p>
     </header>
     <div class="container">
 <h2 class='categoria-titulo'>Mundo & Atualidades</h2>
-<div class='grid-noticias'>
-        <div class="noticia-card">
-            <h2>O Fim de uma Era: 'Irmão' de Bolsonaro e Ícone da Direita Radical, Orbán Perde Eleição Após 16 Anos na Hungria</h2>
-            <p>Após 16 anos de poder ininterrupto, Viktor Orbán, a figura que se tornou um farol para a direita radical global – e um 'irmão ideológico' do ex-presidente brasileiro Jair Bolsonaro – enfrenta uma derrota surpreendente nas urnas húngaras. Em um discurso carregado de emoção aos seus apoiadores, Orbán reconheceu a perda, admitindo que o "resultado da eleição é claro e doloroso". Sua liderança transformou a Hungria em um polo de atração internacional para ideologias conservadoras e nacionalistas, moldando o cenário político do país por quase duas décadas. Agora, o capítulo de sua hegemonia parece ter chegado a um fim inesperado.</p>
-            <div class="tags"><span class="tag">[Viktor Orbán</span><span class="tag">Hungria</span><span class="tag">Eleições</span><span class="tag">Direita Radical</span><span class="tag">Jair Bolsonaro</span><span class="tag">Política Internacional]</span></div>
-        </div>
-        
-        <div class="noticia-card">
-            <h2>O Adversário Inesperado: Péter Magyar, o Ex-Aliado de Orbán na Busca Pelo Poder na Hungria</h2>
-            <p>Desde 2010, quando Viktor Orbán iniciou uma sequência de quatro vitórias eleitorais consecutivas, nenhum rival desafiou seu regime com tamanha intensidade. Agora, Péter Magyar, um ex-aliado que conhece os meandros do poder, emerge como a mais significativa ameaça à hegemonia de Orbán, prometendo uma reviravolta sem precedentes na política húngara.</p>
-            <div class="tags"><span class="tag">[Péter Magyar</span><span class="tag">Viktor Orbán</span><span class="tag">Política Húngara]</span></div>
-        </div>
-        
-        <div class="noticia-card">
-            <h2>Trump Eleva Tensão: EUA Vão Bloquear Acesso a Portos Iranianos Após Fracasso de Acordo de Paz!</h2>
-            <p>O cenário de paz no Oriente Médio desmoronou. Em uma escalada dramática de tensões, o Presidente dos EUA, Donald Trump, utilizou suas redes sociais neste domingo para anunciar uma medida radical: as Forças Armadas americanas bloquearão o acesso a todos os navios que tentarem entrar ou sair do Estreito de Ormuz. Esta rota marítima, fundamental para o comércio global e a economia iraniana, torna-se o novo ponto de ignição após o fracasso de um acordo de paz, prometendo reverberar com consequências imprevisíveis para o cenário internacional.</p>
-            <div class="tags"><span class="tag">Irã</span><span class="tag">EUA</span><span class="tag">Estreito de Ormuz</span></div>
-        </div>
-        </div>
+<div class='grid-noticias'></div>
 <h2 class='categoria-titulo'>Esportes</h2>
-<div class='grid-noticias'>
-        <div class="noticia-card">
-            <h2>Vira-vira Épico e Polêmico! Bahia Conquista Triunfo Fora de Casa nos Acréscimos</h2>
-            <p>O Esquadrão de Aço desafiou a adversidade e protagonizou uma virada eletrizante fora de casa contra o Mirassol neste domingo. Em uma partida que ficará marcada pela intensidade e controvérsia, o gol que selou o triunfo do Tricolor, anotado nos acréscimos, incendiou o gramado: a validação do tento gerou protestos acalorados da equipe da casa e culminou em expulsões, adicionando mais lenha à fogueira da polêmica. Para o Mirassol, apelidado de Leão, o revés doloroso mantém a equipe mergulhada na lanterna do Brasileirão, com sua situação na tabela cada vez mais delicada.</p>
-            <div class="tags"><span class="tag">Futebol</span><span class="tag">Bahia</span><span class="tag">Brasileirão</span></div>
-        </div>
-        
-        <div class="noticia-card">
-            <h2>VIRADA DE ARREPIAR! Cruzeiro Supera Bragantino e Escapa da Vice-Lanterna do Brasileirão</h2>
-            <p>Em uma noite de pura emoção e reviravoltas, o Cruzeiro mostrou sua força e virou o jogo contra o Bragantino, conquistando três pontos vitais no Campeonato Brasileiro. Hurtado havia balançado as redes para o Massa Bruta, colocando a Raposa em desvantagem. No entanto, o espírito guerreiro celeste brilhou: Neyser e Christian foram os heróis da virada, garantindo uma vitória que tira o clube da incômoda vice-lanterna e reacende a esperança na competição!</p>
-            <div class="tags"><span class="tag">Cruzeiro</span><span class="tag">Brasileirão</span><span class="tag">Virada</span></div>
-        </div>
-        
-        <div class="noticia-card">
-            <h2>O Tigrão ruge! Vila Nova bate a Ponte Preta e salta para a vice-liderança da Série B!</h2>
-            <p>Em uma noite de emoções em Campinas (SP), o Tigrão não deu chances à Ponte Preta, garantindo uma vitória estratégica que o catapultou para a segunda posição da Série B. Com o triunfo, o Vila Nova mantém sua campanha impecável e segue invicto na competição, mostrando a que veio. Do outro lado, a Macaca amarga mais um tropeço em casa, segue sem somar vitórias e vê a zona de rebaixamento cada vez mais perto, com a preocupante possibilidade de se tornar a lanterna da tabela.</p>
-            <div class="tags"><span class="tag">[Série B</span><span class="tag">Vila Nova</span><span class="tag">Ponte Preta]</span></div>
-        </div>
-        </div>
+<div class='grid-noticias'></div>
 <h2 class='categoria-titulo'>Games & Tecnologia</h2>
-<div class='grid-noticias'>
-        <div class="noticia-card">
-            <h2>Peaky Blinders: Um Mês Após 'O Homem Imortal', Netflix Desvenda Série Sequência com Novo Duke Shelby!</h2>
-            <p>A adrenalina do universo Peaky Blinders mal assentou após o lançamento de 'Peaky Blinders: O Homem Imortal', e a Netflix já nos lança em uma nova espiral de expectativa! A gigante do streaming acaba de levantar o véu sobre os primeiros detalhes da aguardada série sequência, prometendo expandir o legado da família Shelby de uma forma totalmente nova. Prepare-se para conhecer um novo Duke Shelby, que estará no coração da trama! E para dar vida a essa nova fase, um elenco estelar já está confirmado, com nomes como Jamie Bell, Charlie Heaton e Jessica Brown Findlay, garantindo atuações que prometem nos prender do início ao fim. O que esperar dessa continuação? Mais drama, intriga e o inconfundível estilo Peaky Blinders que tanto amamos, agora com um elenco renovado para redefinir o futuro dos Shelby.</p>
-            <div class="tags"><span class="tag">Peaky Blinders</span><span class="tag">Netflix</span><span class="tag">Série Sequência</span><span class="tag">Duke Shelby</span><span class="tag">Jamie Bell</span><span class="tag">Charlie Heaton</span><span class="tag">Jessica Brown Findlay</span></div>
-        </div>
-        </div>
+<div class='grid-noticias'></div>
 
     </div>
-    <footer>Gerado automaticamente via GitHub Actions • Atualizado de hora em hora</footer>
+    <footer>
+        <p>Sistema Autônomo de Notícias • Desenvolvido com Gemini</p>
+    </footer>
 </body>
 </html>
