@@ -1,3 +1,4 @@
 google-generativeai
 feedparser
 pytz
+beautifulsoup4
