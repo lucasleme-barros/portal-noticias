@@ -1,59 +1,91 @@
 import os
-from google import genai
+import google.generativeai as genai
 import feedparser
 import time
 from datetime import datetime
 import pytz
 
-# Configuração simples
-GOOGLE_API_KEY = os.environ.get("GEMINI_API_KEY") 
-client = genai.Client(api_key=GOOGLE_API_KEY)
+# --- CONFIGURAÇÃO ---
+API_KEY = os.environ.get("GEMINI_API_KEY")
+genai.configure(api_key=API_KEY)
+model = genai.GenerativeModel('gemini-1.5-flash')
+
 fuso = pytz.timezone('America/Sao_Paulo')
-agora = datetime.now(fuso).strftime('%d/%m/%Y %H:%M')
+agora_str = datetime.now(fuso).strftime('%d/%m/%Y %H:%M')
 
-# Usaremos apenas um feed para testar rápido
-FEED_URL = "https://ge.globo.com/rss/ge/"
+FEEDS = {
+    "Mundo": "http://feeds.bbci.co.uk/portuguese/rss.xml",
+    "Esportes": "https://ge.globo.com/rss/ge/",
+    "Tecnologia": "https://br.ign.com/feed.xml"
+}
 
-def atualizar():
-    print("Iniciando teste de conexão...")
-    feed = feedparser.parse(FEED_URL)
-    
-    if not feed.entries:
-        print("Erro: Não foi possível ler o feed RSS.")
-        return
+CSS = """
+<style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; color: #1c1e21; }
+    header { background: #fff; padding: 25px; text-align: center; border-bottom: 3px solid #d93025; }
+    .main-wrapper { display: flex; max-width: 1200px; margin: 20px auto; gap: 20px; padding: 0 20px; }
+    .content-area { flex: 3; }
+    .sidebar { flex: 1; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 10px; }
+    .noticia-card { background: #fff; margin-bottom: 25px; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; }
+    .noticia-img { width: 100%; height: 280px; object-fit: cover; background: #eee; }
+    .noticia-body { padding: 20px; }
+    .historico-item { font-size: 0.85em; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+    @media (max-width: 800px) { .main-wrapper { flex-direction: column; } .sidebar { position: static; } }
+</style>
+"""
 
-    entry = feed.entries[0]
-    print(f"Notícia encontrada: {entry.title}")
-
-    # Teste da IA
-    prompt = f"Resuma em 2 parágrafos: {entry.title}. Resumo original: {entry.summary}"
+def processar_noticia(titulo, resumo):
+    prompt = f"Aja como um jornalista profissional. Reescreva de forma envolvente em dois parágrafos: Título: {titulo}. Resumo original: {resumo}."
     try:
-        response = client.models.generate_content(model='gemini-2.0-flash', contents=prompt)
-        texto_ia = response.text
-        print("IA respondeu com sucesso!")
+        response = model.generate_content(prompt)
+        return response.text
     except Exception as e:
-        print(f"Erro na IA: {e}")
-        texto_ia = "Erro ao processar com IA."
+        print(f"Falha na IA: {e}")
+        return resumo # Se a IA falhar, usamos o resumo original para o site não ficar vazio
 
-    # HTML Simplificado ao extremo
-    html = f"""
-    <!DOCTYPE html>
-    <html lang="pt-BR">
-    <head><meta charset="UTF-8"><title>Teste</title></head>
-    <body style="font-family: sans-serif; padding: 50px; background: #f4f4f4;">
-        <h1>Portal IA News - Teste de Emergência</h1>
-        <p>Atualizado em: {agora}</p>
-        <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-            <h2>{entry.title}</h2>
-            <p>{texto_ia}</p>
-        </div>
-    </body>
-    </html>
-    """
+def atualizar_portal():
+    novas_noticias = ""
+    novos_historicos = ""
+    
+    print("Iniciando coleta...")
+    for cat, url in FEEDS.items():
+        feed = feedparser.parse(url)
+        if feed.entries:
+            entry = feed.entries[0]
+            texto_ia = processar_noticia(entry.title, entry.summary)
+            img = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"
+            
+            # Monta Card
+            novas_noticias += f'''
+            <div class="noticia-card">
+                <img src="{img}" class="noticia-img">
+                <div class="noticia-body">
+                    <small style="color:#d93025; font-weight:bold;">{cat} • {agora_str}</small>
+                    <h2 style="margin-top:10px;">{entry.title}</h2>
+                    <p>{texto_ia}</p>
+                </div>
+            </div>
+            '''
+            # Monta Sidebar
+            novos_historicos += f'<div class="historico-item"><b>{agora_str}</b>: {entry.title}</div>'
+            time.sleep(1)
 
+    # MONTAGEM FINAL
+    final_html = f"""<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="UTF-8"><title>IA News Portal</title>{CSS}</head>
+<body>
+    <header><h1>Portal IA News - Fluxo Contínuo</h1><p>Última atualização: {agora_str}</p></header>
+    <div class="main-wrapper">
+        <div class="content-area">{novas_noticias}</div>
+        <div class="sidebar"><h3>Histórico do Dia</h3><div class="sidebar-list">{novos_historicos}</div></div>
+    </div>
+</body>
+</html>"""
+    
     with open("index.html", "w", encoding="utf-8") as f:
-        f.write(html)
-    print("Arquivo index.html escrito com sucesso!")
+        f.write(final_html)
+    print("✅ Site atualizado com sucesso!")
 
 if __name__ == "__main__":
-    atualizar()
+    atualizar_portal()
