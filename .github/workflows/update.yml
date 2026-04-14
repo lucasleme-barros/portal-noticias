@@ -29,14 +29,9 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python script.py
 
-     - name: Publicar alteracoes
+      - name: Publicar alteracoes
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          
-          # Debug: Mostra no log se os arquivos foram criados
-          ls -R materia/ || echo "Pasta materia vazia"
-          
           git add .
-          # O comando abaixo evita o erro se não houver nada para commitar
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Fix: Deploy materias [$(date)]" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update: Noticias e Materias [$(date)]" && git push)
