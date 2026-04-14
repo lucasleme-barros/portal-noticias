@@ -163,7 +163,7 @@ def extrair_noticias_da_fonte(item):
         tags_h = "".join([f'<span class="tag-item">#{t.strip()}</span>' for t in data['tags'].split(",")])
         
         cards_html += f'''
-        <a href="materia/{id_noticia}.html" class="noticia-card" data-categoria="{cat}">
+       <a href="./materia/{id_noticia}.html" class="noticia-card" data-categoria="{cat}">
             <div class="img-container"><img src="{img}" class="noticia-img"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-{data['sentimento'].lower()}">{data['sentimento']}</span>
