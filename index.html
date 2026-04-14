@@ -1,577 +1,334 @@
-<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><title>Portal IA News</title>
+
+    <!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'>
 <style>
     body { font-family: 'Segoe UI', sans-serif; background: #fff; margin: 0; color: #333; }
     header { background: #fff; padding: 25px; text-align: center; border-bottom: 1px solid #eee; position: relative; }
-    
-    .weather-widget { position: absolute; top: 10px; right: 20px; font-size: 0.85em; color: #555; background: #f9f9f9; padding: 5px 12px; border-radius: 15px; border: 1px solid #eee; display: flex; align-items: center; gap: 8px; cursor: pointer; }
-    .weather-city { font-weight: bold; text-decoration: underline; }
-
-    .search-container { padding: 15px; text-align: center; background: #f6f6f6; border-bottom: 1px solid #eee; }
-    #search-input { padding: 10px 20px; width: 80%; max-width: 400px; border-radius: 25px; border: 1px solid #ddd; outline: none; }
-
-    .filter-container { padding: 10px; background: #fff; border-bottom: 1px solid #eee; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .filter-group { margin-bottom: 5px; }
-    .filter-btn { background: none; border: none; padding: 5px 12px; margin: 2px; cursor: pointer; font-weight: bold; font-size: 0.75em; color: #d93025; text-transform: uppercase; transition: 0.3s; }
+    .weather-widget { position: absolute; top: 10px; right: 20px; font-size: 0.85em; color: #555; cursor: pointer; }
+    .filter-container { padding: 10px; background: #fff; border-bottom: 1px solid #eee; text-align: center; position: sticky; top: 0; z-index: 100; }
+    .filter-btn { background: none; border: none; padding: 5px 12px; cursor: pointer; font-weight: bold; font-size: 0.75em; color: #d93025; text-transform: uppercase; }
     .filter-btn.active { background: #d93025; color: #fff; border-radius: 4px; }
-
-    .main-wrapper { max-width: 1300px; margin: 20px auto; padding: 0 20px; display: flex; gap: 30px; }
-    
-    /* GRID ESTILO G1 */
-    .content-area { 
-        flex: 3;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 25px;
-    }
-
-    .noticia-card { background: #fff; padding-bottom: 20px; cursor: pointer; transition: 0.3s; position: relative; border-bottom: 1px solid #f0f0f0; }
-    .noticia-card:hover { opacity: 0.8; }
-    
-    .sentiment-tag { font-size: 0.65em; font-weight: bold; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; margin-bottom: 8px; display: inline-block; color: #fff; }
-    .bg-positivo { background: #28a745; } .bg-negativo { background: #dc3545; } .bg-neutro { background: #6c757d; }
-
-    .img-container { width: 100%; aspect-ratio: 16/9; background: #f8f8f8; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+    .content-area { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; padding: 20px; max-width: 1200px; margin: auto; }
+    .noticia-card { border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; cursor: pointer; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
+    .img-container { width: 100%; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
     .noticia-img { width: 100%; height: 100%; object-fit: cover; }
-    
-    .noticia-body h2 { margin: 0; font-size: 1.2em; line-height: 1.25; font-weight: 700; color: #111; }
-    .noticia-body p { font-size: 0.9em; color: #555; margin: 10px 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; }
-    
-    .tag-item { font-size: 0.7em; color: #d93025; font-weight: bold; margin-right: 8px; }
-
-    .ad-slot { grid-column: 1 / -1; background: #fdfdfd; padding: 20px; border: 1px dashed #ccc; text-align: center; color: #999; font-size: 0.8em; border-radius: 8px; }
-
-    .sidebar { flex: 1; border-left: 1px solid #eee; padding-left: 20px; max-width: 300px; }
-    .sidebar h3 { font-size: 0.85em; text-transform: uppercase; color: #d93025; border-bottom: 2px solid #d93025; display: inline-block; margin-bottom: 15px; }
-    .historico-item { font-size: 0.85em; margin-bottom: 15px; border-bottom: 1px solid #f6f6f6; padding-bottom: 10px; }
-    .historico-item b { color: #d93025; font-size: 0.75em; text-transform: uppercase; }
-
-    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow-y: auto; }
-    .modal-content { background: #fff; margin: 2% auto; padding: 30px; width: 90%; max-width: 700px; border-radius: 12px; position: relative; }
-    .fechar-modal { position: absolute; right: 20px; top: 10px; font-size: 30px; cursor: pointer; color: #aaa; }
-
-    @media (max-width: 900px) { .main-wrapper { flex-direction: column; } .content-area { grid-template-columns: 1fr; } .sidebar { border-left: none; padding-left: 0; } .weather-widget { position: static; margin: 10px auto; width: fit-content; } }
+    .sentiment-tag { font-size: 0.6em; font-weight: bold; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; color: #fff; width: fit-content; margin-bottom: 5px; }
+    .bg-positivo { background: #28a745; } .bg-negativo { background: #dc3545; } .bg-neutro { background: #6c757d; }
+    h2 { font-size: 1.2em; line-height: 1.2; margin: 5px 0; }
+    p { font-size: 0.9em; color: #666; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
 </style>
-</head><body><header><div class='weather-widget' id='weather-display' onclick='alterarCidade(event)'>⏳</div><h1>Portal IA News</h1></header><div class='search-container'><input type='text' id='search-input' placeholder='O que você quer ler hoje?' onkeyup='pesquisar()'></div>
+</head>
+    <body>
+        <header><h1>Portal IA News</h1></header>
+        
     <div class="filter-container">
-        <div class="filter-group">
-            <button class="filter-btn active" onclick="filtrarNoticias('todas', this)">🏠 Todas</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Esquerda', this)">Esquerda</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Centro', this)">Centro</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Direita', this)">Direita</button>
-        </div>
-        <div class="filter-group">
-            <button class="filter-btn" onclick="filtrarNoticias('Hardware', this)">Hardware</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Games', this)">Games</button>
-            <button class="filter-btn" onclick="filtrarNoticias('C#', this)">C#</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Tech', this)">Tech</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Mundo', this)">Mundo</button>
-        </div>
-    </div><div class='main-wrapper'><div class='content-area'>
-        <div class="noticia-card" data-id="4834831748236837605" data-categoria="Mundo_BBC" onclick="abrirMateria('4834831748236837605')">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Os argumentos do relator da CPI para pedir indiciamento de 3 ministros do STF e do PGR</h2>
-                <p>Um dos acusados, ministro Gilmar Mendes afirma que CPI não tem 'base legal' para sugerir indiciamento de magistrados e diz que relator fechou olhos pa...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.767863-03:00"></small> • <a href="materia/4834831748236837605.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-4834831748236837605" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('4834831748236837605')">&times;</span>
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" style="width:100%; border-radius:8px;"><h1>Os argumentos do relator da CPI para pedir indiciamento de 3 ministros do STF e do PGR</h1><p>Um dos acusados, ministro Gilmar Mendes afirma que CPI não tem 'base legal' para sugerir indiciamento de magistrados e diz que relator fechou olhos para policiais vinculados com milícias.</p></div>
-        </div>
-        <div class="noticia-card" data-id="5747317549148597957" data-categoria="Mundo_BBC" onclick="abrirMateria('5747317549148597957')">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Navios ligados ao Irã cruzam Estreito de Ormuz apesar do bloqueio dos EUA; China critica ação americana</h2>
-                <p>Bloqueio entrou em vigor na segunda-feira (13/3), após fracasso das negociações de paz entre Washington e Teerã no Paquistão....</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.863061-03:00"></small> • <a href="materia/5747317549148597957.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-5747317549148597957" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('5747317549148597957')">&times;</span>
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" style="width:100%; border-radius:8px;"><h1>Navios ligados ao Irã cruzam Estreito de Ormuz apesar do bloqueio dos EUA; China critica ação americana</h1><p>Bloqueio entrou em vigor na segunda-feira (13/3), após fracasso das negociações de paz entre Washington e Teerã no Paquistão.</p></div>
-        </div>
-        <div class="noticia-card" data-id="859839913514292880" data-categoria="Mundo_BBC" onclick="abrirMateria('859839913514292880')">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>A personagem de IA que viraliza com críticas ao governo Lula e ao STF</h2>
-                <p>Perfil com imagens geradas por inteligência artificial tem alcance comparável ao de deputados e figuras públicas; criador da página diz que gasta R$ 2...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.929763-03:00"></small> • <a href="materia/859839913514292880.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-859839913514292880" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('859839913514292880')">&times;</span>
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" style="width:100%; border-radius:8px;"><h1>A personagem de IA que viraliza com críticas ao governo Lula e ao STF</h1><p>Perfil com imagens geradas por inteligência artificial tem alcance comparável ao de deputados e figuras públicas; criador da página diz que gasta R$ 20 por vídeo gerado.</p></div>
-        </div><div class="ad-slot">🚀 Espaço para Publicidade / Afiliados</div>
-        <div class="noticia-card" data-id="-6955929439271007330" data-categoria="Mundo_BBC" onclick="abrirMateria('-6955929439271007330')">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Restaurantes brasileiros são os únicos da América Latina com três estrelas Michelin — os critérios por trás do reconhecimento</h2>
-                <p>Criado humildemente em 1900, o Guia Michelin hoje é cercado de mistério. Um número não divulgado de inspetores analisa mais de 40 mil restaurantes, em...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:25.010539-03:00"></small> • <a href="materia/-6955929439271007330.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--6955929439271007330" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-6955929439271007330')">&times;</span>
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" style="width:100%; border-radius:8px;"><h1>Restaurantes brasileiros são os únicos da América Latina com três estrelas Michelin — os critérios por trás do reconhecimento</h1><p>Criado humildemente em 1900, o Guia Michelin hoje é cercado de mistério. Um número não divulgado de inspetores analisa mais de 40 mil restaurantes, em mais de 30 países.</p></div>
-        </div>
-        <div class="noticia-card" data-id="6906763392679332569" data-categoria="Mundo_BBC" onclick="abrirMateria('6906763392679332569')">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Como culto liderado por pastor negro que falava a 'língua dos anjos' deu origem ao movimento evangélico há 120 anos</h2>
-                <p>Uma série de cultos evangélicos realizada há 120 anos em um templo abandonado da Igreja Metodista Africana em Los Angeles, na Califórnia, foi o catali...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:25.104676-03:00"></small> • <a href="materia/6906763392679332569.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-6906763392679332569" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('6906763392679332569')">&times;</span>
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" style="width:100%; border-radius:8px;"><h1>Como culto liderado por pastor negro que falava a 'língua dos anjos' deu origem ao movimento evangélico há 120 anos</h1><p>Uma série de cultos evangélicos realizada há 120 anos em um templo abandonado da Igreja Metodista Africana em Los Angeles, na Califórnia, foi o catalisador do movimento pentecostal</p></div>
-        </div>
-        <div class="noticia-card" data-id="-6233476289164361825" data-categoria="Mundo_BBC" onclick="abrirMateria('-6233476289164361825')">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Imagem de Trump como Jesus Cristo e embate com o papa provocam reação até entre aliados</h2>
-                <p>Trump recebeu críticas não apenas de opositores, mas também de setores de sua própria base....</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:25.147763-03:00"></small> • <a href="materia/-6233476289164361825.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--6233476289164361825" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-6233476289164361825')">&times;</span>
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" style="width:100%; border-radius:8px;"><h1>Imagem de Trump como Jesus Cristo e embate com o papa provocam reação até entre aliados</h1><p>Trump recebeu críticas não apenas de opositores, mas também de setores de sua própria base.</p></div>
-        </div>
-        <div class="noticia-card" data-id="-4375028424958512846" data-categoria="Geral_G1" onclick="abrirMateria('-4375028424958512846')">
-            <div class="img-container"><img src="https://s2-g1.glbimg.com/BvG0YQnq5tkvcRLqknDnyJA_4WU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/p/h/mBQO2SSAKtqmIAuTqFrw/whatsapp-image-2026-04-13-at-11.44.43.jpeg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Café do Conhecimento destaca venda consultiva com Luis Pimentel</h2>
-                <p><img src="https://s2-g1.glbimg.com/BvG0YQnq5tkvcRLqknDnyJA_4WU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/p/h/m...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:25.941044-03:00"></small> • <a href="materia/-4375028424958512846.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--4375028424958512846" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-4375028424958512846')">&times;</span>
-            <img src="https://s2-g1.glbimg.com/BvG0YQnq5tkvcRLqknDnyJA_4WU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/p/h/mBQO2SSAKtqmIAuTqFrw/whatsapp-image-2026-04-13-at-11.44.43.jpeg" style="width:100%; border-radius:8px;"><h1>Café do Conhecimento destaca venda consultiva com Luis Pimentel</h1><p><img src="https://s2-g1.glbimg.com/BvG0YQnq5tkvcRLqknDnyJA_4WU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/p/h/mBQO2SSAKtqmIAuTqFrw/whatsapp-image-2026-04-13-at-11.44.43.jpeg" /><br />     Café do Conhecimento destaca venda consultiva com Luis Pimentel  – Crédito: Divulgação.<br><br><br><br>Empresários, vendedores e profissionais que desejam aprimorar suas estratégias comerciais terão uma oportunidade especial no dia 30 de abril, em Limeira. O Café da Manhã do Conhecimento, promovido pelo CME da ACIL, traz como destaque a palestra “O poder da venda consultiva para o sucesso nos negócios”, com o especialista Luis Pimentel.<br><br>Consultor, escritor e mentor de vendas, Pimentel é reconhecido por sua abordagem prática e estratégica, ajudando empresas e profissionais a aumentarem seus resultados por meio de uma venda mais humanizada e eficiente. Durante o encontro, os participantes poderão entender como a venda consultiva pode transformar a relação com o cliente, gerar mais valor e impulsionar o fechamento de negócios.<br><br>O evento acontece na sede da ACIL, a partir das 8h com café incluso, e início da palestra às 8h30. Além do conteúdo, o encontro proporciona um ambiente propício para networking, troca de experiências e conexões entre empreendedores da região.<br><br>A iniciativa faz parte da programação do Café da Manhã do Conhecimento, que acontece toda última quinta-feira de cada mês com o objetivo de levar conteúdos relevantes e aplicáveis ao dia a dia empresarial, fortalecendo o desenvolvimento profissional e o crescimento dos negócios locais.<br><br>Os convites podem ser adquiridos através do site acillimeira.com.br/agenda. Os ingressos custam R$ 15 para sócios da ACIL e R$ 35 para não-sócios.  As vagas são limitadas.</p></div>
-        </div>
-        <div class="noticia-card" data-id="1831708720687682425" data-categoria="Geral_G1" onclick="abrirMateria('1831708720687682425')">
-            <div class="img-container"><img src="https://s2-g1.glbimg.com/vaJ9z4OY9DbJndLOhzafyRCeAVg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/X/egnBlHRwqxQfXAFiyzkw/design-sem-nome-2026-04-14t141614.841.png" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Pai de santo é morto a facadas dentro de terreiro no sudoeste da Bahia</h2>
-                <p><img src="https://s2-g1.glbimg.com/vaJ9z4OY9DbJndLOhzafyRCeAVg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/X/e...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:26.010519-03:00"></small> • <a href="materia/1831708720687682425.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-1831708720687682425" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('1831708720687682425')">&times;</span>
-            <img src="https://s2-g1.glbimg.com/vaJ9z4OY9DbJndLOhzafyRCeAVg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/X/egnBlHRwqxQfXAFiyzkw/design-sem-nome-2026-04-14t141614.841.png" style="width:100%; border-radius:8px;"><h1>Pai de santo é morto a facadas dentro de terreiro no sudoeste da Bahia</h1><p><img src="https://s2-g1.glbimg.com/vaJ9z4OY9DbJndLOhzafyRCeAVg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/X/egnBlHRwqxQfXAFiyzkw/design-sem-nome-2026-04-14t141614.841.png" /><br />     Pai de santo é morto a facadas dentro de terreiro em Vitória da Conquista<br><br>Reprodução/Redes Sociais<br><br>Um pai de santo foi morto a facadas após homens invadirem um terreiro no bairro Cruzeiro, em Vitória da Conquista, no sudoeste da Bahia. O crime aconteceu na noite de segunda-feira (13). <br><br>Segundo a Polícia Civil, a vítima foi identificada como Josiel Oliveira Bomfim, de 29 anos. Ele deixa esposa e um filho de 4 anos. O pai de santo era considerado uma liderança respeitada pela comunidade, amigos e frequentadores do espaço religioso.<br><br>Homens entraram em uma residência e golpearam o jovem com arma branca. Ele não resistiu aos ferimentos e morreu no local.<br><br>Informações apuradas pela TV Sudoeste, afiliada da Rede Bahia na região, apontam que dois homens participaram da ação criminosa. Testemunhas relataram que a dupla chegou ao imóvel, localizado na Rua Calércio Santos Sandes, pouco depois das 19h. No momento do crime, alguns filhos de santo estavam reunidos no local.<br><br>📲 Clique aqui e entre no grupo do WhatsApp do g1 Bahia<br><br>Ainda segundo relatos, os suspeitos estavam armados, sendo um com faca e outro com arma de fogo. Após matar Josiel, eles recolheram celulares e equipamentos que armazenavam imagens de câmeras de segurança, amarraram algumas pessoas que estavam na casa e fugiram.<br><br>Veja os vídeos que estão em alta no g1<br><br>Câmeras de segurança instaladas nas proximidades estão sendo analisadas e testemunhas começaram a ser ouvidas na manhã desta terça-feira (14). Até o momento, a polícia não definiu uma linha de investigação.<br><br>Josiel Bomfim era pai de santo e liderava a casa de quimbanda “Passagem de Exu”, onde ocorreu o crime. Antes de se tornar líder religioso, ele atuou como pastor. A casa foi fundada há cerca de seis anos e funcionava no bairro Cruzeiro há três.<br><br>O corpo da vítima foi encaminhado ao Departamento de Polícia Técnica (DPT) de Vitória da Conquista e liberado para a família na manhã desta terça-feira (14). O velório e o sepultamento estão previstos para a tarde, mas o local não foi divulgado por familiares. <br><br>A autoria e motivação do crime são investigadas pela 1ª Delegacia Territorial de Vitória da Conquista. <br><br>A Comissão de Combate à Intolerância Religiosa da Ordem dos Advogados do Brasil (OAB) em Vitória da Conquista divulgou uma nota de pesar e indignação pelo caso. No comunicado, a entidade destacou que a morte dentro de um templo religioso causa profunda comoção e cobrou uma investigação rápida e rigorosa. (Veja nota na íntegra abaixo) <br><br>Nota da Comissão de Combate à Intolerância Religiosa da OAB de Vitória da Conquista<br><br>"É com profundo pesar e indignação que acompanhamos as notícias sobre a morte trágica de Josiel Bonfim, ocorrida ontem (13/04/2026) no bairro Cruzeiro, em Vitória da Conquista-BA. Mesmo para quem não o conhecia pessoalmente, é impossível não se sensibilizar com a dor de uma comunidade que perde uma liderança respeitada e acolhedora de forma tão violenta.<br><br><br><br>Saber que um homem foi atacado dentro de seu próprio templo, um local que deveria ser de paz e sagrado para tantos, causa uma consternação profunda em todos nós. A morte de um líder religioso de matriz africana é uma perda que ecoa além das fronteiras do seu bairro, ferindo o sentimento de segurança e o respeito à diversidade que devem reger nossa sociedade.<br><br>Manifestamos nossa total solidariedade aos amigos, vizinhos e filhos de santo que hoje choram essa perda inestimável. Cobramos das autoridades da Bahia uma investigação célere e incisiva. Não podemos aceitar que crimes dessa natureza fiquem impunes; é preciso que os autores sejam identificados e que a justiça seja aplicada com o rigor necessário para honrar a memória de Josiel e trazer um mínimo de alento aos que ficaram.<br><br>Justiça por Josiel Bonfim. 🖤"<br><br>LEIA TAMBÉM:<br><br>Mulher é morta a facadas dentro de casa no sudoeste da Bahia; principal suspeito é ex-companheiro da vítima<br><br>Professora é morta com golpe de faca ao tentar defender o pai após briga em jogo de futebol amador<br><br>Adolescente de 16 anos é encontrada morta com marcas de facadas e queimaduras na BA<br><br>Veja mais notícias do estado no g1 Bahia<br><br>Assista aos vídeos do g1 e TV Bahia 💻</p></div>
-        </div>
-        <div class="noticia-card" data-id="8488243790806385125" data-categoria="Geral_G1" onclick="abrirMateria('8488243790806385125')">
-            <div class="img-container"><img src="https://s2-g1.glbimg.com/JBukvSGVgMbTKiHeIEapviH-gj8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/l/5/dVzbFpTDSmg7wlsBM4Cg/2026-04-12t135436z-1625689504-rc2gnkaezcwq-rtrmadp-3-iran-crisis-hormuz.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Navios fazem meia-volta em meio a bloqueio no Estreito de Ormuz; EUA e Irã avaliam retomar negociações</h2>
-                <p><img src="https://s2-g1.glbimg.com/JBukvSGVgMbTKiHeIEapviH-gj8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/l/5/d...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:26.059685-03:00"></small> • <a href="materia/8488243790806385125.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-8488243790806385125" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('8488243790806385125')">&times;</span>
-            <img src="https://s2-g1.glbimg.com/JBukvSGVgMbTKiHeIEapviH-gj8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/l/5/dVzbFpTDSmg7wlsBM4Cg/2026-04-12t135436z-1625689504-rc2gnkaezcwq-rtrmadp-3-iran-crisis-hormuz.jpg" style="width:100%; border-radius:8px;"><h1>Navios fazem meia-volta em meio a bloqueio no Estreito de Ormuz; EUA e Irã avaliam retomar negociações</h1><p><img src="https://s2-g1.glbimg.com/JBukvSGVgMbTKiHeIEapviH-gj8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/l/5/dVzbFpTDSmg7wlsBM4Cg/2026-04-12t135436z-1625689504-rc2gnkaezcwq-rtrmadp-3-iran-crisis-hormuz.jpg" /><br />     Navios fazem meia-volta em meio a bloqueio no Estreito de Ormuz; EUA e Irã avaliam retomar negociações Trump afirmou nesta terça (14) que uma nova rodada de negociações com Irã pode ocorrer nos próximos dias. Navios militares dos EUA faziam nesta terça (14) um bloqueio naval à saída do Estreito de Ormuz, mas nenhuma embarcação foi parada até agora; ENTENDA o que é o bloqueio. Rastreamento mostra navios fazendo meia-volta. Dados de monitoramento, no entanto, chegaram a indicar que algumas embarcações atravessaram; os EUA negam e dizem que nenhum barco furou o bloqueio.. Apesar da primeira reunião terminar sem acordo, Trump afirmou que uma nova rodada de negociações com Irã pode ocorrer nos próximos dias.. A Europa, em paralelo, estuda uma coalizão para tentar desbloquear o estreito. Líderes do Reino Unido e da França se reúnem nesta terça para discutir a parceria. . Em Washington, Israel e Líbano iniciaram negociações nesta terça, mediadas pelo secretário de Estado dos EUA, Marco Rubio.</p></div>
-        </div><div class="ad-slot">🚀 Espaço para Publicidade / Afiliados</div>
-        <div class="noticia-card" data-id="-8650942836288500483" data-categoria="Geral_G1" onclick="abrirMateria('-8650942836288500483')">
-            <div class="img-container"><img src="https://s2-g1.glbimg.com/XO0MWT7BG3Y638euOjaUmQ5IT2c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/o/Yr86mRRWa7Ke0rNopJTA/30.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Entenda como a USP apura, em Piracicaba, o principal indicador do preço comercial do café do Brasil</h2>
-                <p><img src="https://s2-g1.glbimg.com/XO0MWT7BG3Y638euOjaUmQ5IT2c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/o/Y...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:26.117618-03:00"></small> • <a href="materia/-8650942836288500483.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--8650942836288500483" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-8650942836288500483')">&times;</span>
-            <img src="https://s2-g1.glbimg.com/XO0MWT7BG3Y638euOjaUmQ5IT2c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/o/Yr86mRRWa7Ke0rNopJTA/30.jpg" style="width:100%; border-radius:8px;"><h1>Entenda como a USP apura, em Piracicaba, o principal indicador do preço comercial do café do Brasil</h1><p><img src="https://s2-g1.glbimg.com/XO0MWT7BG3Y638euOjaUmQ5IT2c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/o/Yr86mRRWa7Ke0rNopJTA/30.jpg" /><br />     Conheça os fatores que influenciam o preço do café para o consumidor<br><br>Companheiro da manhã, do fim da tarde e dos dias tumultuados do trabalho, o café faz parte do dia a dia dos brasileiros. O consumo indispensável traz outra preocupação tanto para quem compra no mercado quanto para quem movimenta milhões com o grão: o preço.<br><br>☕No Dia Mundial do Café, celebrado nesta terça-feira (14), a EPTV foi conhecer de perto como é apurado o preço comercial do café do indicador da Escola Superior de Agricultura Luiz de Queiroz da Universidade de São Paulo (Esalq-USP), a principal referência do Brasil no comércio do grão.<br><br>📲 Siga o g1 Piracicaba no Instagram<br><br>As análises dos preços são feitas diariamente pela equipe da USP em Piracicaba (SP).  Victor Hugo Abreu, analista de café do Centro de Estudos Avançados em Economia Aplicada (Cepea), inicia o dia ligando para cooperativas de café de todo o País. <br><br>🔍 O indicador Esalq começou a ser medido em 1996 e as atualizações são diárias, com três parciais sendo publicadas ao longo do dia. De acordo com os analistas, o mercado é dinâmico e a variação de valores depende de fatores múltiplos.<br><br>Entenda o levantamento: O preço comercializado nos supermercados é diferente do valor divulgado pela Esalq. Isso porque, nesse levantamento, os analistas perguntam o preço comercial do café, ou seja, o valor da saca vendida pelos produtores às cooperativas.<br><br>O valor indicado norteia todo o comércio de café do País e impacta diretamente a exportação do grão, bem como o preço que vai chegar às prateleiras. <br><br>'Oscilações acontecem muitas vezes no próprio decorrer do dia'<br><br>Os pesquisadores de Piracicaba fazem a cotação ligando para as cooperativas que compram os cafés dos produtores e repassam para as empresas que fazem a moagem e torra do café.<br><br>"O mercado é muito dinâmico. Então, as oscilações acontecem muitas vezes no próprio decorrer do dia. O cenário cambial impacta bastante a condição de preço, então, se o mercado abre em uma condição de câmbio e fecha em outra condição, no decorrer do mesmo dia, a gente consegue ter alguma mudança em termos de precificação", reiterou o analista.<br><br>Parciais<br><br>Café<br><br>Reprodução/EPTV<br><br>O trabalho de Vitor começa cedo: ele liga perguntando para as cooperativas o preço dos cafés tipos 6, 7, 8 e o Arábica Rio. Segundo o analista, é uma conversa bem simples, clara e direta. "Eu pergunto se sabem dizer também por que teve essa alteração e peço o preço", relatou.<br><br>Isso é apenas o início do processo. Ao longo de todo o dia, outras pessoas fazem a mesma análise. <br><br>⏰ A pesquisa de preço do café é feita de manhã e à tarde por causa do fuso horário. <br><br>Cedo, por causa do horário de Londres, quatro horas à frente do horário de Brasília;<br><br>À tarde, por causa da bolsa de Nova Iorque, que funciona no fuso horário uma hora atrás do horário brasileiro.<br><br>"As negociações acontecem basicamente utilizando a referência da bolsa de Nova Iorque. Essa é a referência para os mercados e nós aqui conseguimos trazer uma referência dos fechamentos para o mercado interno. Então isso ajuda todo mundo na tomada de decisão", explicou.<br><br>Maior alta em 2025<br><br>Café<br><br>Reprodução/EPTV<br><br>Desde que o acompanhamento dos preços do café começou, a maior alta foi no início de 2025, quando a saca de 60 kg atingiu o recorde de R$ 2.769. O primeiro trimestre do ano passado foi, inclusive, o período de maior alta no café. A média da safra ficou em R$ 2,5 mil. <br><br>Neste ano, já houve uma redução, e a média entre janeiro e março ficou em R$ 1,7 mil. O menor valor registrado foi em 2002, com R$ 500 a saca.<br><br>☕ Para quem gosta de café, a projeção para o segundo semestre deste ano é animadora. Em julho começa a colheita e existe a possibilidade de o valor cair.<br><br>"O Brasil é o principal produtor de café e deve colher uma boa safra este ano. Os dados da Conab, por exemplo, indicam para uma safra recorde. E essa safra recorde com certeza vai favorecer que você tenha um aumento de oferta. Então é bem provável agora que, com a entrada da nova safra, os preços sofram uma certa pressão", explicou.<br><br>Café<br><br>Reprodução/EPTV<br><br>VÍDEOS: Tudo sobre Piracicaba e Região<br><br>Veja mais notícias sobre a região na página do g1 Piracicaba</p></div>
-        </div>
-        <div class="noticia-card" data-id="-8280014504684215522" data-categoria="Geral_G1" onclick="abrirMateria('-8280014504684215522')">
-            <div class="img-container"><img src="https://s2-g1.glbimg.com/AYjm0fdd3KgkRRBDT4dxArWRtkI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Y/R/gQUSbcQA66RIPB91EUHQ/cpi.png" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>CPI do Crime Organizado tem troca de integrantes antes da votação de relatório</h2>
-                <p><img src="https://s2-g1.glbimg.com/AYjm0fdd3KgkRRBDT4dxArWRtkI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Y/R/g...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:26.200751-03:00"></small> • <a href="materia/-8280014504684215522.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--8280014504684215522" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-8280014504684215522')">&times;</span>
-            <img src="https://s2-g1.glbimg.com/AYjm0fdd3KgkRRBDT4dxArWRtkI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Y/R/gQUSbcQA66RIPB91EUHQ/cpi.png" style="width:100%; border-radius:8px;"><h1>CPI do Crime Organizado tem troca de integrantes antes da votação de relatório</h1><p><img src="https://s2-g1.glbimg.com/AYjm0fdd3KgkRRBDT4dxArWRtkI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Y/R/gQUSbcQA66RIPB91EUHQ/cpi.png" /><br />     A composição da CPI do Crime Organizado, no Senado, teve sua composição alterada horas antes da votação do relatório que pede o indiciamento de ministros do Supremo Tribunal Federal (STF) por crime de responsabilidade.<br><br>Saíram dois senadores que potencialmente votariam a favor da aprovação do relatório apresentado por Alessandro Vieira (MDB-SE) e entraram dois novos membros da base do governo.<br><br>Conforme os registros do Senado, saíram do colegiado os senadores Sergio Moro (União-PR) e Marcos do Val (Avante-ES), e entraram Beto Faro (PT-PA) e Teresa Leitão (PT-PE).<br><br>As alterações foram no bloco de partidos formado por MDB, PSDB, Podemos e União Brasil. A CPI tem 11 membros titulares.<br><br>A sessão para a votação do relatório final começou às 14h20.<br><br>Veja os vídeos que estão em alta no g1<br><br>O relatório da CPI<br><br>O relatório final da CPI, apresentado pelo senador Alessandro Vieira (MDB-SE), pede o indiciamento de três ministros do STF e do procurador-geral da República (PGR), Paulo Gonet.<br><br>O texto, que será votado na tarde desta terça-feira (14), aponta que há indícios de crimes de responsabilidade por parte do PGR e dos ministros do STF Dias Toffoli, Alexandre de Moraes e Gilmar Mendes.<br><br>🔎 Este texto não é o final da CPI, já que o documento ainda precisa ser votado pela comissão. Os parlamentares ainda vão decidir se aprovam as propostas de indiciamentos e recomendações feitas pelo relator. Esta terça é a data prevista para a conclusão dos trabalhos.<br><br>➡️Na prática , o pedido de indiciamento — desde que aprovado pela maioria da CPI — pode levar a uma solicitação de impeachment das quatro autoridades citadas. Esse pedido de impeachment tem que ser apresentado de forma apartada à Mesa do Senado.<br><br>➡️O processo para julgar um crime de responsabilidade corre no próprio Senado. Crime de responsabilidade é um delito de natureza política, portanto, tem um trâmite diferente do crime comum.<br><br>CPI do Crime Organizado faz a leitura do relatório final<br><br>Reprodução<br><br>A TV Globo questionou o Supremo e os ministros sobre os pedidos de indiciamento, mas ainda não obteve retorno. A PGR afirmou que não vai se manifestar.<br><br>Gilmar Mendes publicou uma mensagem nas redes sociais na qual afirma que "CPI não tem 'base legal' para pedir indiciamento de ministros do STF".<br><br>Segundo ele, o indiciamento é um ato que cabe exclusivamente à autoridade policial e não se aplica aos crimes de responsabilidade, que seguem um rito próprio, previsto na legislação.<br><br>Esses crimes, segundo ele, são analisados por procedimentos específicos, que envolvem o Congresso Nacional, sem previsão de atuação de CPIs nesse tipo de processo.<br><br>O ministro também criticou o que classificou como tentativa de criminalizar a interpretação da lei por magistrados, prática conhecida no meio jurídico como “crime de hermenêutica” — expressão usada para definir tentativas de punir juízes por suas decisões.</p></div>
-        </div>
-        <div class="noticia-card" data-id="-4307237304401236226" data-categoria="Geral_G1" onclick="abrirMateria('-4307237304401236226')">
-            <div class="img-container"><img src="https://s2-g1.glbimg.com/BFm3deMCHu_2BOBBa78krTw3FKA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/U/B/wZXoEgQDC3nQX417ubjg/foto-g1-2026-04-14t110223.616.png" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>VÍDEO: ladrões armados rendem casal com criança e obrigam vítima a ligar caminhonete para roubo</h2>
-                <p><img src="https://s2-g1.glbimg.com/BFm3deMCHu_2BOBBa78krTw3FKA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/U/B/w...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:26.298642-03:00"></small> • <a href="materia/-4307237304401236226.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--4307237304401236226" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-4307237304401236226')">&times;</span>
-            <img src="https://s2-g1.glbimg.com/BFm3deMCHu_2BOBBa78krTw3FKA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/U/B/wZXoEgQDC3nQX417ubjg/foto-g1-2026-04-14t110223.616.png" style="width:100%; border-radius:8px;"><h1>VÍDEO: ladrões armados rendem casal com criança e obrigam vítima a ligar caminhonete para roubo</h1><p><img src="https://s2-g1.glbimg.com/BFm3deMCHu_2BOBBa78krTw3FKA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/U/B/wZXoEgQDC3nQX417ubjg/foto-g1-2026-04-14t110223.616.png" /><br />     Ladrões armados rendem casal com criança e obrigam vítima a ligar caminhonete para roubar<br><br>Ladrões armados em motocicletas renderam um casal com uma criança e obrigaram o homem a ligar caminhonete para roubar, na noite de segunda-feira (13) em São José do Rio Preto (SP). <br><br>Segundo o boletim de ocorrência, o motorista da caminhonete denunciou o roubo na delegacia e disse à polícia que estava saindo da farmácia, no estacionamento, por volta de 19h20, quando foi abordado pelo trio, em duas motocicletas. Um vídeo de câmera de segurança no comércio registrou o assalto. Assista acima. <br><br>📲 Participe do canal do g1 Rio Preto e Araçatuba no WhatsApp<br><br>A vítima e a esposa foram ameaçados pelo homem armado, que exigiu que o casal e a criança descessem da caminhonete. A mulher tentou correr com o filho no colo, mas escorregou e caiu na calçada. Eles não ficaram feridos. <br><br>Câmera de segurança flagrou roubo de caminhonete em Rio Preto (SP)<br><br>Reprodução/Câmera de segurança<br><br>Sob a mira da arma, o motorista, então, instruiu o suspeito a ligar a caminhonete, porque, de acordo com o relato da vítima, ele não sabia usar o câmbio automático. Os ladrões fugiram com o veículo. <br><br>A caminhonete não foi localizada e os suspeitos não foram presos até a última atualização desta reportagem. A ocorrência foi registrada como roubo. <br><br>Initial plugin text<br><br>Veja mais notícias da região no g1 Rio Preto e Araçatuba<br><br>VÍDEOS: confira as reportagens da TV TEM</p></div>
-        </div>
-        <div class="noticia-card" data-id="1370900406573383639" data-categoria="Hardware_Adrenaline" onclick="abrirMateria('1370900406573383639')">
-            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/last-flag-capa-640x400.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Last Flag já está disponível: shooter 5v5 aposta em captura de bandeira sem microtransações</h2>
-                <p><img alt="" class="webfeedsFeaturedVisual wp-post-image" height="400" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/last-flag-capa-640...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.714484-03:00"></small> • <a href="materia/1370900406573383639.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-1370900406573383639" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('1370900406573383639')">&times;</span>
-            <img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/last-flag-capa-640x400.jpg" style="width:100%; border-radius:8px;"><h1>Last Flag já está disponível: shooter 5v5 aposta em captura de bandeira sem microtransações</h1><p><img alt="" class="webfeedsFeaturedVisual wp-post-image" height="400" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/last-flag-capa-640x400.jpg" width="640" />O jogo também chegará futuramente aos consoles PlayStation 5 e Xbox Series X&#124;S, com lançamento previsto para o inverno no Hemisfério Sul.</p></div>
-        </div>
-        <div class="noticia-card" data-id="-3510414839361331517" data-categoria="Hardware_Adrenaline" onclick="abrirMateria('-3510414839361331517')">
-            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/ps3-emulador-rpcs3-requisitos-640x400.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Emulador de PS3 recebe requisitos de sistema exigentes e devs explicam o motivo</h2>
-                <p><img alt="Foto do PS3 editada com processadores Intel e AMD" class="webfeedsFeaturedVisual wp-post-image" height="400" src="https://www.adrenaline.com...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.812176-03:00"></small> • <a href="materia/-3510414839361331517.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--3510414839361331517" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-3510414839361331517')">&times;</span>
-            <img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/ps3-emulador-rpcs3-requisitos-640x400.jpg" style="width:100%; border-radius:8px;"><h1>Emulador de PS3 recebe requisitos de sistema exigentes e devs explicam o motivo</h1><p><img alt="Foto do PS3 editada com processadores Intel e AMD" class="webfeedsFeaturedVisual wp-post-image" height="400" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/ps3-emulador-rpcs3-requisitos-640x400.jpg" width="640" />RPCS3, o emulador mais famoso do PS3, exige um Ryzen 7 9800X3D para "performance máxima"</p></div>
-        </div>
-        <div class="noticia-card" data-id="-6485553755356550485" data-categoria="Hardware_Adrenaline" onclick="abrirMateria('-6485553755356550485')">
-            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Xbox-Discussoes-Volta-Exclusivos-640x400.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Xbox discute internamente uma possível volta de jogos exclusivos</h2>
-                <p><img alt="Xbox discute internamente uma possível volta de jogos exclusivos" class="webfeedsFeaturedVisual wp-post-image" height="400" src="https://www...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.915700-03:00"></small> • <a href="materia/-6485553755356550485.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--6485553755356550485" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-6485553755356550485')">&times;</span>
-            <img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Xbox-Discussoes-Volta-Exclusivos-640x400.jpg" style="width:100%; border-radius:8px;"><h1>Xbox discute internamente uma possível volta de jogos exclusivos</h1><p><img alt="Xbox discute internamente uma possível volta de jogos exclusivos" class="webfeedsFeaturedVisual wp-post-image" height="400" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Xbox-Discussoes-Volta-Exclusivos-640x400.jpg" width="640" />Sob a direção de Asha Sharma, a divisão Xbox parece estar reavaliando várias de suas decisões antigas.</p></div>
-        </div><div class="ad-slot">🚀 Espaço para Publicidade / Afiliados</div>
-        <div class="noticia-card" data-id="-5827983726475437394" data-categoria="Hardware_Adrenaline" onclick="abrirMateria('-5827983726475437394')">
-            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/spider-man-3-captura-movimentos-rumores-640x400.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Ator de Marvel’s Spider-Man mostra trabalho de captura e acende rumores para novo game</h2>
-                <p><img alt="Captura de gameplay de Marvel&#039;s Spider-Man: Miles Morales" class="webfeedsFeaturedVisual wp-post-image" height="400" src="https://www.a...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:25.013946-03:00"></small> • <a href="materia/-5827983726475437394.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--5827983726475437394" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-5827983726475437394')">&times;</span>
-            <img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/spider-man-3-captura-movimentos-rumores-640x400.jpg" style="width:100%; border-radius:8px;"><h1>Ator de Marvel’s Spider-Man mostra trabalho de captura e acende rumores para novo game</h1><p><img alt="Captura de gameplay de Marvel&#039;s Spider-Man: Miles Morales" class="webfeedsFeaturedVisual wp-post-image" height="400" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/spider-man-3-captura-movimentos-rumores-640x400.jpg" width="640" />Peter Parker da Insomniac posta foto fazendo pose clássica e debate sobre Spider-Man 3 começa</p></div>
-        </div>
-        <div class="noticia-card" data-id="4470805842950841859" data-categoria="Hardware_Adrenaline" onclick="abrirMateria('4470805842950841859')">
-            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2025/07/ea-sports-fc-26-capa-640x400.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Jogos de PC em oferta na Epic Games; até 90% de desconto nesta semana</h2>
-                <p><img alt="EA Sports FC 26" class="webfeedsFeaturedVisual wp-post-image" height="400" src="https://www.adrenaline.com.br/wp-content/uploads/2025/07/ea-...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:25.107977-03:00"></small> • <a href="materia/4470805842950841859.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-4470805842950841859" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('4470805842950841859')">&times;</span>
-            <img src="https://www.adrenaline.com.br/wp-content/uploads/2025/07/ea-sports-fc-26-capa-640x400.jpg" style="width:100%; border-radius:8px;"><h1>Jogos de PC em oferta na Epic Games; até 90% de desconto nesta semana</h1><p><img alt="EA Sports FC 26" class="webfeedsFeaturedVisual wp-post-image" height="400" src="https://www.adrenaline.com.br/wp-content/uploads/2025/07/ea-sports-fc-26-capa-640x400.jpg" width="640" />Os interessados podem aproveitar as ofertas da Epic Games por tempo limitado, até que novos jogos entrem em promoção</p></div>
-        </div>
-        <div class="noticia-card" data-id="-3174563291859074013" data-categoria="Hardware_Adrenaline" onclick="abrirMateria('-3174563291859074013')">
-            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Steam-Controller-Encomenda-Valve-640x400.jpeg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Primeira grande encomenda do novo Steam Controller já chegou aos EUA</h2>
-                <p><img alt="Primeira grande encomenda do novo Steam Controller já chegou aos EUA" class="webfeedsFeaturedVisual wp-post-image" height="400" src="https:/...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:25.198608-03:00"></small> • <a href="materia/-3174563291859074013.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--3174563291859074013" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-3174563291859074013')">&times;</span>
-            <img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Steam-Controller-Encomenda-Valve-640x400.jpeg" style="width:100%; border-radius:8px;"><h1>Primeira grande encomenda do novo Steam Controller já chegou aos EUA</h1><p><img alt="Primeira grande encomenda do novo Steam Controller já chegou aos EUA" class="webfeedsFeaturedVisual wp-post-image" height="400" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Steam-Controller-Encomenda-Valve-640x400.jpeg" width="640" />Ainda sem data de estreia, o novo Steam Controller já começou a ser enviado por fornecedores chineses.</p></div>
-        </div>
-        <div class="noticia-card" data-id="6401997679062071109" data-categoria="C#_MS_Blog" onclick="abrirMateria('6401997679062071109')">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Your Migration’s Source of Truth: The Modernization Assessment</h2>
-                <p><p>Introducing GitHub Copilot Modernization and diving into the assessment report as part of cloud modernization process</p>
-<p>The post <a href="http...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.706964-03:00"></small> • <a href="materia/6401997679062071109.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-6401997679062071109" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('6401997679062071109')">&times;</span>
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" style="width:100%; border-radius:8px;"><h1>Your Migration’s Source of Truth: The Modernization Assessment</h1><p><p>Introducing GitHub Copilot Modernization and diving into the assessment report as part of cloud modernization process</p><br><br><p>The post <a href="https://devblogs.microsoft.com/dotnet/your-migrations-source-of-truth-the-modernization-assessment/">Your Migration&#8217;s Source of Truth: The Modernization Assessment</a> appeared first on <a href="https://devblogs.microsoft.com/dotnet">.NET Blog</a>.</p></p></div>
-        </div>
-        <div class="noticia-card" data-id="-8094308119092410157" data-categoria="C#_MS_Blog" onclick="abrirMateria('-8094308119092410157')">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>ASP.NET Core 2.3 end of support announcement</h2>
-                <p><p>ASP.NET Core 2.3 will reach end of support on April 13, 2027. Learn what this means for your applications and how to upgrade to a modern supported ...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.762972-03:00"></small> • <a href="materia/-8094308119092410157.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--8094308119092410157" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-8094308119092410157')">&times;</span>
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" style="width:100%; border-radius:8px;"><h1>ASP.NET Core 2.3 end of support announcement</h1><p><p>ASP.NET Core 2.3 will reach end of support on April 13, 2027. Learn what this means for your applications and how to upgrade to a modern supported version of .NET.</p><br><br><p>The post <a href="https://devblogs.microsoft.com/dotnet/aspnet-core-2-3-end-of-support/">ASP.NET Core 2.3 end of support announcement</a> appeared first on <a href="https://devblogs.microsoft.com/dotnet">.NET Blog</a>.</p></p></div>
-        </div>
-        <div class="noticia-card" data-id="5621698256053496741" data-categoria="C#_MS_Blog" onclick="abrirMateria('5621698256053496741')">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Explore union types in C# 15</h2>
-                <p><p>C# 15 introduces union types — declare a closed set of case types with implicit conversions and exhaustive pattern matching. Try unions in preview ...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.825178-03:00"></small> • <a href="materia/5621698256053496741.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-5621698256053496741" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('5621698256053496741')">&times;</span>
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" style="width:100%; border-radius:8px;"><h1>Explore union types in C# 15</h1><p><p>C# 15 introduces union types — declare a closed set of case types with implicit conversions and exhaustive pattern matching. Try unions in preview today and see the broader exhaustiveness roadmap.</p><br><br><p>The post <a href="https://devblogs.microsoft.com/dotnet/csharp-15-union-types/">Explore union types in C# 15</a> appeared first on <a href="https://devblogs.microsoft.com/dotnet">.NET Blog</a>.</p></p></div>
-        </div><div class="ad-slot">🚀 Espaço para Publicidade / Afiliados</div>
-        <div class="noticia-card" data-id="7377718362142692518" data-categoria="C#_MS_Blog" onclick="abrirMateria('7377718362142692518')">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Generative AI for Beginners .NET: Version 2 on .NET 10</h2>
-                <p><p>Announcement of Version 2 of Generative AI for Beginners .NET, a free course rebuilt for .NET 10 with Microsoft.Extensions.AI, updated RAG patterns...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.910338-03:00"></small> • <a href="materia/7377718362142692518.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-7377718362142692518" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('7377718362142692518')">&times;</span>
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" style="width:100%; border-radius:8px;"><h1>Generative AI for Beginners .NET: Version 2 on .NET 10</h1><p><p>Announcement of Version 2 of Generative AI for Beginners .NET, a free course rebuilt for .NET 10 with Microsoft.Extensions.AI, updated RAG patterns, and new agent framework content across five structured lessons for building production-ready AI apps.</p><br><br><p>The post <a href="https://devblogs.microsoft.com/dotnet/generative-ai-for-beginners-dotnet-version-2-on-dotnet-10/">Generative AI for Beginners .NET: Version 2 on .NET 10</a> appeared first on <a href="https://devblogs.microsoft.com/dotnet">.NET Blog</a>.</p></p></div>
-        </div>
-        <div class="noticia-card" data-id="-7181909327137196613" data-categoria="C#_MS_Blog" onclick="abrirMateria('-7181909327137196613')">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Ten Months with Copilot Coding Agent in dotnet/runtime</h2>
-                <p><p>After ten months using GitHub Copilot Coding Agent (CCA) in dotnet/runtime, the .NET team shares data-driven lessons on cloud-AI-assisted developme...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:25.009461-03:00"></small> • <a href="materia/-7181909327137196613.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--7181909327137196613" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-7181909327137196613')">&times;</span>
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" style="width:100%; border-radius:8px;"><h1>Ten Months with Copilot Coding Agent in dotnet/runtime</h1><p><p>After ten months using GitHub Copilot Coding Agent (CCA) in dotnet/runtime, the .NET team shares data-driven lessons on cloud-AI-assisted development.</p><br><br><p>The post <a href="https://devblogs.microsoft.com/dotnet/ten-months-with-cca-in-dotnet-runtime/">Ten Months with Copilot Coding Agent in dotnet/runtime</a> appeared first on <a href="https://devblogs.microsoft.com/dotnet">.NET Blog</a>.</p></p></div>
-        </div>
-        <div class="noticia-card" data-id="3196501921100503781" data-categoria="C#_MS_Blog" onclick="abrirMateria('3196501921100503781')">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Accelerating .NET MAUI Development with AI Agents</h2>
-                <p><p>Learn how custom-built AI agents are dramatically improving the .NET MAUI contribution workflow, reducing issue resolution time by 50-70% while inc...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:25.093653-03:00"></small> • <a href="materia/3196501921100503781.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-3196501921100503781" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('3196501921100503781')">&times;</span>
-            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" style="width:100%; border-radius:8px;"><h1>Accelerating .NET MAUI Development with AI Agents</h1><p><p>Learn how custom-built AI agents are dramatically improving the .NET MAUI contribution workflow, reducing issue resolution time by 50-70% while increasing test coverage and code quality.</p><br><br><p>The post <a href="https://devblogs.microsoft.com/dotnet/accelerating-dotnet-maui-with-ai-agents/">Accelerating .NET MAUI Development with AI Agents</a> appeared first on <a href="https://devblogs.microsoft.com/dotnet">.NET Blog</a>.</p></p></div>
-        </div>
-        <div class="noticia-card" data-id="-7280407865862133449" data-categoria="Games_IGN" onclick="abrirMateria('-7280407865862133449')">
-            <div class="img-container"><img src="https://sm.ign.com/ign_br/screenshot/default/lastflag-keyart-3840x2160_254w.png" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Last Flag chega ao PC com promessa de reinventar o modo capture a bandeira</h2>
-                <p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/lastflag-keyart-3840x2160_254w.640.png" vspace="5" width="120"...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.711233-03:00"></small> • <a href="materia/-7280407865862133449.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--7280407865862133449" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-7280407865862133449')">&times;</span>
-            <img src="https://sm.ign.com/ign_br/screenshot/default/lastflag-keyart-3840x2160_254w.png" style="width:100%; border-radius:8px;"><h1>Last Flag chega ao PC com promessa de reinventar o modo capture a bandeira</h1><p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/lastflag-keyart-3840x2160_254w.640.png" vspace="5" width="120" /><br><br>Uma nova abordagem para um modo clássico</p></div>
-        </div>
-        <div class="noticia-card" data-id="-2642882497973722160" data-categoria="Games_IGN" onclick="abrirMateria('-2642882497973722160')">
-            <div class="img-container"><img src="https://sm.ign.com/ign_br/news/g/godzilla-m/godzilla-minus-zero-trailer-plot-and-cast-revealed_4vez.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Godzilla vai para Nova York no primeiro trailer de Godzilla Minus Zero; confira sinopse e elenco</h2>
-                <p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/news/g/godzilla-m/godzilla-minus-zero-trailer-plot-and-cast-revealed_4vez.640.jpg...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.811194-03:00"></small> • <a href="materia/-2642882497973722160.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--2642882497973722160" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-2642882497973722160')">&times;</span>
-            <img src="https://sm.ign.com/ign_br/news/g/godzilla-m/godzilla-minus-zero-trailer-plot-and-cast-revealed_4vez.jpg" style="width:100%; border-radius:8px;"><h1>Godzilla vai para Nova York no primeiro trailer de Godzilla Minus Zero; confira sinopse e elenco</h1><p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/news/g/godzilla-m/godzilla-minus-zero-trailer-plot-and-cast-revealed_4vez.640.jpg" vspace="5" width="120" />Longa será o primeiro filme japonês a ser filmado para IMAX<br><br><p>Takashi Yamazaki revelou o primeiro trailer e detalhes sobre <a href="https://br.ign.com/godzilla-minus-zero" target="_blank">Godzilla Minus Zero</a> durante a apresentação da GKIDS na CinemaCon. A sequência será a p<a href="https://br.ign.com/godzilla-minus-zero/151191/news/o-melhor-rugido-do-cinema-godzilla-minus-zero-sera-lancado-em-imax-ao-redor-do-mundo" target="_blank">rimeira produção japonesa a ser filmada para IMAX</a>.(O trailer será lançado online ainda hoje e subiremos aqui quando possível.)</p> <ul> <li> <p><a href="https://br.ign.com/godzilla-minus-one/148780/news/shonen-de-godzilla-toho-anuncia-novo-anime-baseado-no-kaiju">Shonen …</p></div>
-        </div>
-        <div class="noticia-card" data-id="-8799441041339275284" data-categoria="Games_IGN" onclick="abrirMateria('-8799441041339275284')">
-            <div class="img-container"><img src="https://sm.ign.com/ign_br/gallery/a/a-visual-h/a-visual-history-of-godzilla_nm9x.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>A Visual History of Godzilla</h2>
-                <p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/gallery/a/a-visual-h/a-visual-history-of-godzilla_nm9x.640.jpg" vspace="5" width=...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.882487-03:00"></small> • <a href="materia/-8799441041339275284.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--8799441041339275284" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-8799441041339275284')">&times;</span>
-            <img src="https://sm.ign.com/ign_br/gallery/a/a-visual-h/a-visual-history-of-godzilla_nm9x.jpg" style="width:100%; border-radius:8px;"><h1>A Visual History of Godzilla</h1><p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/gallery/a/a-visual-h/a-visual-history-of-godzilla_nm9x.640.jpg" vspace="5" width="120" /></p></div>
-        </div><div class="ad-slot">🚀 Espaço para Publicidade / Afiliados</div>
-        <div class="noticia-card" data-id="2536656592694877763" data-categoria="Games_IGN" onclick="abrirMateria('2536656592694877763')">
-            <div class="img-container"><img src="https://sm.ign.com/ign_br/news/m/marathon-g/marathon-gets-new-experimental-mode_ersy.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Marathon recebe novo modo experimental perfeito para novos jogadores</h2>
-                <p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/news/m/marathon-g/marathon-gets-new-experimental-mode_ersy.640.jpg" vspace="5" wi...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.960197-03:00"></small> • <a href="materia/2536656592694877763.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-2536656592694877763" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('2536656592694877763')">&times;</span>
-            <img src="https://sm.ign.com/ign_br/news/m/marathon-g/marathon-gets-new-experimental-mode_ersy.jpg" style="width:100%; border-radius:8px;"><h1>Marathon recebe novo modo experimental perfeito para novos jogadores</h1><p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/news/m/marathon-g/marathon-gets-new-experimental-mode_ersy.640.jpg" vspace="5" width="120" /><br><br>“O que acontece quando você leva uma faca... para uma briga de facas?”</p></div>
-        </div>
-        <div class="noticia-card" data-id="7774851805979787564" data-categoria="Games_IGN" onclick="abrirMateria('7774851805979787564')">
-            <div class="img-container"><img src="https://sm.ign.com/ign_br/news/n/new-hero-s/new-hero-sierra-returning-post-match-accolades-and-a-map-rew_xrkh.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</h2>
-                <p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/news/n/new-hero-s/new-hero-sierra-returning-post-match-accolades-and-a-map-rew_xr...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:25.032934-03:00"></small> • <a href="materia/7774851805979787564.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-7774851805979787564" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('7774851805979787564')">&times;</span>
-            <img src="https://sm.ign.com/ign_br/news/n/new-hero-s/new-hero-sierra-returning-post-match-accolades-and-a-map-rew_xrkh.jpg" style="width:100%; border-radius:8px;"><h1>Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</h1><p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/news/n/new-hero-s/new-hero-sierra-returning-post-match-accolades-and-a-map-rew_xrkh.640.jpg" vspace="5" width="120" /><br><br>Todos os detalhes da nova atualização que chega hoje, 14 de abril</p></div>
-        </div>
-        <div class="noticia-card" data-id="-4978220431504026320" data-categoria="Games_IGN" onclick="abrirMateria('-4978220431504026320')">
-            <div class="img-container"><img src="https://sm.ign.com/ign_br/news/b/bloodborne/bloodborne-r-rated-animated-movie-in-development-with-jackse_7hhv.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Bloodborne tem filme de animação para maiores de 18 anos em desenvolvimento, com produção de JackSepticEye</h2>
-                <p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/news/b/bloodborne/bloodborne-r-rated-animated-movie-in-development-with-jackse_7h...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:25.122168-03:00"></small> • <a href="materia/-4978220431504026320.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--4978220431504026320" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-4978220431504026320')">&times;</span>
-            <img src="https://sm.ign.com/ign_br/news/b/bloodborne/bloodborne-r-rated-animated-movie-in-development-with-jackse_7hhv.jpg" style="width:100%; border-radius:8px;"><h1>Bloodborne tem filme de animação para maiores de 18 anos em desenvolvimento, com produção de JackSepticEye</h1><p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/news/b/bloodborne/bloodborne-r-rated-animated-movie-in-development-with-jackse_7hhv.640.jpg" vspace="5" width="120" /><br><br>A Sony Pictures fez o anúncio na CinemaCon 2026</p></div>
-        </div>
-        <div class="noticia-card" data-id="-8921719140270441639" data-categoria="Direita_Oeste" onclick="abrirMateria('-8921719140270441639')">
-            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2025/08/Wilson-Diaz-Roraima.jpeg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>TSE retoma julgamento sobre governador e ex-governador de Roraima</h2>
-                <p><p><img alt="Antonio Denarium (PP): lentidão do Judiciário mantém governador no posto | Foto: Wilson Dias/Agência Brasil" class="attachment-medium siz...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.712277-03:00"></small> • <a href="materia/-8921719140270441639.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--8921719140270441639" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-8921719140270441639')">&times;</span>
-            <img src="https://medias.revistaoeste.com/wp-content/uploads/2025/08/Wilson-Diaz-Roraima.jpeg" style="width:100%; border-radius:8px;"><h1>TSE retoma julgamento sobre governador e ex-governador de Roraima</h1><p><p><img alt="Antonio Denarium (PP): lentidão do Judiciário mantém governador no posto | Foto: Wilson Dias/Agência Brasil" class="attachment-medium size-medium wp-post-image" height="179" src="https://medias.revistaoeste.com/wp-content/uploads/2025/08/Wilson-Diaz-Roraima-300x179.jpeg" width="300" /></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O<a href="https://www.tse.jus.br/" rel="noreferrer noopener" target="_blank"> <strong>Tribunal Superior Eleitoral (TSE)</strong></a> retoma nesta terça-feira, 14, julgamento sobre a cassação do mandato do atual governador de Roraima (RR), Edilson Damião (União Brasil), e a inelegibilidade do ex-governador Antônio Denarium (Republicanos).</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Denarium renunciou ao cargo de governador para disputar uma vaga no Senado Federal nas eleições deste ano. O então vice, Damião, assumiu o cargo.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p><strong>Leia também: <a href="https://revistaoeste.com/politica/gilmar-mendes-cobra-julgamento-de-antonio-denarium-no-tse/" rel="noreferrer noopener" target="_blank">"Gilmar cobra julgamento de Antonio Denarium no TSE"</a></strong></p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Eles foram condenados pelo Tribunal Regional Eleitoral do estado (TRE-RR) por abuso de poder político e econômico nas eleições de 2022.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O TRE-RR ainda decretou a inelegibilidade de Denarium e determinou a realização de novas eleições para o governo roraimense.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p><strong>+ Leia mais notícias de <a href="https://revistaoeste.com/politica/politica/" rel="noreferrer noopener" target="_blank">Política</a> em Oeste</strong></p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:heading --></p><br><br><h2 class="wp-block-heading" id="h-tse-ja-tem-dois-votos-pela-cassacao">TSE já tem dois votos pela cassação</h2><br><br><p><!-- /wp:heading --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Dois ministros do STF já votaram pela cassação da chapa. A então relatora Isabel Gallotti votou pela manutenção da decisão do TRE-RR. Enquanto o ministro André Mendonça acompanhou em parte o voto.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:embed {"url":"https://www.youtube.com/shorts/RBgX0JnXZSs","type":"video","providerNameSlug":"youtube","responsive":true,"className":"wp-embed-aspect-9-16 wp-has-aspect-ratio"} --></p><br><br><figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-9-16 wp-has-aspect-ratio"><br><br><div class="wp-block-embed__wrapper"><br><br>https://www.youtube.com/shorts/RBgX0JnXZSs<br><br></div><br><br></figure><br><br><p><!-- /wp:embed --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Em seguida, Nunes Marques pediu vista (mais tempo para analisar o caso) e suspendeu o julgamento. Se houver maioria, Damião perderá o cargo, enquanto Denarium ficará inelegível.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>A retomada do julgamento ocorre com a troca no comando do TSE. A ministra Cármen Lúcia marcou para esta terça-feira a eleição do novo presidente. Pelo rodízio, Nunes Marques deverá assumir o cargo.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p><strong>Leia também: <a href="https://revistaoeste.com/politica/ministros-indicados-por-bolsonaro-comandam-o-tse-em-2026/" rel="noreferrer noopener" target="_blank">"Ministros indicados por Bolsonaro comandam o TSE em 2026"</a></strong></p><br><br><p><!-- /wp:paragraph --></p><br><br><p>O post <a href="https://revistaoeste.com/politica/tse-retoma-julgamento-sobre-governador-e-ex-governador-de-roraima/">TSE retoma julgamento sobre governador e ex-governador de Roraima</a> apareceu primeiro em <a href="https://revistaoeste.com">Revista Oeste</a>.</p></p></div>
-        </div>
-        <div class="noticia-card" data-id="8049753764313690635" data-categoria="Direita_Oeste" onclick="abrirMateria('8049753764313690635')">
-            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2026/03/BX2017-06-08T132928Z_385984799_RC1F2A734C30_RTRMADP_3_BRAZIL-POLITICS.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Gilmar diz que indiciamento por CPI não tem ‘base legal’</h2>
-                <p><p><img alt="" class="attachment-medium size-medium wp-post-image" height="200" src="https://medias.revistaoeste.com/wp-content/uploads/2026/03/BX2017...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.813591-03:00"></small> • <a href="materia/8049753764313690635.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-8049753764313690635" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('8049753764313690635')">&times;</span>
-            <img src="https://medias.revistaoeste.com/wp-content/uploads/2026/03/BX2017-06-08T132928Z_385984799_RC1F2A734C30_RTRMADP_3_BRAZIL-POLITICS.jpg" style="width:100%; border-radius:8px;"><h1>Gilmar diz que indiciamento por CPI não tem ‘base legal’</h1><p><p><img alt="" class="attachment-medium size-medium wp-post-image" height="200" src="https://medias.revistaoeste.com/wp-content/uploads/2026/03/BX2017-06-08T132928Z_385984799_RC1F2A734C30_RTRMADP_3_BRAZIL-POLITICS-300x200.jpg" width="300" /></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O decano do Supremo Tribunal Federal (STF), ministro Gilmar Mendes, afirmou nesta terça-feira, 14, que o indiciamento pela Comissão Parlamentar de Inquérito (CPI) do Crime Organizado não tem "base legal".</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>"O pedido do relator da CPI do Crime Organizado, voltado ao indiciamento de ministros do STF sem base legal, nos leva a uma reflexão sobre o papel e os poderes das CPIs", começa Gilmar, em postagem no X. "Tanto pior quando o pedido flerta com arbitrariedades, como a criminalização de decisões que concedem habeas corpus diante de abuso de poder."</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p><strong>+ Leia mais notícias de <a href="https://revistaoeste.com/politica/politica/" rel="noreferrer noopener" target="_blank">Política</a> em Oeste</strong></p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O ministro afirma que o assunto é básico até para "estudante de Direito", que CPIs não têm atribuição para indiciar investigados, ao citar a Lei 1.079/1950.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>"Essa lei, ao definir as competências e o rito do <em>impeachment</em>, atribui o processamento e o julgamento do pedido a órgãos específicos — como a mesa do Senado, a comissão especial e o plenário da Casa — sem sequer prever a atuação de CPIs nesse procedimento."</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Gilmar também critica o relator dos indiciamentos, o senador Alessandro Vieira (MDB-SE). Para ele, o parlamentar não investigou a operação nos Complexos do Alemão e da Penha, no Rio de Janeiro, no ano passado.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:embed {"url":"https://twitter.com/gilmarmendes/status/2044092509802963092?s=48","type":"rich","providerNameSlug":"twitter","responsive":true} --></p><br><br><figure class="wp-block-embed is-type-rich is-provider-twitter wp-block-embed-twitter"><br><br><div class="wp-block-embed__wrapper"><br><br>https://twitter.com/gilmarmendes/status/2044092509802963092?s=48<br><br></div><br><br></figure><br><br><p><!-- /wp:embed --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>"É no mínimo perturbador que o relator, enquanto integrante de carreira policial, tenha fechado olhos para seus colegas que, traindo a boa imagem da instituição, cruzaram para o lado sombrio das milícias", reclamou o decano do STF. "O relatório revela verdadeira cortina de fumaça."</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Segundo Gilmar, a Procuradoria-Geral da República deve investigar os "abusos" cometidos pelas CPIs.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:heading --></p><br><br><h2 class="wp-block-heading" id="h-gilmar-moraes-e-gonet-indiciados">Gilmar, Moraes e Gonet indiciados</h2><br><br><p><!-- /wp:heading --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O relatório final da CPI do Crime Organizado, apresentado por Vieira, pede o indiciamento de três ministros do STF e do procurador-geral da República, Paulo Gonet.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Além de Gilmar, Dias Toffoli e Alexandre de Moraes integram a lista dos ministros do STF que constam no relatório de Vieira.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p><strong>Leia também: <a href="https://revistaoeste.com/politica/relator-da-cpi-do-crime-organizado-indicia-moraes-toffoli-gilmar-e-gonet/" rel="noreferrer noopener" target="_blank">"Relator da CPI do Crime Organizado pede indiciamento de Moraes, Toffoli, Gilmar e Gonet"</a></strong></p><br><br><p><!-- /wp:paragraph --></p><br><br><p>O post <a href="https://revistaoeste.com/politica/gilmar-diz-que-indiciamento-por-cpi-nao-tem-base-legal/">Gilmar diz que indiciamento por CPI não tem ‘base legal’</a> apareceu primeiro em <a href="https://revistaoeste.com">Revista Oeste</a>.</p></p></div>
-        </div>
-        <div class="noticia-card" data-id="5938256735845803477" data-categoria="Direita_Oeste" onclick="abrirMateria('5938256735845803477')">
-            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/Defesa-de-Filipe-Martins.jpeg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>STF mantém Filipe Martins preso em Ponta Grossa</h2>
-                <p><p><img alt="Filipe Martins corre risco de morte, segundo Polícia Penal | Foto: Rosinei Coutinho/STF" class="attachment-medium size-medium wp-post-ima...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.909762-03:00"></small> • <a href="materia/5938256735845803477.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-5938256735845803477" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('5938256735845803477')">&times;</span>
-            <img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/Defesa-de-Filipe-Martins.jpeg" style="width:100%; border-radius:8px;"><h1>STF mantém Filipe Martins preso em Ponta Grossa</h1><p><p><img alt="Filipe Martins corre risco de morte, segundo Polícia Penal | Foto: Rosinei Coutinho/STF" class="attachment-medium size-medium wp-post-image" height="173" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/Defesa-de-Filipe-Martins-300x173.jpeg" width="300" /></p><br><br><p><!-- wp:paragraph --></p><br><br><p>A 1ª Turma do <strong><a href="https://portal.stf.jus.br/processos/detalhe.asp?incidente=7285943" rel="noreferrer noopener" target="_blank">Supremo Tribunal Federal (STF)</a></strong> decidiu, por unanimidade, manter o ex-assessor de Jair Bolsonaro Filipe Martins preso na cadeia pública de Ponta Grossa (PR). O colegiado rejeitou recurso da defesa que tentava impedir a parmanência do ex-assessor à unidade no interior do estado.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p><strong>+ Leia mais notícias de <a href="https://revistaoeste.com/politica/politica/" rel="noreferrer noopener" target="_blank">Política</a> em Oeste</strong></p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O julgamento ocorreu em plenário virtual e foi encerrado nesta segunda-feira, 13. Os ministros acompanharam integralmente o voto do relator, Alexandre de Moraes.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:heading --></p><br><br><h2 class="wp-block-heading" id="h-stf-reafirma-controle-sobre-transferencias">STF reafirma controle sobre transferências</h2><br><br><p><!-- /wp:heading --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Em seu voto, Moraes entendeu que a transferência do preso para outra unidade não poderia ocorrer sem autorização judicial. Segundo o ministro, mudanças no local de custódia devem passar pelo controle do Judiciário, conforme prevê a Lei de Execução Penal.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Na decisão, o relator afirmou que a remoção realizada por ato administrativo, sem autorização do STF, desrespeitou a competência da Corte. Por isso, determinou o retorno de Martins à unidade de Ponta Grossa e manteve esse entendimento.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:embed {"url":"https://www.youtube.com/watch?v=TCAgMxeDY-w\u0026pp=ygUccmV2aXN0YSBvZXN0ZSBmZWxpcGUgbWFydGlucw%3D%3D","type":"video","providerNameSlug":"youtube","responsive":true,"className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} --></p><br><br><figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><br><br><div class="wp-block-embed__wrapper"><br><br>https://www.youtube.com/watch?v=TCAgMxeDY-w&amp;pp=ygUccmV2aXN0YSBvZXN0ZSBmZWxpcGUgbWFydGlucw%3D%3D<br><br></div><br><br></figure><br><br><p><!-- /wp:embed --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>A Procuradoria-Geral da República também se manifestou contra o recurso e defendeu a manutenção da decisão.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:heading --></p><br><br><h2 class="wp-block-heading" id="h-defesa-contestava-retorno-ao-interior">Defesa contestava retorno ao interior</h2><br><br><p><!-- /wp:heading --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>A defesa questionava a ordem de retorno à cadeia de Ponta Grossa. Os advogados argumentaram que a transferência para o Complexo Médico Penal, em Curitiba, ocorreu por decisão administrativa ligada a critérios de segurança, e não por escolha do preso.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O STF rejeitou o argumento e manteve o entendimento de que a mudança de unidade exige autorização judicial prévia.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:heading --></p><br><br><h2 class="wp-block-heading" id="h-prisao-ocorre-em-investigacao-sobre-tentativa-de-golpe">Prisão ocorre em investigação sobre tentativa de golpe</h2><br><br><p><!-- /wp:heading --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Moraes determinou a prisão preventiva de Filipe Martins em 2 de janeiro, no âmbito das investigações sobre a suposta tentativa de golpe de Estado, sob a suspeita de descumprimento de medidas cautelares.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O STF também condenou Filipe Martins a 21 anos de prisão no processo que apura a suposta tentativa de reverter o resultado das eleições de 2022.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p><strong>Leia mais: “<a href="https://revistaoeste.com/politica/joao-campos-e-denunciado-por-uso-politico-de-espaco-publico/" rel="noreferrer noopener" target="_blank">João Campos é denunciado por uso político de espaço público</a>”</strong></p><br><br><p><!-- /wp:paragraph --></p><br><br><p>O post <a href="https://revistaoeste.com/politica/stf-mantem-filipe-martins-preso-em-ponta-grossa/">STF mantém Filipe Martins preso em Ponta Grossa</a> apareceu primeiro em <a href="https://revistaoeste.com">Revista Oeste</a>.</p></p></div>
-        </div><div class="ad-slot">🚀 Espaço para Publicidade / Afiliados</div>
-        <div class="noticia-card" data-id="2037194295055066585" data-categoria="Direita_Oeste" onclick="abrirMateria('2037194295055066585')">
-            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2026/02/Flavio-Dino.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Dino critica pedido de indiciamento de ministros do STF</h2>
-                <p><p><img alt="flávio dino" class="attachment-medium size-medium wp-post-image" height="200" src="https://medias.revistaoeste.com/wp-content/uploads/202...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:24.994869-03:00"></small> • <a href="materia/2037194295055066585.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-2037194295055066585" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('2037194295055066585')">&times;</span>
-            <img src="https://medias.revistaoeste.com/wp-content/uploads/2026/02/Flavio-Dino.jpg" style="width:100%; border-radius:8px;"><h1>Dino critica pedido de indiciamento de ministros do STF</h1><p><p><img alt="flávio dino" class="attachment-medium size-medium wp-post-image" height="200" src="https://medias.revistaoeste.com/wp-content/uploads/2026/02/Flavio-Dino-300x200.jpg" width="300" /></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Críticas dirigidas ao <strong><a href="https://revistaoeste.com/politica/sistema-eleitoral" rel="noreferrer noopener" target="_blank">Supremo Tribunal Federal</a></strong> (STF) e a seus ministros geraram reações nesta terça-feira, 14, quando o ministro Flávio Dino classificou como “irresponsabilidade e erro histórico” o pedido de indiciamento de <strong><a href="http://revistaoeste.com/tag/alexandre-de-moraes" rel="noreferrer noopener" target="_blank">Alexandre de Moraes</a></strong>, Dias Toffoli, Gilmar Mendes e do procurador-geral da República (<strong><a href="https://revistaoeste.com/sem-categoria/pgr-o-que-e/" rel="noreferrer noopener" target="_blank">PGR</a></strong>), Paulo Gonet, por parte do relatório da CPI do Crime Organizado. Dino alertou para possíveis consequências institucionais dessas ações, ao apontar que parte dos agentes políticos estaria cometendo um “equívoco” ao transformar o STF no principal alvo de insatisfação nacional, segundo ele.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:html --><br /><br><br><center></p><br><br><blockquote class="instagram-media"><br><br><div style="padding: 16px;"> <a href="https://www.instagram.com/p/DXHcqiNjWvc/?utm_source=ig_embed&amp;utm_campaign=loading" style="line-height: 0; padding: 0 0; text-align: center; text-decoration: none; width: 100%;" target="_blank"> </p><br><br><div style="display: flex;"><br><br><div style="background-color: #F4F4F4; border-radius: 50%; height: 40px; margin-right: 14px; width: 40px;"></div><br><br><div style="display: flex;"><br><br><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; margin-bottom: 6px; width: 100px;"></div><br><br><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; width: 60px;"></div><br><br></div><br><br></div><br><br><div style="padding: 19% 0;"></div><br><br><div style="display: block; height: 50px; margin: 0 auto 12px; width: 50px;"></div><br><br><div style="padding-top: 8px;"><br><br><div style="color: #3897f0; font-family: Arial,sans-serif; font-size: 14px; font-style: normal; font-weight: 550; line-height: 18px;">Ver essa foto no Instagram</div><br><br></div><br><br><div style="padding: 12.5% 0;"></div><br><br><div style="display: flex; margin-bottom: 14px;"><br><br><div><br><br><div></div><br><br><div></div><br><br><div></div><br><br></div><br><br><div style="margin-left: 8px;"><br><br><div style="background-color: #F4F4F4; border-radius: 50%; height: 20px; width: 20px;"></div><br><br><div></div><br><br></div><br><br><div style="margin-left: auto;"><br><br><div></div><br><br><div></div><br><br><div></div><br><br></div><br><br></div><br><br><div style="display: flex; margin-bottom: 24px;"><br><br><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; margin-bottom: 6px; width: 224px;"></div><br><br><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; width: 144px;"></div><br><br></div><br><br><p></a></p><br><br><p style="color: #c9c8cd; font-family: Arial,sans-serif; font-size: 14px; line-height: 17px; margin-bottom: 0; margin-top: 8px; overflow: hidden; padding: 8px 0 7px; text-align: center; white-space: nowrap;"><a href="https://www.instagram.com/p/DXHcqiNjWvc/?utm_source=ig_embed&amp;utm_campaign=loading" style="color: #c9c8cd; font-family: Arial,sans-serif; font-size: 14px; font-style: normal; font-weight: normal; line-height: 17px; text-decoration: none;" target="_blank">Um post compartilhado por Flávio Dino (@flaviodino)</a></p><br><br></div><br><br></blockquote><br><br><p></center><br /><br><br><!-- /wp:html --></p><br><br><p><!-- wp:paragraph --></p><br><br><p><strong>+ Leia mais notícias de&nbsp;<a href="https://revistaoeste.com/politica" rel="noreferrer noopener" target="_blank">Política</a>&nbsp;em Oeste</strong></p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O relatório final da <strong><a href="http://revistaoeste.com/tag/cpi" rel="noreferrer noopener" target="_blank">CPI</a></strong>, elaborado pelo senador Alessandro Vieira (MDB-SE), concluiu que os três ministros do STF cometeram atos previstos na Lei do Impeachment, e destacou suspeição e condutas consideradas incompatíveis com o decoro. O texto será lido e colocado em votação ainda nesta terça-feira, 14, marcando o encerramento dos trabalhos da comissão.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:heading --></p><br><br><h2 class="wp-block-heading" id="acusacoes-detalhadas-no-relatorio-da-cpi">Acusações detalhadas no relatório da CPI<a href="https://wainews-homolog.streamlit.app/~/+/#acusacoes-detalhadas-no-relatorio-da-cpi"></a></h2><br><br><p><!-- /wp:heading --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>No caso específico de Dias Toffoli, o documento demonstra que o magistrado teria atuado em processos nos quais deveria se declarar impedido, como no episódio envolvendo o <strong><a href="https://pt.wikipedia.org/wiki/Banco_Master" rel="noreferrer noopener" target="_blank">Banco Master</a></strong>, além de comportamentos considerados inadequados ao cargo. Sobre Alexandre de Moraes, a análise indica decisões que poderiam caracterizar impedimento e possíveis restrições ao andamento das investigações da CPI.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:embed {"url":"https://www.youtube.com/watch?v=0AvPBeb4YZo","type":"video","providerNameSlug":"youtube","responsive":true,"className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} --></p><br><br><figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-16-9 wp-has-aspect-ratio"><br><br><div class="wp-block-embed__wrapper"><br><br>https://www.youtube.com/watch?v=0AvPBeb4YZo<br><br></div><br><br></figure><br><br><p><!-- /wp:embed --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Quanto ao procurador-geral Paulo Gonet, o relatório sugere indiciamento por suposta omissão em suas funções, ao afirmar que ele teria sido “patentemente desidioso no cumprimento de suas atribuições”. Apesar do relatório recomendar o <em>impeachment</em>, o início do processo depende do presidente do Senado, Davi Alcolumbre (União-AP), que já sinalizou não pretender avançar com as medidas.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:heading --></p><br><br><h2 class="wp-block-heading" id="proximos-passos-e-possiveis-desdobramentos">Próximos passos e possíveis desdobramentos<a href="https://wainews-homolog.streamlit.app/~/+/#proximos-passos-e-possiveis-desdobramentos"></a></h2><br><br><p><!-- /wp:heading --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O entendimento da CPI é de que possíveis crimes de responsabilidade devem ser avaliados pelo próprio Senado. Se aprovado, o relatório será encaminhado para a Mesa do Senado, presidida por Alcolumbre, além do Ministério Público Federal e do Conselho Superior do Ministério Público Federal.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p><strong>Leia também: </strong><a href="https://revistaoeste.com/revista/edicao-315/punicao-excessiva-e-impagavel/"><strong>“Punição excessiva e impagável"</strong></a><strong>, artigo de Rachel Díaz na Edição 315 da Revista Oeste</strong></p><br><br><p><!-- /wp:paragraph --></p><br><br><p>O post <a href="https://revistaoeste.com/politica/dino-critica-pedido-de-indiciamento-de-ministros-do-stf/">Dino critica pedido de indiciamento de ministros do STF</a> apareceu primeiro em <a href="https://revistaoeste.com">Revista Oeste</a>.</p></p></div>
-        </div>
-        <div class="noticia-card" data-id="5214117012815220879" data-categoria="Direita_Oeste" onclick="abrirMateria('5214117012815220879')">
-            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/fab-1404.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Faroeste à Brasileira: assista ao programa de 14/4/2026</h2>
-                <p><p><img alt="O Faroeste à Brasileira é transmitido de segunda a sexta, das 14h às 16h | Foto: Divulgação/Oeste" class="attachment-medium size-medium w...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:25.058822-03:00"></small> • <a href="materia/5214117012815220879.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal-5214117012815220879" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('5214117012815220879')">&times;</span>
-            <img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/fab-1404.jpg" style="width:100%; border-radius:8px;"><h1>Faroeste à Brasileira: assista ao programa de 14/4/2026</h1><p><p><img alt="O Faroeste à Brasileira é transmitido de segunda a sexta, das 14h às 16h | Foto: Divulgação/Oeste" class="attachment-medium size-medium wp-post-image" height="167" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/fab-1404-300x167.jpg" width="300" /></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O programa <strong>Faroeste à Brasileira</strong> vai ao ar de segunda a sexta-feira, das 14h às 16h, com apresentação de Gustavo Segré e comentários de Maria De Carli, Luís Artur Nogueira e Marcelo Suano. Convidados do dia: Eli Corrêa Filho e Clarissa Tércio.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:embed {"url":"https://www.youtube.com/watch?v=CCJEO9wzTsI","type":"video","providerNameSlug":"youtube","responsive":true,"className":"wp-embed-aspect-4-3 wp-has-aspect-ratio"} --></p><br><br><figure class="wp-block-embed is-type-video is-provider-youtube wp-block-embed-youtube wp-embed-aspect-4-3 wp-has-aspect-ratio"><br><br><div class="wp-block-embed__wrapper"><br><br>https://www.youtube.com/watch?v=CCJEO9wzTsI<br><br></div><br><br></figure><br><br><p><!-- /wp:embed --></p><br><br><p><!-- wp:heading --></p><br><br><h2 class="wp-block-heading" id="h-acompanhe-os-destaques-desta-edicao-do-faroeste-a-brasileira">Acompanhe os destaques desta edição do Faroeste à Brasileira</h2><br><br><p><!-- /wp:heading --></p><br><br><p><!-- wp:list --></p><br><br><ul class="wp-block-list"><!-- wp:list-item --></p><br><br><li><strong><a href="https://revistaoeste.com/politica/relator-da-cpi-do-crime-organizado-indicia-moraes-toffoli-gilmar-e-gonet/">Relator da CPI do Crime Organizado indicia Moraes, Toffoli, Gilmar e Gonet</a></strong></li><br><br><p><!-- /wp:list-item --></p><br><br><p><!-- wp:list-item --></p><br><br><li>Lula demite presidente do INSS; servidora de carreira assume cargo</li><br><br><p><!-- /wp:list-item --></p><br><br><p><!-- wp:list-item --></p><br><br><li><strong><a href="https://revistaoeste.com/politica/lula-e-flavio-tem-empate-tecnico-no-1o-turno-indica-futura-apex/">Lula e Flávio têm empate técnico no 1º turno, indica Futura/Apex</a></strong></li><br><br><p><!-- /wp:list-item --></p><br><br><p><!-- wp:list-item --></p><br><br><li><strong><a href="https://revistaoeste.com/politica/datafolha-55-acreditam-em-envolvimento-de-ministros-do-stf-no-caso-master/">Datafolha: 55% acreditam em envolvimento de ministros do STF no caso Master</a></strong></li><br><br><p><!-- /wp:list-item --></p><br><br><p><!-- wp:list-item --></p><br><br><li>Zema defende que Toffoli e Moraes sejam afastados do STF e presos</li><br><br><p><!-- /wp:list-item --></p><br><br><p><!-- wp:list-item --></p><br><br><li>Zema afirma que PL tem “frutas podres” e se diz “mais à direita”</li><br><br><p><!-- /wp:list-item --></p><br><br><p><!-- wp:list-item --></p><br><br><li>Tesouro: carga tributária do Governo Geral cresce a 32,4% do PIB, maior da série</li><br><br><p><!-- /wp:list-item --></p><br><br><p><!-- wp:list-item --></p><br><br><li>TCU investiga emenda de R$ 4 milhões de Janones à prefeitura de sua ex</li><br><br><p><!-- /wp:list-item --></p><br><br><p><!-- wp:list-item --></p><br><br><li>Empresário ligado ao PCC entrega proposta de delação e cita magistrados</li><br><br><p><!-- /wp:list-item --></p><br><br><p><!-- wp:list-item --></p><br><br><li>“Horrorosa”: ex-candidato xinga deputada e é indiciado pela polícia.</li><br><br><p><!-- /wp:list-item --></p><br><br><p><!-- wp:list-item --></p><br><br><li>PL cogita deputada mais votada do Nordeste para vice de Flávio Bolsonaro</li><br><br><p><!-- /wp:list-item --></ul><br><br><p><!-- /wp:list --></p><br><br><p><!-- wp:paragraph --></p><br><br><p><strong>+ <a href="https://www.youtube.com/watch?v=GXcLsFl-Vl0&amp;list=PLa6ZAwmKhIlploBxeQKb1PsUMD03j1tCx" rel="noreferrer noopener" target="_blank">Clique aqui</a> e veja todas as edições do Faroeste à Brasileira</strong></p><br><br><p><!-- /wp:paragraph --></p><br><br><p>O post <a href="https://revistaoeste.com/videos/faroeste-a-brasileira/faroeste-a-brasileira-assista-ao-programa-de-14-4-2026/">Faroeste à Brasileira: assista ao programa de 14/4/2026</a> apareceu primeiro em <a href="https://revistaoeste.com">Revista Oeste</a>.</p></p></div>
-        </div>
-        <div class="noticia-card" data-id="-2994344559020260763" data-categoria="Direita_Oeste" onclick="abrirMateria('-2994344559020260763')">
-            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/joao-campos-e-denunciado-por-uso-idevido-de-espaco-publico-edson-holanda-pcr.jpg" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>João Campos é denunciado por uso político de espaço público</h2>
-                <p><p><img alt="João Campos é denunciado por uso idevido de espaço publico - Edson Holanda PCR" class="attachment-medium size-medium wp-post-image" heigh...</p>
-                <div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
-                <small class="timeago" datetime="2026-04-14T14:40:25.138128-03:00"></small> • <a href="materia/-2994344559020260763.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
-            </div>
-        </div>
-        <div id="modal--2994344559020260763" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('-2994344559020260763')">&times;</span>
-            <img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/joao-campos-e-denunciado-por-uso-idevido-de-espaco-publico-edson-holanda-pcr.jpg" style="width:100%; border-radius:8px;"><h1>João Campos é denunciado por uso político de espaço público</h1><p><p><img alt="João Campos é denunciado por uso idevido de espaço publico - Edson Holanda PCR" class="attachment-medium size-medium wp-post-image" height="200" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/joao-campos-e-denunciado-por-uso-idevido-de-espaco-publico-edson-holanda-pcr-300x200.jpg" width="300" /></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O vereador Thiago Medina (PL), do Recife, protocolou uma denúncia junto ao <strong><a href="https://tcepe.tc.br/internet/" rel="noreferrer noopener" target="_blank">Tribunal de Contas do Estado de Pernambuco (TCE-PE)</a></strong> contra a gestão do ex-prefeito <strong><a href="https://www.revistaoeste.com/tag/joao-campos/page/2/" rel="noreferrer noopener" target="_blank">João Campos</a> (PSB)</strong>. O vereador pede apuração por possível violação ao princípio da impessoalidade.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>A representação questiona a presença de um símbolo partidário em equipamento público recém-inaugurado. O alvo é o Memorial Eduardo Campos, dentro do parque de mesmo nome.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p><strong>Leia também: “<a href="https://revistaoeste.com/politica/pt-processa-tiktok-por-videos-de-petistas-exorcizados/" rel="noreferrer noopener" target="_blank">PT processa TikTok por vídeos de petistas 'exorcizados'</a>”</strong></p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O documento afirma que uma placa do memorial exibe a pomba com ramo de oliveira. O símbolo identifica o <strong><a href="https://revistaoeste.com/tag/partido-socialista-brasileiro-psb/" rel="noreferrer noopener" target="_blank">Partido Socialista Brasileiro</a></strong>, legenda presidida nacionalmente por João Campos.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:image {"id":2378870,"sizeSlug":"full","linkDestination":"none","align":"center"} --></p><br><br><figure class="wp-block-image aligncenter size-full"><img alt="João Campos é denunciado por uso indevido de espaço publico - Foto Hélia ..." class="wp-image-2378870" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/joao-campos-e-denunciado-por-uso-idevido-de-espaco-publico-foto-helia-scheppa-pcr.jpg" /><figcaption class="wp-element-caption">Memorial foi inaugurado em 2 de abril, e a denúncia foi protocolada em 3 de abril | Foto: Hélia Scheppa/PCR</figcaption></figure><br><br><p><!-- /wp:image --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Medina afirma que o uso de identidade visual partidária em espaço público fere a Constituição. O político do Partido Liberal cita o artigo 37, que exige impessoalidade, moralidade e legalidade na administração pública. Segundo o vereador, o caso mistura interesse público com promoção política.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:heading --></p><br><br><h2 class="wp-block-heading" id="h-joao-campos-e-pre-candidato-ao-governo-de-pernambuco">João Campos é pré-candidato ao governo de Pernambuco</h2><br><br><p><!-- /wp:heading --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O memorial homenageia Eduardo Campos, pai de João Campos. A gestão do então prefeito conduziu a obra e fez a entrega do espaço.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>João Campos<strong> <a href="https://revistaoeste.com/politica/prefeitos-de-10-capitais-renunciam-para-disputar-governos-estaduais-em-2026/" rel="noreferrer noopener" target="_blank">deixou a Prefeitura do Recife</a></strong> recentemente para disputar o governo estadual. Para Medina, esse contexto reforça a suspeita de uso político da estrutura pública.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O vereador afirma que houve possível desvio de finalidade. Ele também aponta indícios de improbidade administrativa. No documento, ele pede a retirada imediata do símbolo e a responsabilização dos envolvidos.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:quote --></p><br><br><blockquote class="wp-block-quote"><p><!-- wp:paragraph --></p><br><br><p>“O espaço público não pode ser utilizado para promover partido político", afirmou o parlamentar. "A Constituição é clara ao vedar qualquer associação entre obras públicas e símbolos que caracterizem promoção pessoal ou partidária.”</p><br><br><p><!-- /wp:paragraph --></p></blockquote><br><br><p><!-- /wp:quote --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Medina também solicita que o TCE-PE abra fiscalização. Ele pede a identificação dos responsáveis e o envio do caso ao Ministério Público.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Até o momento, João Campos não se manifestou sobre a acusação. </p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O tribunal vai analisar a denúncia. A Corte pode pedir esclarecimentos, abrir diligências e adotar medidas cautelares para garantir o uso correto de bens públicos.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p><strong>+Leia mais <a href="https://revistaoeste.com/politica/politica-no-brasil-hoje" rel="noreferrer noopener" target="_blank">notícias de Política</a> em Oeste</strong></p><br><br><p><!-- /wp:paragraph --></p><br><br><p>O post <a href="https://revistaoeste.com/politica/joao-campos-e-denunciado-por-uso-politico-de-espaco-publico/">João Campos é denunciado por uso político de espaço público</a> apareceu primeiro em <a href="https://revistaoeste.com">Revista Oeste</a>.</p></p></div>
-        </div><div class="noticia-card" data-categoria="Mundo_BBC" data-id="-4599206627861368537" onclick="abrirMateria('-4599206627861368537')">
+        <button class="filter-btn active" onclick="filtrar('todas')">Todas</button>
+        <button class="filter-btn" onclick="filtrar('Hardware')">Hardware</button>
+        <button class="filter-btn" onclick="filtrar('Cyber')">Cyber</button>
+        <button class="filter-btn" onclick="filtrar('C#')">C#</button>
+    </div>
+    
+        <div class="content-area"><div class="noticia-card" data-categoria="Mundo_BBC" data-id="4834831748236837605" onclick="abrirMateria('4834831748236837605')">
+<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Os argumentos do relator da CPI para pedir indiciamento de 3 ministros do STF e do PGR</h2>
+<p>Um dos acusados, ministro Gilmar Mendes afirma que CPI não tem 'base legal' para sugerir indiciamento de magistrados e diz que relator fechou olhos pa...</p>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.767863-03:00"></small> • <a href="materia/4834831748236837605.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div>
+</div><div class="noticia-card" data-categoria="Mundo_BBC" data-id="5747317549148597957" onclick="abrirMateria('5747317549148597957')">
+<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Navios ligados ao Irã cruzam Estreito de Ormuz apesar do bloqueio dos EUA; China critica ação americana</h2>
+<p>Bloqueio entrou em vigor na segunda-feira (13/3), após fracasso das negociações de paz entre Washington e Teerã no Paquistão....</p>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.863061-03:00"></small> • <a href="materia/5747317549148597957.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div>
+</div><div class="noticia-card" data-categoria="Mundo_BBC" data-id="859839913514292880" onclick="abrirMateria('859839913514292880')">
+<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>A personagem de IA que viraliza com críticas ao governo Lula e ao STF</h2>
+<p>Perfil com imagens geradas por inteligência artificial tem alcance comparável ao de deputados e figuras públicas; criador da página diz que gasta R$ 2...</p>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.929763-03:00"></small> • <a href="materia/859839913514292880.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div>
+</div><div class="noticia-card" data-categoria="Mundo_BBC" data-id="-6955929439271007330" onclick="abrirMateria('-6955929439271007330')">
+<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Restaurantes brasileiros são os únicos da América Latina com três estrelas Michelin — os critérios por trás do reconhecimento</h2>
+<p>Criado humildemente em 1900, o Guia Michelin hoje é cercado de mistério. Um número não divulgado de inspetores analisa mais de 40 mil restaurantes, em...</p>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:25.010539-03:00"></small> • <a href="materia/-6955929439271007330.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div>
+</div><div class="noticia-card" data-categoria="Mundo_BBC" data-id="6906763392679332569" onclick="abrirMateria('6906763392679332569')">
+<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Como culto liderado por pastor negro que falava a 'língua dos anjos' deu origem ao movimento evangélico há 120 anos</h2>
+<p>Uma série de cultos evangélicos realizada há 120 anos em um templo abandonado da Igreja Metodista Africana em Los Angeles, na Califórnia, foi o catali...</p>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:25.104676-03:00"></small> • <a href="materia/6906763392679332569.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div>
+</div><div class="noticia-card" data-categoria="Mundo_BBC" data-id="-6233476289164361825" onclick="abrirMateria('-6233476289164361825')">
+<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Imagem de Trump como Jesus Cristo e embate com o papa provocam reação até entre aliados</h2>
+<p>Trump recebeu críticas não apenas de opositores, mas também de setores de sua própria base....</p>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:25.147763-03:00"></small> • <a href="materia/-6233476289164361825.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div>
+</div><div class="noticia-card" data-categoria="Geral_G1" data-id="-4375028424958512846" onclick="abrirMateria('-4375028424958512846')">
+<div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/BvG0YQnq5tkvcRLqknDnyJA_4WU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/p/h/mBQO2SSAKtqmIAuTqFrw/whatsapp-image-2026-04-13-at-11.44.43.jpeg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Café do Conhecimento destaca venda consultiva com Luis Pimentel</h2>
+<p><img margin-bottom:8px;"="" src="https://s2-g1.glbimg.com/BvG0YQnq5tkvcRLqknDnyJA_4WU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/p/h/m...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:25.941044-03:00"></small> • <a href="materia/-4375028424958512846.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Geral_G1" data-id="1831708720687682425" onclick="abrirMateria('1831708720687682425')">
+<div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/vaJ9z4OY9DbJndLOhzafyRCeAVg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/X/egnBlHRwqxQfXAFiyzkw/design-sem-nome-2026-04-14t141614.841.png"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Pai de santo é morto a facadas dentro de terreiro no sudoeste da Bahia</h2>
+<p><img margin-bottom:8px;"="" src="https://s2-g1.glbimg.com/vaJ9z4OY9DbJndLOhzafyRCeAVg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/X/e...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:26.010519-03:00"></small> • <a href="materia/1831708720687682425.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Geral_G1" data-id="8488243790806385125" onclick="abrirMateria('8488243790806385125')">
+<div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/JBukvSGVgMbTKiHeIEapviH-gj8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/l/5/dVzbFpTDSmg7wlsBM4Cg/2026-04-12t135436z-1625689504-rc2gnkaezcwq-rtrmadp-3-iran-crisis-hormuz.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Navios fazem meia-volta em meio a bloqueio no Estreito de Ormuz; EUA e Irã avaliam retomar negociações</h2>
+<p><img margin-bottom:8px;"="" src="https://s2-g1.glbimg.com/JBukvSGVgMbTKiHeIEapviH-gj8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/l/5/d...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:26.059685-03:00"></small> • <a href="materia/8488243790806385125.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Geral_G1" data-id="-8650942836288500483" onclick="abrirMateria('-8650942836288500483')">
+<div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/XO0MWT7BG3Y638euOjaUmQ5IT2c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/o/Yr86mRRWa7Ke0rNopJTA/30.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Entenda como a USP apura, em Piracicaba, o principal indicador do preço comercial do café do Brasil</h2>
+<p><img margin-bottom:8px;"="" src="https://s2-g1.glbimg.com/XO0MWT7BG3Y638euOjaUmQ5IT2c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/o/Y...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:26.117618-03:00"></small> • <a href="materia/-8650942836288500483.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Geral_G1" data-id="-8280014504684215522" onclick="abrirMateria('-8280014504684215522')">
+<div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/AYjm0fdd3KgkRRBDT4dxArWRtkI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Y/R/gQUSbcQA66RIPB91EUHQ/cpi.png"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>CPI do Crime Organizado tem troca de integrantes antes da votação de relatório</h2>
+<p><img margin-bottom:8px;"="" src="https://s2-g1.glbimg.com/AYjm0fdd3KgkRRBDT4dxArWRtkI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Y/R/g...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:26.200751-03:00"></small> • <a href="materia/-8280014504684215522.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Geral_G1" data-id="-4307237304401236226" onclick="abrirMateria('-4307237304401236226')">
+<div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/BFm3deMCHu_2BOBBa78krTw3FKA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/U/B/wZXoEgQDC3nQX417ubjg/foto-g1-2026-04-14t110223.616.png"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>VÍDEO: ladrões armados rendem casal com criança e obrigam vítima a ligar caminhonete para roubo</h2>
+<p><img margin-bottom:8px;"="" src="https://s2-g1.glbimg.com/BFm3deMCHu_2BOBBa78krTw3FKA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/U/B/w...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:26.298642-03:00"></small> • <a href="materia/-4307237304401236226.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Hardware_Adrenaline" data-id="1370900406573383639" onclick="abrirMateria('1370900406573383639')">
+<div class="img-container"><img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/last-flag-capa-640x400.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Last Flag já está disponível: shooter 5v5 aposta em captura de bandeira sem microtransações</h2>
+<p><img alt="" class="webfeedsFeaturedVisual wp-post-image" height="400" margin-bottom:8px;"="" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/last-flag-capa-640...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.714484-03:00"></small> • <a href="materia/1370900406573383639.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Hardware_Adrenaline" data-id="-3510414839361331517" onclick="abrirMateria('-3510414839361331517')">
+<div class="img-container"><img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/ps3-emulador-rpcs3-requisitos-640x400.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Emulador de PS3 recebe requisitos de sistema exigentes e devs explicam o motivo</h2>
+<p><img alt="Foto do PS3 editada com processadores Intel e AMD" class="webfeedsFeaturedVisual wp-post-image" height="400" margin-bottom:8px;"="" src="https://www.adrenaline.com...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.812176-03:00"></small> • <a href="materia/-3510414839361331517.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Hardware_Adrenaline" data-id="-6485553755356550485" onclick="abrirMateria('-6485553755356550485')">
+<div class="img-container"><img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Xbox-Discussoes-Volta-Exclusivos-640x400.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Xbox discute internamente uma possível volta de jogos exclusivos</h2>
+<p><img alt="Xbox discute internamente uma possível volta de jogos exclusivos" class="webfeedsFeaturedVisual wp-post-image" height="400" margin-bottom:8px;"="" src="https://www...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.915700-03:00"></small> • <a href="materia/-6485553755356550485.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Hardware_Adrenaline" data-id="-5827983726475437394" onclick="abrirMateria('-5827983726475437394')">
+<div class="img-container"><img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/spider-man-3-captura-movimentos-rumores-640x400.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Ator de Marvel’s Spider-Man mostra trabalho de captura e acende rumores para novo game</h2>
+<p><img alt="Captura de gameplay de Marvel's Spider-Man: Miles Morales" class="webfeedsFeaturedVisual wp-post-image" height="400" margin-bottom:8px;"="" src="https://www.a...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:25.013946-03:00"></small> • <a href="materia/-5827983726475437394.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Hardware_Adrenaline" data-id="4470805842950841859" onclick="abrirMateria('4470805842950841859')">
+<div class="img-container"><img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2025/07/ea-sports-fc-26-capa-640x400.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Jogos de PC em oferta na Epic Games; até 90% de desconto nesta semana</h2>
+<p><img alt="EA Sports FC 26" class="webfeedsFeaturedVisual wp-post-image" height="400" margin-bottom:8px;"="" src="https://www.adrenaline.com.br/wp-content/uploads/2025/07/ea-...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:25.107977-03:00"></small> • <a href="materia/4470805842950841859.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Hardware_Adrenaline" data-id="-3174563291859074013" onclick="abrirMateria('-3174563291859074013')">
+<div class="img-container"><img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Steam-Controller-Encomenda-Valve-640x400.jpeg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Primeira grande encomenda do novo Steam Controller já chegou aos EUA</h2>
+<p><img alt="Primeira grande encomenda do novo Steam Controller já chegou aos EUA" class="webfeedsFeaturedVisual wp-post-image" height="400" margin-bottom:8px;"="" src="https:/...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:25.198608-03:00"></small> • <a href="materia/-3174563291859074013.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="C#_MS_Blog" data-id="6401997679062071109" onclick="abrirMateria('6401997679062071109')">
+<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Your Migration’s Source of Truth: The Modernization Assessment</h2>
+<p><p>Introducing GitHub Copilot Modernization and diving into the assessment report as part of cloud modernization process</p>
+<p>The post <a href="http...&lt;/p&gt;
+                &lt;div style=" margin-bottom:8px;"=""><span class="tag-item">#Geral</span></a></p></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.706964-03:00"></small> • <a href="materia/6401997679062071109.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="C#_MS_Blog" data-id="-8094308119092410157" onclick="abrirMateria('-8094308119092410157')">
+<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>ASP.NET Core 2.3 end of support announcement</h2>
+<p><p>ASP.NET Core 2.3 will reach end of support on April 13, 2027. Learn what this means for your applications and how to upgrade to a modern supported ...</p>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.762972-03:00"></small> • <a href="materia/-8094308119092410157.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</p></div>
+</div><div class="noticia-card" data-categoria="C#_MS_Blog" data-id="5621698256053496741" onclick="abrirMateria('5621698256053496741')">
+<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Explore union types in C# 15</h2>
+<p><p>C# 15 introduces union types — declare a closed set of case types with implicit conversions and exhaustive pattern matching. Try unions in preview ...</p>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.825178-03:00"></small> • <a href="materia/5621698256053496741.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</p></div>
+</div><div class="noticia-card" data-categoria="C#_MS_Blog" data-id="7377718362142692518" onclick="abrirMateria('7377718362142692518')">
+<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Generative AI for Beginners .NET: Version 2 on .NET 10</h2>
+<p><p>Announcement of Version 2 of Generative AI for Beginners .NET, a free course rebuilt for .NET 10 with Microsoft.Extensions.AI, updated RAG patterns...</p>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.910338-03:00"></small> • <a href="materia/7377718362142692518.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</p></div>
+</div><div class="noticia-card" data-categoria="C#_MS_Blog" data-id="-7181909327137196613" onclick="abrirMateria('-7181909327137196613')">
+<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Ten Months with Copilot Coding Agent in dotnet/runtime</h2>
+<p><p>After ten months using GitHub Copilot Coding Agent (CCA) in dotnet/runtime, the .NET team shares data-driven lessons on cloud-AI-assisted developme...</p>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:25.009461-03:00"></small> • <a href="materia/-7181909327137196613.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</p></div>
+</div><div class="noticia-card" data-categoria="C#_MS_Blog" data-id="3196501921100503781" onclick="abrirMateria('3196501921100503781')">
+<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Accelerating .NET MAUI Development with AI Agents</h2>
+<p><p>Learn how custom-built AI agents are dramatically improving the .NET MAUI contribution workflow, reducing issue resolution time by 50-70% while inc...</p>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:25.093653-03:00"></small> • <a href="materia/3196501921100503781.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</p></div>
+</div><div class="noticia-card" data-categoria="Games_IGN" data-id="-7280407865862133449" onclick="abrirMateria('-7280407865862133449')">
+<div class="img-container"><img class="noticia-img" src="https://sm.ign.com/ign_br/screenshot/default/lastflag-keyart-3840x2160_254w.png"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Last Flag chega ao PC com promessa de reinventar o modo capture a bandeira</h2>
+<p><img ...<="" align="left" alt="" hspace="5" p="" src="https://sm.ign.com/t/ign_br/screenshot/default/lastflag-keyart-3840x2160_254w.640.png" vspace="5" width="120"/>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.711233-03:00"></small> • <a href="materia/-7280407865862133449.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</p></div>
+</div><div class="noticia-card" data-categoria="Games_IGN" data-id="-2642882497973722160" onclick="abrirMateria('-2642882497973722160')">
+<div class="img-container"><img class="noticia-img" src="https://sm.ign.com/ign_br/news/g/godzilla-m/godzilla-minus-zero-trailer-plot-and-cast-revealed_4vez.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Godzilla vai para Nova York no primeiro trailer de Godzilla Minus Zero; confira sinopse e elenco</h2>
+<p><img align="left" alt="" hspace="5" margin-bottom:8px;"="" src="https://sm.ign.com/t/ign_br/news/g/godzilla-m/godzilla-minus-zero-trailer-plot-and-cast-revealed_4vez.640.jpg...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.811194-03:00"></small> • <a href="materia/-2642882497973722160.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Games_IGN" data-id="-8799441041339275284" onclick="abrirMateria('-8799441041339275284')">
+<div class="img-container"><img class="noticia-img" src="https://sm.ign.com/ign_br/gallery/a/a-visual-h/a-visual-history-of-godzilla_nm9x.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>A Visual History of Godzilla</h2>
+<p><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/gallery/a/a-visual-h/a-visual-history-of-godzilla_nm9x.640.jpg" vspace="5" width="...&lt;/p"/>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.882487-03:00"></small> • <a href="materia/-8799441041339275284.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</p></div>
+</div><div class="noticia-card" data-categoria="Games_IGN" data-id="2536656592694877763" onclick="abrirMateria('2536656592694877763')">
+<div class="img-container"><img class="noticia-img" src="https://sm.ign.com/ign_br/news/m/marathon-g/marathon-gets-new-experimental-mode_ersy.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Marathon recebe novo modo experimental perfeito para novos jogadores</h2>
+<p><img align="left" alt="" hspace="5" p="" src="https://sm.ign.com/t/ign_br/news/m/marathon-g/marathon-gets-new-experimental-mode_ersy.640.jpg" vspace="5" wi...<=""/>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.960197-03:00"></small> • <a href="materia/2536656592694877763.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</p></div>
+</div><div class="noticia-card" data-categoria="Games_IGN" data-id="7774851805979787564" onclick="abrirMateria('7774851805979787564')">
+<div class="img-container"><img class="noticia-img" src="https://sm.ign.com/ign_br/news/n/new-hero-s/new-hero-sierra-returning-post-match-accolades-and-a-map-rew_xrkh.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</h2>
+<p><img align="left" alt="" hspace="5" margin-bottom:8px;"="" src="https://sm.ign.com/t/ign_br/news/n/new-hero-s/new-hero-sierra-returning-post-match-accolades-and-a-map-rew_xr...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:25.032934-03:00"></small> • <a href="materia/7774851805979787564.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Games_IGN" data-id="-4978220431504026320" onclick="abrirMateria('-4978220431504026320')">
+<div class="img-container"><img class="noticia-img" src="https://sm.ign.com/ign_br/news/b/bloodborne/bloodborne-r-rated-animated-movie-in-development-with-jackse_7hhv.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Bloodborne tem filme de animação para maiores de 18 anos em desenvolvimento, com produção de JackSepticEye</h2>
+<p><img align="left" alt="" hspace="5" margin-bottom:8px;"="" src="https://sm.ign.com/t/ign_br/news/b/bloodborne/bloodborne-r-rated-animated-movie-in-development-with-jackse_7h...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:25.122168-03:00"></small> • <a href="materia/-4978220431504026320.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Direita_Oeste" data-id="-8921719140270441639" onclick="abrirMateria('-8921719140270441639')">
+<div class="img-container"><img class="noticia-img" src="https://medias.revistaoeste.com/wp-content/uploads/2025/08/Wilson-Diaz-Roraima.jpeg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>TSE retoma julgamento sobre governador e ex-governador de Roraima</h2>
+<p><p><img alt="Antonio Denarium (PP): lentidão do Judiciário mantém governador no posto | Foto: Wilson Dias/Agência Brasil" class="attachment-medium siz...&lt;/p&gt; &lt;div style=" margin-bottom:8px;"=""/><span class="tag-item">#Geral</span></p></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.712277-03:00"></small> • <a href="materia/-8921719140270441639.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Direita_Oeste" data-id="8049753764313690635" onclick="abrirMateria('8049753764313690635')">
+<div class="img-container"><img class="noticia-img" src="https://medias.revistaoeste.com/wp-content/uploads/2026/03/BX2017-06-08T132928Z_385984799_RC1F2A734C30_RTRMADP_3_BRAZIL-POLITICS.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Gilmar diz que indiciamento por CPI não tem ‘base legal’</h2>
+<p><p><img alt="" class="attachment-medium size-medium wp-post-image" height="200" margin-bottom:8px;"="" src="https://medias.revistaoeste.com/wp-content/uploads/2026/03/BX2017...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.813591-03:00"></small> • <a href="materia/8049753764313690635.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Direita_Oeste" data-id="5938256735845803477" onclick="abrirMateria('5938256735845803477')">
+<div class="img-container"><img class="noticia-img" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/Defesa-de-Filipe-Martins.jpeg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>STF mantém Filipe Martins preso em Ponta Grossa</h2>
+<p><p><img alt="Filipe Martins corre risco de morte, segundo Polícia Penal | Foto: Rosinei Coutinho/STF" class="attachment-medium size-medium wp-post-ima...&lt;/p&gt; &lt;div style=" margin-bottom:8px;"=""/><span class="tag-item">#Geral</span></p></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.909762-03:00"></small> • <a href="materia/5938256735845803477.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Direita_Oeste" data-id="2037194295055066585" onclick="abrirMateria('2037194295055066585')">
+<div class="img-container"><img class="noticia-img" src="https://medias.revistaoeste.com/wp-content/uploads/2026/02/Flavio-Dino.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Dino critica pedido de indiciamento de ministros do STF</h2>
+<p><p><img alt="flávio dino" class="attachment-medium size-medium wp-post-image" height="200" margin-bottom:8px;"="" src="https://medias.revistaoeste.com/wp-content/uploads/202...&lt;/p&gt;
+                &lt;div style="/><span class="tag-item">#Geral</span></p></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:24.994869-03:00"></small> • <a href="materia/2037194295055066585.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Direita_Oeste" data-id="5214117012815220879" onclick="abrirMateria('5214117012815220879')">
+<div class="img-container"><img class="noticia-img" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/fab-1404.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Faroeste à Brasileira: assista ao programa de 14/4/2026</h2>
+<p><p><img alt="O Faroeste à Brasileira é transmitido de segunda a sexta, das 14h às 16h | Foto: Divulgação/Oeste" class="attachment-medium size-medium w...&lt;/p&gt; &lt;div style=" margin-bottom:8px;"=""/><span class="tag-item">#Geral</span></p></p></div>
+<small class="timeago" datetime="2026-04-14T14:40:25.058822-03:00"></small> • <a href="materia/5214117012815220879.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</div><div class="noticia-card" data-categoria="Direita_Oeste" data-id="-2994344559020260763" onclick="abrirMateria('-2994344559020260763')">
+<div class="img-container"><img class="noticia-img" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/joao-campos-e-denunciado-por-uso-idevido-de-espaco-publico-edson-holanda-pcr.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>João Campos é denunciado por uso político de espaço público</h2>
+<p><p><img alt="João Campos é denunciado por uso idevido de espaço publico - Edson Holanda PCR" class="attachment-medium size-medium wp-post-image" heigh...<="" p=""/>
+<div style="margin-bottom:8px;"><span class="tag-item">#Geral</span></div>
+<small class="timeago" datetime="2026-04-14T14:40:25.138128-03:00"></small> • <a href="materia/-2994344559020260763.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#d93025; text-decoration:none;">Ler mais</a>
+</p></p></div>
+</div><div class="noticia-card" data-categoria="Mundo_BBC" data-id="-4599206627861368537" onclick="abrirMateria('-4599206627861368537')">
 <div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
 <div class="noticia-body">
 <span class="sentiment-tag neutro">Neutro</span>
@@ -625,327 +382,70 @@
 <span class="sentiment-tag neutro">Neutro</span>
 <h2>Café do Conhecimento destaca venda consultiva com Luis Pimentel</h2>
 <p><img datetime="2026-04-14T14:36:47.979184-03:00" src="https://s2-g1.glbimg.com/BvG0YQnq5tkvcRLqknDnyJA_4WU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c8...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></div>
+                &lt;small class=" timeago"="">
+</img></p></div>
 </div><div class="noticia-card" data-categoria="Geral_G1" data-id="-3268049331434752074" onclick="abrirMateria('-3268049331434752074')">
 <div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/vaJ9z4OY9DbJndLOhzafyRCeAVg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/X/egnBlHRwqxQfXAFiyzkw/design-sem-nome-2026-04-14t141614.841.png"/></div>
 <div class="noticia-body">
 <span class="sentiment-tag neutro">Neutro</span>
 <h2>Pai de santo é morto a facadas dentro de terreiro no sudoeste da Bahia</h2>
 <p><img datetime="2026-04-14T14:36:48.030673-03:00" src="https://s2-g1.glbimg.com/vaJ9z4OY9DbJndLOhzafyRCeAVg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c8...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></div>
+                &lt;small class=" timeago"="">
+</img></p></div>
 </div><div class="noticia-card" data-categoria="Geral_G1" data-id="5693407426934992621" onclick="abrirMateria('5693407426934992621')">
 <div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/JBukvSGVgMbTKiHeIEapviH-gj8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/l/5/dVzbFpTDSmg7wlsBM4Cg/2026-04-12t135436z-1625689504-rc2gnkaezcwq-rtrmadp-3-iran-crisis-hormuz.jpg"/></div>
 <div class="noticia-body">
 <span class="sentiment-tag neutro">Neutro</span>
 <h2>Navios fazem meia-volta em meio a bloqueio no Estreito de Ormuz; EUA e Irã avaliam retomar negociações</h2>
 <p><img datetime="2026-04-14T14:36:48.068334-03:00" src="https://s2-g1.glbimg.com/JBukvSGVgMbTKiHeIEapviH-gj8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c8...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></div>
+                &lt;small class=" timeago"="">
+</img></p></div>
 </div><div class="noticia-card" data-categoria="Geral_G1" data-id="3762168327042196876" onclick="abrirMateria('3762168327042196876')">
 <div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/XO0MWT7BG3Y638euOjaUmQ5IT2c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/o/Yr86mRRWa7Ke0rNopJTA/30.jpg"/></div>
 <div class="noticia-body">
 <span class="sentiment-tag neutro">Neutro</span>
 <h2>Entenda como a USP apura, em Piracicaba, o principal indicador do preço comercial do café do Brasil</h2>
 <p><img datetime="2026-04-14T14:36:48.124418-03:00" src="https://s2-g1.glbimg.com/XO0MWT7BG3Y638euOjaUmQ5IT2c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c8...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></div>
+                &lt;small class=" timeago"="">
+</img></p></div>
 </div><div class="noticia-card" data-categoria="Geral_G1" data-id="4537375342575266718" onclick="abrirMateria('4537375342575266718')">
 <div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/AYjm0fdd3KgkRRBDT4dxArWRtkI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Y/R/gQUSbcQA66RIPB91EUHQ/cpi.png"/></div>
 <div class="noticia-body">
 <span class="sentiment-tag neutro">Neutro</span>
 <h2>CPI do Crime Organizado tem troca de integrantes antes da votação de relatório</h2>
 <p><img datetime="2026-04-14T14:36:48.164558-03:00" src="https://s2-g1.glbimg.com/AYjm0fdd3KgkRRBDT4dxArWRtkI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c8...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></div>
+                &lt;small class=" timeago"="">
+</img></p></div>
 </div><div class="noticia-card" data-categoria="Geral_G1" data-id="-7681406798086383200" onclick="abrirMateria('-7681406798086383200')">
 <div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/BFm3deMCHu_2BOBBa78krTw3FKA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/U/B/wZXoEgQDC3nQX417ubjg/foto-g1-2026-04-14t110223.616.png"/></div>
 <div class="noticia-body">
 <span class="sentiment-tag neutro">Neutro</span>
 <h2>VÍDEO: ladrões armados rendem casal com criança e obrigam vítima a ligar caminhonete para roubo</h2>
 <p><img datetime="2026-04-14T14:36:48.215699-03:00" src="https://s2-g1.glbimg.com/BFm3deMCHu_2BOBBa78krTw3FKA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c8...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></div>
+                &lt;small class=" timeago"="">
+</img></p></div>
 </div><div class="noticia-card" data-categoria="Hardware_Adrenaline" data-id="-8503244959166797366" onclick="abrirMateria('-8503244959166797366')">
 <div class="img-container"><img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/last-flag-capa-640x400.jpg"/></div>
 <div class="noticia-body">
 <span class="sentiment-tag neutro">Neutro</span>
 <h2>Last Flag já está disponível: shooter 5v5 aposta em captura de bandeira sem microtransações</h2>
 <p><img alt="" class="webfeedsFeaturedVisual wp-post-image" datetime="2026-04-14T14:36:47.311426-03:00" height="400" src="https://www.adrenaline.co...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></div>
+                &lt;small class=" timeago"="">
+</img></p></div>
 </div><div class="noticia-card" data-categoria="Hardware_Adrenaline" data-id="-302739689934162932" onclick="abrirMateria('-302739689934162932')">
 <div class="img-container"><img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/ps3-emulador-rpcs3-requisitos-640x400.jpg"/></div>
 <div class="noticia-body">
 <span class="sentiment-tag neutro">Neutro</span>
 <h2>Emulador de PS3 recebe requisitos de sistema exigentes e devs explicam o motivo</h2>
-<p><img alt="Foto do PS3 editada com processadores Intel e AMD" class="webfeedsFeaturedVisual wp-post-i...&lt;/p&gt; &lt;small class=" datetime="2026-04-14T14:36:47.360576-03:00" timeago"=""/>
-</p></div>
-</div><div class="noticia-card" data-categoria="Hardware_Adrenaline" data-id="3341663229362741165" onclick="abrirMateria('3341663229362741165')">
-<div class="img-container"><img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Xbox-Discussoes-Volta-Exclusivos-640x400.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Xbox discute internamente uma possível volta de jogos exclusivos</h2>
-<p><img alt="Xbox discute internamente uma possível volta de jogos exclusivos" class="webfeedsFeaturedV...&lt;/p&gt; &lt;small class=" datetime="2026-04-14T14:36:47.461730-03:00" timeago"=""/>
-</p></div>
-</div><div class="noticia-card" data-categoria="Hardware_Adrenaline" data-id="-1746180624701536538" onclick="abrirMateria('-1746180624701536538')">
-<div class="img-container"><img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/spider-man-3-captura-movimentos-rumores-640x400.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Ator de Marvel’s Spider-Man mostra trabalho de captura e acende rumores para novo game</h2>
-<p><img alt="Captura de gameplay de Marvel's Spider-Man: Miles Morales" class="webfeedsFeaturedVis...&lt;/p&gt; &lt;small class=" datetime="2026-04-14T14:36:47.511718-03:00" timeago"=""/>
-</p></div>
-</div><div class="noticia-card" data-categoria="Hardware_Adrenaline" data-id="-9119122746713880142" onclick="abrirMateria('-9119122746713880142')">
-<div class="img-container"><img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2025/07/ea-sports-fc-26-capa-640x400.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Jogos de PC em oferta na Epic Games; até 90% de desconto nesta semana</h2>
-<p><img alt="EA Sports FC 26" class="webfeedsFeaturedVisual wp-post-image" datetime="2026-04-14T14:36:47.552330-03:00" height="400" src="https://ww...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></div>
-</div><div class="noticia-card" data-categoria="Hardware_Adrenaline" data-id="-1903901859588450049" onclick="abrirMateria('-1903901859588450049')">
-<div class="img-container"><img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Steam-Controller-Encomenda-Valve-640x400.jpeg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Primeira grande encomenda do novo Steam Controller já chegou aos EUA</h2>
-<p><img alt="Primeira grande encomenda do novo Steam Controller já chegou aos EUA" class="webfeedsFeatu...&lt;/p&gt; &lt;small class=" datetime="2026-04-14T14:36:47.631164-03:00" timeago"=""/>
-</p></div>
-</div><div class="noticia-card" data-categoria="C#_MS_Blog" data-id="8676245213356858661" onclick="abrirMateria('8676245213356858661')">
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Your Migration’s Source of Truth: The Modernization Assessment</h2>
-<p><p>Introducing GitHub Copilot Modernization and diving into the assessment report as part of cloud m...</p>
-<small class="timeago" datetime="2026-04-14T14:36:47.240664-03:00"></small>
-</p></div>
-</div><div class="noticia-card" data-categoria="C#_MS_Blog" data-id="1304044738380270627" onclick="abrirMateria('1304044738380270627')">
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>ASP.NET Core 2.3 end of support announcement</h2>
-<p><p>ASP.NET Core 2.3 will reach end of support on April 13, 2027. Learn what this means for your appl...</p>
-<small class="timeago" datetime="2026-04-14T14:36:47.312658-03:00"></small>
-</p></div>
-</div><div class="noticia-card" data-categoria="C#_MS_Blog" data-id="-835384214516009517" onclick="abrirMateria('-835384214516009517')">
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Explore union types in C# 15</h2>
-<p><p>C# 15 introduces union types — declare a closed set of case types with implicit conversions and e...</p>
-<small class="timeago" datetime="2026-04-14T14:36:47.429047-03:00"></small>
-</p></div>
-</div><div class="noticia-card" data-categoria="C#_MS_Blog" data-id="1612748629198367217" onclick="abrirMateria('1612748629198367217')">
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Generative AI for Beginners .NET: Version 2 on .NET 10</h2>
-<p><p>Announcement of Version 2 of Generative AI for Beginners .NET, a free course rebuilt for .NET 10 ...</p>
-<small class="timeago" datetime="2026-04-14T14:36:47.512801-03:00"></small>
-</p></div>
-</div><div class="noticia-card" data-categoria="C#_MS_Blog" data-id="7188666934715108948" onclick="abrirMateria('7188666934715108948')">
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Ten Months with Copilot Coding Agent in dotnet/runtime</h2>
-<p><p>After ten months using GitHub Copilot Coding Agent (CCA) in dotnet/runtime, the .NET team shares ...</p>
-<small class="timeago" datetime="2026-04-14T14:36:47.556886-03:00"></small>
-</p></div>
-</div><div class="noticia-card" data-categoria="C#_MS_Blog" data-id="1140884188730293633" onclick="abrirMateria('1140884188730293633')">
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Accelerating .NET MAUI Development with AI Agents</h2>
-<p><p>Learn how custom-built AI agents are dramatically improving the .NET MAUI contribution workflow, ...</p>
-<small class="timeago" datetime="2026-04-14T14:36:47.648443-03:00"></small>
-</p></div>
-</div><div class="noticia-card" data-categoria="Games_IGN" data-id="6963770814095824927" onclick="abrirMateria('6963770814095824927')">
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Last Flag chega ao PC com promessa de reinventar o modo capture a bandeira</h2>
-<p><img align="left" alt="" datetime="2026-04-14T14:36:46.997338-03:00" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/lastflag-key...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></div>
-</div><div class="noticia-card" data-categoria="Games_IGN" data-id="-1700488175090149775" onclick="abrirMateria('-1700488175090149775')">
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Godzilla vai para Nova York no primeiro trailer de Godzilla Minus Zero; confira sinopse e elenco</h2>
-<p><img align="left" alt="" datetime="2026-04-14T14:36:47.178432-03:00" hspace="5" src="https://sm.ign.com/t/ign_br/news/g/godzilla-m/godzilla-minu...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></div>
-</div><div class="noticia-card" data-categoria="Games_IGN" data-id="2333771905785358343" onclick="abrirMateria('2333771905785358343')">
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>A Visual History of Godzilla</h2>
-<p><img align="left" alt="" datetime="2026-04-14T14:36:47.310568-03:00" hspace="5" src="https://sm.ign.com/t/ign_br/gallery/a/a-visual-h/a-visual-h...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></div>
-</div><div class="noticia-card" data-categoria="Games_IGN" data-id="4155471381032033783" onclick="abrirMateria('4155471381032033783')">
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Marathon recebe novo modo experimental perfeito para novos jogadores</h2>
-<p><img align="left" alt="" datetime="2026-04-14T14:36:47.353256-03:00" hspace="5" src="https://sm.ign.com/t/ign_br/news/m/marathon-g/marathon-gets...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></div>
-</div><div class="noticia-card" data-categoria="Games_IGN" data-id="3388199781438107851" onclick="abrirMateria('3388199781438107851')">
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</h2>
-<p><img align="left" alt="" datetime="2026-04-14T14:36:47.419131-03:00" hspace="5" src="https://sm.ign.com/t/ign_br/news/n/new-hero-s/new-hero-sier...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></div>
-</div><div class="noticia-card" data-categoria="Games_IGN" data-id="-2352095575818132574" onclick="abrirMateria('-2352095575818132574')">
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Bloodborne tem filme de animação para maiores de 18 anos em desenvolvimento, com produção de JackSepticEye</h2>
-<p><img align="left" alt="" datetime="2026-04-14T14:36:47.466296-03:00" hspace="5" src="https://sm.ign.com/t/ign_br/news/b/bloodborne/bloodborne-r-...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></div>
-</div><div class="noticia-card" data-categoria="Direita_Oeste" data-id="-3271547895882872541" onclick="abrirMateria('-3271547895882872541')">
-<div class="img-container"><img class="noticia-img" src="https://medias.revistaoeste.com/wp-content/uploads/2026/03/BX2017-06-08T132928Z_385984799_RC1F2A734C30_RTRMADP_3_BRAZIL-POLITICS.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Gilmar diz que indiciamento por CPI não tem ‘base legal’</h2>
-<p><p><img alt="" class="attachment-medium size-medium wp-post-image" datetime="2026-04-14T14:36:46.883000-03:00" height="200" src="https://medias....&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></p></div>
-</div><div class="noticia-card" data-categoria="Direita_Oeste" data-id="7854737955111067788" onclick="abrirMateria('7854737955111067788')">
-<div class="img-container"><img class="noticia-img" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/Defesa-de-Filipe-Martins.jpeg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>STF mantém Filipe Martins preso em Ponta Grossa</h2>
-<p><p><img alt="Filipe Martins corre risco de morte, segundo Polícia Penal | Foto: Rosinei Coutinho/STF...&lt;/p&gt;
-                &lt;small class=" datetime="2026-04-14T14:36:47.041341-03:00" timeago"=""/>
-</p></p></div>
-</div><div class="noticia-card" data-categoria="Direita_Oeste" data-id="4365026617654564063" onclick="abrirMateria('4365026617654564063')">
-<div class="img-container"><img class="noticia-img" src="https://medias.revistaoeste.com/wp-content/uploads/2026/02/Flavio-Dino.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Dino critica pedido de indiciamento de ministros do STF</h2>
-<p><p><img alt="flávio dino" class="attachment-medium size-medium wp-post-image" datetime="2026-04-14T14:36:47.178926-03:00" height="200" src="http...&lt;/p&gt;
-                &lt;small class=" timeago"=""/>
-</p></p></div>
-</div><div class="noticia-card" data-categoria="Direita_Oeste" data-id="-6096637217522524707" onclick="abrirMateria('-6096637217522524707')">
-<div class="img-container"><img class="noticia-img" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/fab-1404.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Faroeste à Brasileira: assista ao programa de 14/4/2026</h2>
-<p><p><img alt="O Faroeste à Brasileira é transmitido de segunda a sexta, das 14h às 16h | Foto: Divulg...&lt;/p&gt;
-                &lt;small class=" datetime="2026-04-14T14:36:47.313080-03:00" timeago"=""/>
-</p></p></div>
-</div><div class="noticia-card" data-categoria="Direita_Oeste" data-id="-9020389425952560323" onclick="abrirMateria('-9020389425952560323')">
-<div class="img-container"><img class="noticia-img" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/joao-campos-e-denunciado-por-uso-idevido-de-espaco-publico-edson-holanda-pcr.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>João Campos é denunciado por uso político de espaço público</h2>
-<p><p><img alt="João Campos é denunciado por uso idevido de espaço publico - Edson Holanda PCR" class="...&lt;/p&gt; &lt;small class=" datetime="2026-04-14T14:36:47.366886-03:00" timeago"=""/>
-</p></p></div>
-</div><div class="noticia-card" data-categoria="Direita_Oeste" data-id="-8563629346864413630" onclick="abrirMateria('-8563629346864413630')">
-<div class="img-container"><img class="noticia-img" src="https://medias.revistaoeste.com/wp-content/uploads/2024/02/padre1-83af9a5c.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Padre José Eduardo é sequestrado e roubado em Barueri (SP)</h2>
-<p><p><img alt="Padre José Eduardo de Oliveira" class="attachment-medium size-medium wp-post-image" hei...<="" p=""/>
-<small class="timeago" datetime="2026-04-14T14:36:47.469109-03:00"></small>
-</p></p></div>
-</div><div class="noticia-card border-padrao" data-categoria="Mundo_BBC" data-id="8593221187832981458" onclick="abrirMateria('8593221187832981458')">
-<div class="sentiment-tag bg-neutro">Neutro</div>
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<small class="timeago" datetime="2026-04-14T14:30:03.308731-03:00"></small> • <b>MUNDO_BBC</b>
-<h2>Navios ligados ao Irã cruzam Estreito de Ormuz apesar do bloqueio dos EUA; China critica ação americana</h2>
-<div class="tags-list"><span class="tag">#Geral</span></div>
-<div style="margin-top:10px;"><a href="materia/8593221187832981458.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#1a73e8;">Link da Matéria</a></div>
-</div>
-</div><div class="noticia-card border-padrao" data-categoria="Mundo_BBC" data-id="6519849423271335249" onclick="abrirMateria('6519849423271335249')">
-<div class="sentiment-tag bg-neutro">Neutro</div>
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<small class="timeago" datetime="2026-04-14T14:30:03.577741-03:00"></small> • <b>MUNDO_BBC</b>
-<h2>Os argumentos do relator da CPI para pedir indiciamento de 3 ministros do STF e do PGR</h2>
-<div class="tags-list"><span class="tag">#Geral</span></div>
-<div style="margin-top:10px;"><a href="materia/6519849423271335249.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#1a73e8;">Link da Matéria</a></div>
-</div>
-</div><div class="noticia-card border-padrao" data-categoria="Mundo_BBC" data-id="-5280318079997003363" onclick="abrirMateria('-5280318079997003363')">
-<div class="sentiment-tag bg-neutro">Neutro</div>
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<small class="timeago" datetime="2026-04-14T14:30:03.792916-03:00"></small> • <b>MUNDO_BBC</b>
-<h2>A personagem de IA que viraliza com críticas ao governo Lula e ao STF</h2>
-<div class="tags-list"><span class="tag">#Geral</span></div>
-<div style="margin-top:10px;"><a href="materia/-5280318079997003363.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#1a73e8;">Link da Matéria</a></div>
-</div>
-</div><div class="noticia-card border-padrao" data-categoria="Mundo_BBC" data-id="67241269295010913" onclick="abrirMateria('67241269295010913')">
-<div class="sentiment-tag bg-neutro">Neutro</div>
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<small class="timeago" datetime="2026-04-14T14:30:03.992253-03:00"></small> • <b>MUNDO_BBC</b>
-<h2>Restaurantes brasileiros são os únicos da América Latina com três estrelas Michelin — os critérios por trás do reconhecimento</h2>
-<div class="tags-list"><span class="tag">#Geral</span></div>
-<div style="margin-top:10px;"><a href="materia/67241269295010913.html" onclick="event.stopPropagation();" style="font-size:0.8em; color:#1a73e8;">Link da Matéria</a></div>
-</div>
-</div></div><div class='sidebar'><h3>Últimas Capturas</h3><div class='sidebar-list'><div class="historico-item"><b>Mundo_BBC</b><br>Os argumentos do relator da CPI para pedir indiciamento de 3 ministros do STF e do PGR</div><div class="historico-item"><b>Mundo_BBC</b><br>Navios ligados ao Irã cruzam Estreito de Ormuz apesar do bloqueio dos EUA; China critica ação americana</div><div class="historico-item"><b>Mundo_BBC</b><br>A personagem de IA que viraliza com críticas ao governo Lula e ao STF</div><div class="historico-item"><b>Mundo_BBC</b><br>Restaurantes brasileiros são os únicos da América Latina com três estrelas Michelin — os critérios por trás do reconhecimento</div><div class="historico-item"><b>Mundo_BBC</b><br>Como culto liderado por pastor negro que falava a 'língua dos anjos' deu origem ao movimento evangélico há 120 anos</div><div class="historico-item"><b>Mundo_BBC</b><br>Imagem de Trump como Jesus Cristo e embate com o papa provocam reação até entre aliados</div><div class="historico-item"><b>Geral_G1</b><br>Café do Conhecimento destaca venda consultiva com Luis Pimentel</div><div class="historico-item"><b>Geral_G1</b><br>Pai de santo é morto a facadas dentro de terreiro no sudoeste da Bahia</div><div class="historico-item"><b>Geral_G1</b><br>Navios fazem meia-volta em meio a bloqueio no Estreito de Ormuz; EUA e Irã avaliam retomar negociações</div><div class="historico-item"><b>Geral_G1</b><br>Entenda como a USP apura, em Piracicaba, o principal indicador do preço comercial do café do Brasil</div><div class="historico-item"><b>Geral_G1</b><br>CPI do Crime Organizado tem troca de integrantes antes da votação de relatório</div><div class="historico-item"><b>Geral_G1</b><br>VÍDEO: ladrões armados rendem casal com criança e obrigam vítima a ligar caminhonete para roubo</div><div class="historico-item"><b>Hardware_Adrenaline</b><br>Last Flag já está disponível: shooter 5v5 aposta em captura de bandeira sem microtransações</div><div class="historico-item"><b>Hardware_Adrenaline</b><br>Emulador de PS3 recebe requisitos de sistema exigentes e devs explicam o motivo</div><div class="historico-item"><b>Hardware_Adrenaline</b><br>Xbox discute internamente uma possível volta de jogos exclusivos</div><div class="historico-item"><b>Hardware_Adrenaline</b><br>Ator de Marvel’s Spider-Man mostra trabalho de captura e acende rumores para novo game</div><div class="historico-item"><b>Hardware_Adrenaline</b><br>Jogos de PC em oferta na Epic Games; até 90% de desconto nesta semana</div><div class="historico-item"><b>Hardware_Adrenaline</b><br>Primeira grande encomenda do novo Steam Controller já chegou aos EUA</div><div class="historico-item"><b>C#_MS_Blog</b><br>Your Migration’s Source of Truth: The Modernization Assessment</div><div class="historico-item"><b>C#_MS_Blog</b><br>ASP.NET Core 2.3 end of support announcement</div><div class="historico-item"><b>C#_MS_Blog</b><br>Explore union types in C# 15</div><div class="historico-item"><b>C#_MS_Blog</b><br>Generative AI for Beginners .NET: Version 2 on .NET 10</div><div class="historico-item"><b>C#_MS_Blog</b><br>Ten Months with Copilot Coding Agent in dotnet/runtime</div><div class="historico-item"><b>C#_MS_Blog</b><br>Accelerating .NET MAUI Development with AI Agents</div><div class="historico-item"><b>Games_IGN</b><br>Last Flag chega ao PC com promessa de reinventar o modo capture a bandeira</div><div class="historico-item"><b>Games_IGN</b><br>Godzilla vai para Nova York no primeiro trailer de Godzilla Minus Zero; confira sinopse e elenco</div><div class="historico-item"><b>Games_IGN</b><br>A Visual History of Godzilla</div><div class="historico-item"><b>Games_IGN</b><br>Marathon recebe novo modo experimental perfeito para novos jogadores</div><div class="historico-item"><b>Games_IGN</b><br>Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</div><div class="historico-item"><b>Games_IGN</b><br>Bloodborne tem filme de animação para maiores de 18 anos em desenvolvimento, com produção de JackSepticEye</div><div class="historico-item"><b>Direita_Oeste</b><br>TSE retoma julgamento sobre governador e ex-governador de Roraima</div><div class="historico-item"><b>Direita_Oeste</b><br>Gilmar diz que indiciamento por CPI não tem ‘base legal’</div><div class="historico-item"><b>Direita_Oeste</b><br>STF mantém Filipe Martins preso em Ponta Grossa</div><div class="historico-item"><b>Direita_Oeste</b><br>Dino critica pedido de indiciamento de ministros do STF</div><div class="historico-item"><b>Direita_Oeste</b><br>Faroeste à Brasileira: assista ao programa de 14/4/2026</div><div class="historico-item"><b>Direita_Oeste</b><br>João Campos é denunciado por uso político de espaço público</div><div class="historico-item"><b>Mundo_BBC</b>: Os argumentos do relator da CPI para pedir indiciamento de 3 ministros do STF e do PGR</div><div class="historico-item"><b>Mundo_BBC</b>: Navios ligados ao Irã cruzam Estreito de Ormuz apesar do bloqueio dos EUA; China critica ação americana</div><div class="historico-item"><b>Mundo_BBC</b>: A personagem de IA que viraliza com críticas ao governo Lula e ao STF</div><div class="historico-item"><b>Mundo_BBC</b>: Restaurantes brasileiros são os únicos da América Latina com três estrelas Michelin — os critérios por trás do reconhecimento</div><div class="historico-item"><b>Mundo_BBC</b>: Como culto liderado por pastor negro que falava a 'língua dos anjos' deu origem ao movimento evangélico há 120 anos</div><div class="historico-item"><b>Mundo_BBC</b>: Imagem de Trump como Jesus Cristo e embate com o papa provocam reação até entre aliados</div><div class="historico-item"><b>Geral_G1</b>: Café do Conhecimento destaca venda consultiva com Luis Pimentel</div><div class="historico-item"><b>Geral_G1</b>: Pai de santo é morto a facadas dentro de terreiro no sudoeste da Bahia</div><div class="historico-item"><b>Geral_G1</b>: Navios fazem meia-volta em meio a bloqueio no Estreito de Ormuz; EUA e Irã avaliam retomar negociações</div><div class="historico-item"><b>Geral_G1</b>: Entenda como a USP apura, em Piracicaba, o principal indicador do preço comercial do café do Brasil</div><div class="historico-item"><b>Geral_G1</b>: CPI do Crime Organizado tem troca de integrantes antes da votação de relatório</div><div class="historico-item"><b>Geral_G1</b>: VÍDEO: ladrões armados rendem casal com criança e obrigam vítima a ligar caminhonete para roubo</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Last Flag já está disponível: shooter 5v5 aposta em captura de bandeira sem microtransações</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Emulador de PS3 recebe requisitos de sistema exigentes e devs explicam o motivo</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Xbox discute internamente uma possível volta de jogos exclusivos</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Ator de Marvel’s Spider-Man mostra trabalho de captura e acende rumores para novo game</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Jogos de PC em oferta na Epic Games; até 90% de desconto nesta semana</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Primeira grande encomenda do novo Steam Controller já chegou aos EUA</div><div class="historico-item"><b>C#_MS_Blog</b>: Your Migration’s Source of Truth: The Modernization Assessment</div><div class="historico-item"><b>C#_MS_Blog</b>: ASP.NET Core 2.3 end of support announcement</div><div class="historico-item"><b>C#_MS_Blog</b>: Explore union types in C# 15</div><div class="historico-item"><b>C#_MS_Blog</b>: Generative AI for Beginners .NET: Version 2 on .NET 10</div><div class="historico-item"><b>C#_MS_Blog</b>: Ten Months with Copilot Coding Agent in dotnet/runtime</div><div class="historico-item"><b>C#_MS_Blog</b>: Accelerating .NET MAUI Development with AI Agents</div><div class="historico-item"><b>Games_IGN</b>: Last Flag chega ao PC com promessa de reinventar o modo capture a bandeira</div><div class="historico-item"><b>Games_IGN</b>: Godzilla vai para Nova York no primeiro trailer de Godzilla Minus Zero; confira sinopse e elenco</div><div class="historico-item"><b>Games_IGN</b>: A Visual History of Godzilla</div><div class="historico-item"><b>Games_IGN</b>: Marathon recebe novo modo experimental perfeito para novos jogadores</div><div class="historico-item"><b>Games_IGN</b>: Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</div><div class="historico-item"><b>Games_IGN</b>: Bloodborne tem filme de animação para maiores de 18 anos em desenvolvimento, com produção de JackSepticEye</div><div class="historico-item"><b>Direita_Oeste</b>: Gilmar diz que indiciamento por CPI não tem ‘base legal’</div><div class="historico-item"><b>Direita_Oeste</b>: STF mantém Filipe Martins preso em Ponta Grossa</div><div class="historico-item"><b>Direita_Oeste</b>: Dino critica pedido de indiciamento de ministros do STF</div><div class="historico-item"><b>Direita_Oeste</b>: Faroeste à Brasileira: assista ao programa de 14/4/2026</div><div class="historico-item"><b>Direita_Oeste</b>: João Campos é denunciado por uso político de espaço público</div><div class="historico-item"><b>Direita_Oeste</b>: Padre José Eduardo é sequestrado e roubado em Barueri (SP)</div></div></div></div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/2.0.2/timeago.min.js"></script>
-<script>
-    async function carregarClima(cidadeManual = null) {
-        const display = document.getElementById('weather-display');
-        let lat, lon, nomeCidade;
-        const cidadeSalva = cidadeManual || localStorage.getItem('user_city');
-        try {
-            if (cidadeSalva) {
-                const geo = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${cidadeSalva}&count=1&language=pt`).then(r => r.json());
-                lat = geo.results[0].latitude; lon = geo.results[0].longitude; nomeCidade = geo.results[0].name;
-                localStorage.setItem('user_city', nomeCidade);
-            } else {
-                const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej));
-                lat = pos.coords.latitude; lon = pos.coords.longitude;
-                const rev = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`).then(r => r.json());
-                nomeCidade = rev.address.city || rev.address.town || "Sua Região";
+<p><img alt="Foto do PS3 editada com processadores Intel e AMD" class="webfeedsFeaturedVisual wp-post-i...&lt;/p&gt; &lt;small class=" datetime="2026-04-14T14:36:47.360576-03:00" timeago"="">
+</img></p></div>
+</div></div>
+        <script>
+            function filtrar(cat) {
+                document.querySelectorAll('.noticia-card').forEach(c => {
+                    c.style.display = (cat === 'todas' || c.dataset.categoria.includes(cat)) ? 'flex' : 'none';
+                });
             }
-            const w = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`).then(r => r.json());
-            display.innerHTML = `<span onclick="alterarCidade(event)" class="weather-city">📍 ${nomeCidade}</span>: <b>${Math.round(w.current_weather.temperature)}°C</b>`;
-        } catch (e) { display.innerHTML = `<span onclick="alterarCidade(event)">📍 Definir Local</span>`; }
-    }
-
-    function alterarCidade(e) { e.stopPropagation(); const n = prompt("Cidade:"); if (n) carregarClima(n); }
-
-    let idx;
-    function buildIndex() {
-        const cards = document.querySelectorAll('.noticia-card');
-        idx = lunr(function () {
-            this.field('titulo'); this.field('categoria'); this.ref('id');
-            cards.forEach(c => this.add({ id: c.getAttribute('data-id'), titulo: c.querySelector('h2').innerText, categoria: c.getAttribute('data-categoria') }));
-        });
-    }
-
-    function pesquisar() {
-        const q = document.getElementById('search-input').value.toLowerCase();
-        const cards = document.querySelectorAll('.noticia-card');
-        if (!q) { cards.forEach(c => c.style.display = 'block'); return; }
-        const res = idx.search(q).map(r => r.ref);
-        cards.forEach(c => c.style.display = res.includes(c.getAttribute('data-id')) ? 'block' : 'none');
-    }
-
-    function filtrarNoticias(cat, btn) {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.noticia-card').forEach(c => {
-            const cardCat = c.getAttribute('data-categoria').toLowerCase();
-            c.style.display = (cat === 'todas' || cardCat.includes(cat.toLowerCase())) ? 'block' : 'none';
-        });
-    }
-
-    function abrirMateria(id) { document.getElementById('modal-' + id).style.display = 'block'; document.body.style.overflow = 'hidden'; }
-    function fecharMateria(id) { document.getElementById('modal-' + id).style.display = 'none'; document.body.style.overflow = 'auto'; }
-    window.onclick = (e) => { if (e.target.className === 'modal') { e.target.style.display = 'none'; document.body.style.overflow = 'auto'; } };
-
-    window.onload = () => { buildIndex(); carregarClima(); timeago().render(document.querySelectorAll('.timeago'), 'pt_BR'); };
-</script>
-</body></html>
+        </script>
+    </body></html>
+    
