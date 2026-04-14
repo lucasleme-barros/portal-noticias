@@ -37,39 +37,30 @@ CSS = """
 <style>
     body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; color: #1c1e21; }
     header { background: #fff; padding: 25px; text-align: center; border-bottom: 3px solid #d93025; position: relative; }
-    
-    /* Clima com Banco de Dados Local */
-    .weather-widget { position: absolute; top: 10px; right: 20px; font-size: 0.85em; color: #555; background: #f9f9f9; padding: 5px 12px; border-radius: 15px; border: 1px solid #eee; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; }
-    .weather-widget:hover { background: #e8f0fe; border-color: #1a73e8; }
-    .weather-city { font-weight: bold; text-decoration: underline; }
-
+    .weather-widget { position: absolute; top: 10px; right: 20px; font-size: 0.85em; color: #555; background: #f9f9f9; padding: 5px 12px; border-radius: 15px; border: 1px solid #eee; display: flex; align-items: center; gap: 8px; cursor: pointer; }
     .search-container { padding: 10px; background: #fff; text-align: center; border-bottom: 1px solid #ddd; }
     #search-input { padding: 10px; width: 80%; max-width: 400px; border-radius: 20px; border: 1px solid #ccc; outline: none; }
-
     .filter-container { text-align: center; padding: 15px; position: sticky; top: 0; background: #f0f2f5; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .filter-group { margin-bottom: 8px; }
-    .filter-btn { background: #fff; border: 2px solid #ddd; padding: 6px 14px; margin: 2px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.85em; transition: 0.3s; }
+    .filter-btn { background: #fff; border: 2px solid #ddd; padding: 6px 14px; margin: 2px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.85em; }
     .filter-btn.active { background: #1a73e8; color: #fff; border-color: #1a73e8; }
-
     .main-wrapper { display: flex; max-width: 1250px; margin: 20px auto; gap: 20px; padding: 0 20px; }
     .content-area { flex: 3; }
     .sidebar { flex: 1.2; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 200px; }
-    
-    .noticia-card { background: #fff; margin-bottom: 25px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; transition: 0.3s; position: relative; }
+    .noticia-card { background: #fff; margin-bottom: 25px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; position: relative; }
     .sentiment-tag { position: absolute; top: 10px; right: 10px; padding: 4px 8px; border-radius: 4px; font-size: 0.7em; font-weight: bold; color: #fff; z-index: 10; }
     .bg-positivo { background: #28a745; } .bg-negativo { background: #dc3545; } .bg-neutro { background: #6c757d; }
-
     .border-esquerda { border-left: 8px solid #d93025; } .border-direita { border-left: 8px solid #1a73e8; } .border-centro { border-left: 8px solid #6c757d; } .border-padrao { border-left: 8px solid #00c853; }
-
     .img-container { position: relative; width: 100%; padding-top: 56.25%; background: #eee; }
     .noticia-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
     .noticia-body { padding: 15px; }
     .noticia-body h2 { margin: 5px 0; font-size: 1.3em; color: #1a73e8; line-height: 1.3; }
     
+    /* Espaço de Anúncio */
+    .ad-slot { background: #e9ebee; margin: 20px 0; padding: 20px; border-radius: 8px; border: 2px dashed #bbb; text-align: center; color: #777; font-size: 0.9em; }
+
     .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow-y: auto; }
     .modal-content { background: #fff; margin: 30px auto; padding: 30px; width: 90%; max-width: 750px; border-radius: 12px; position: relative; line-height: 1.7; }
     .fechar-modal { position: absolute; right: 20px; top: 10px; font-size: 30px; cursor: pointer; }
-    
     @media (max-width: 800px) { .main-wrapper { flex-direction: column; } .weather-widget { position: static; margin-top: 10px; } }
 </style>
 """
@@ -78,44 +69,32 @@ JS = """
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/2.0.2/timeago.min.js"></script>
 <script>
-    // SISTEMA DE CLIMA COM PERSISTÊNCIA (BANCO DE DADOS LOCAL)
     async function carregarClima(cidadeManual = null) {
         const display = document.getElementById('weather-display');
         let lat, lon, nomeCidade;
-
-        // Recupera do "Banco de Dados" do navegador
         const cidadeSalva = cidadeManual || localStorage.getItem('user_city');
-
         try {
             if (cidadeSalva) {
                 const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${cidadeSalva}&count=1&language=pt`);
                 const geoData = await geoRes.json();
-                if (!geoData.results) throw new Error();
-                lat = geoData.results[0].latitude;
-                lon = geoData.results[0].longitude;
-                nomeCidade = geoData.results[0].name;
-                localStorage.setItem('user_city', nomeCidade); // Salva no banco
+                lat = geoData.results[0].latitude; lon = geoData.results[0].longitude; nomeCidade = geoData.results[0].name;
+                localStorage.setItem('user_city', nomeCidade);
             } else {
                 const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej));
-                lat = pos.coords.latitude;
-                lon = pos.coords.longitude;
+                lat = pos.coords.latitude; lon = pos.coords.longitude;
                 const revGeo = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`);
                 const revData = await revGeo.json();
                 nomeCidade = revData.address.city || revData.address.town || "Sua Região";
             }
-
             const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
             const wData = await wRes.json();
-            const temp = Math.round(wData.current_weather.temperature);
-            display.innerHTML = `<span onclick="alterarCidade(event)" class="weather-city">📍 ${nomeCidade}</span>: <b>${temp}°C</b> ☀️`;
-        } catch (e) {
-            display.innerHTML = `<span onclick="alterarCidade(event)">📍 Definir Local</span>`;
-        }
+            display.innerHTML = `<span onclick="alterarCidade(event)" class="weather-city">📍 ${nomeCidade}</span>: <b>${Math.round(wData.current_weather.temperature)}°C</b> ☀️`;
+        } catch (e) { display.innerHTML = `<span onclick="alterarCidade(event)">📍 Definir Local</span>`; }
     }
 
     function alterarCidade(e) {
         e.stopPropagation();
-        const nova = prompt("Para qual cidade deseja mudar?");
+        const nova = prompt("Cidade:");
         if (nova) carregarClima(nova);
     }
 
@@ -124,9 +103,7 @@ JS = """
         const cards = document.querySelectorAll('.noticia-card');
         idx = lunr(function () {
             this.field('titulo'); this.field('categoria'); this.ref('id');
-            cards.forEach(card => {
-                this.add({ id: card.getAttribute('data-id'), titulo: card.querySelector('h2').innerText, categoria: card.getAttribute('data-categoria') });
-            });
+            cards.forEach(card => this.add({ id: card.getAttribute('data-id'), titulo: card.querySelector('h2').innerText, categoria: card.getAttribute('data-categoria') }));
         });
     }
 
@@ -140,20 +117,13 @@ JS = """
 
     function abrirMateria(id) { document.getElementById('modal-' + id).style.display = 'block'; document.body.style.overflow = 'hidden'; }
     function fecharMateria(id) { document.getElementById('modal-' + id).style.display = 'none'; document.body.style.overflow = 'auto'; }
-
-    window.onclick = function(event) {
-        if (event.target.className === 'modal') {
-            event.target.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-    };
+    window.onclick = function(e) { if (e.target.className === 'modal') fecharMateria(e.target.id.split('-')[1]); };
 
     function filtrarNoticias(cat, btn) {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         document.querySelectorAll('.noticia-card').forEach(card => {
-            const cardCat = card.getAttribute('data-categoria').toLowerCase();
-            card.style.display = (cat === 'todas' || cardCat.includes(cat.toLowerCase())) ? 'block' : 'none';
+            card.style.display = (cat === 'todas' || card.getAttribute('data-categoria').toLowerCase().includes(cat.toLowerCase())) ? 'block' : 'none';
         });
     }
 
@@ -164,19 +134,20 @@ JS = """
 def processar_noticia(titulo, resumo, categoria):
     if not model: return f"[MANCHETE] {titulo} [MATERIA] {resumo} [SENTIMENTO] Neutro [FIM]"
     prompt = f"Analista. Cat: {categoria}. Título: {titulo}. Resumo: {resumo}. Gere: [MANCHETE] (Curta) [MATERIA] (3 parágrafos) [SENTIMENTO] (Positivo, Negativo ou Neutro) [FIM]"
-    try:
-        res = model.generate_content(prompt); return res.text
+    try: return model.generate_content(prompt).text
     except: return f"[MANCHETE] {titulo} [MATERIA] {resumo} [SENTIMENTO] Neutro [FIM]"
 
 def gerar_pagina_individual(id_noticia, manchete, materia, img, cat, sentimento):
-    if not os.path.exists("materia"): os.makedirs("materia")
-    html = f"<!DOCTYPE html><html><head><meta charset='UTF-8'>{CSS}</head><body><header><h1>Portal IA News</h1><a href='../index.html'>← Voltar</a></header><div class='modal-content'><img src='{img}' style='width:100%'><h1>{manchete}</h1><p>{materia}</p></div></body></html>"
+    # CORREÇÃO: exist_ok=True impede erro de concorrência nas Threads
+    os.makedirs("materia", exist_ok=True)
+    html = f"<!DOCTYPE html><html><head><meta charset='UTF-8'>{CSS}</head><body><header><h1>Portal IA</h1><a href='../index.html'>← Voltar</a></header><div class='modal-content'><img src='{img}' style='width:100%'><h1>{manchete}</h1><p>{materia}</p></div></body></html>"
     with open(f"materia/{id_noticia}.html", "w", encoding="utf-8") as f: f.write(html)
 
 def extrair_noticias_da_fonte(item):
     cat, url = item
     feed = feedparser.parse(url)
     cards_html, hist_html = "", ""
+    adicionadas = 0
     for entry in feed.entries[:5]:
         texto_ia = processar_noticia(entry.title, entry.get('summary', ''), cat)
         try:
@@ -190,7 +161,6 @@ def extrair_noticias_da_fonte(item):
         if 'media_content' in entry: img = entry.media_content[0].get('url', img)
         
         gerar_pagina_individual(id_noticia, manchete, materia, img, cat, sentimento)
-        
         classe_sent = f"bg-{sentimento.lower()}"
         classe_cor = "border-esquerda" if "Esquerda" in cat else "border-direita" if "Direita" in cat else "border-centro" if "Centro" in cat else "border-padrao"
         
@@ -208,6 +178,12 @@ def extrair_noticias_da_fonte(item):
             <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('{id_noticia}')">&times;</span>
             <img src="{img}" style="width:100%; border-radius:8px;"><h1>{manchete}</h1><p>{materia.replace(chr(10), '<br>')}</p></div>
         </div>'''
+        
+        # Inserção de Anúncio a cada 3 cards nesta fonte
+        adicionadas += 1
+        if adicionadas == 3:
+            cards_html += '<div class="ad-slot">🚀 Anúncio: Espaço disponível para publicidade</div>'
+            
         hist_html += f'<div class="historico-item"><b>{cat}</b>: {manchete}</div>'
     return cards_html, hist_html
 
@@ -215,8 +191,8 @@ def atualizar_portal():
     if os.path.exists("index.html"):
         with open("index.html", "r", encoding="utf-8") as f:
             soup = BeautifulSoup(f.read(), 'html.parser')
-            antigas = "".join([str(c) for c in soup.find_all(class_='noticia-card')[:50]])
-            hist_antigo = "".join([str(i) for i in soup.find_all(class_='historico-item')[:60]])
+            antigas = "".join([str(c) for c in soup.find_all(class_='noticia-card')[:40]])
+            hist_antigo = "".join([str(i) for i in soup.find_all(class_='historico-item')[:50]])
     else: antigas, hist_antigo = "", ""
 
     with ThreadPoolExecutor(max_workers=10) as ex:
@@ -225,7 +201,7 @@ def atualizar_portal():
     novas = "".join([r[0] for r in res]); novos_h = "".join([r[1] for r in res])
     
     filtros = """
-    <div class="search-container"><input type="text" id="search-input" placeholder="Pesquisar notícias..." onkeyup="pesquisar()"></div>
+    <div class="search-container"><input type="text" id="search-input" placeholder="Pesquisar..." onkeyup="pesquisar()"></div>
     <div class="filter-container">
         <div class="filter-group">
             <button class="filter-btn active" onclick="filtrarNoticias('todas', this)">🏠 Todas</button>
@@ -238,9 +214,6 @@ def atualizar_portal():
             <button class="filter-btn" onclick="filtrarNoticias('Games', this)">🎮 Games</button>
             <button class="filter-btn" onclick="filtrarNoticias('C#', this)">🎯 C#</button>
             <button class="filter-btn" onclick="filtrarNoticias('Cyber', this)">🛡️ Cyber</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Tech', this)">🚀 Tech</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Esportes', this)">⚽ Esportes</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Mundo', this)">🌎 Mundo</button>
         </div>
     </div>"""
 
