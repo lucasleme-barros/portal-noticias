@@ -41,14 +41,37 @@ CSS = """
 <style>
     body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; color: #1c1e21; }
     header { background: #fff; padding: 25px; text-align: center; border-bottom: 3px solid #d93025; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    
+    .filter-container { 
+        text-align: center; 
+        margin: 0; 
+        padding: 15px;
+        position: sticky;
+        top: 0;
+        background: #f0f2f5;
+        z-index: 100;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .filter-btn {
+        background: #fff;
+        border: 2px solid #ddd;
+        padding: 8px 18px;
+        margin: 5px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+    .filter-btn:hover { background: #e8f0fe; border-color: #1a73e8; }
+    .filter-btn.active { background: #1a73e8; color: #fff; border-color: #1a73e8; }
+
     .main-wrapper { display: flex; max-width: 1000px; margin: 20px auto; gap: 20px; padding: 0 20px; }
     .content-area { flex: 3; }
-    .sidebar { flex: 1; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 10px; }
+    .sidebar { flex: 1; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 80px; }
     
     .noticia-card { background: #fff; margin-bottom: 30px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; transition: 0.3s; }
     .noticia-card:hover { transform: translateY(-5px); }
     
-    /* CORES DE POLÍTICA */
     .border-esquerda { border-left: 8px solid #d93025 !important; }
     .border-direita { border-left: 8px solid #1a73e8 !important; }
     .border-centro { border-left: 8px solid #6c757d !important; }
@@ -78,12 +101,28 @@ function fecharMateria(id) {
     document.getElementById('modal-' + id).style.display = 'none';
     document.body.style.overflow = 'auto';
 }
+
+function filtrarNoticias(categoria, btn) {
+    const cards = document.querySelectorAll('.noticia-card');
+    const botoes = document.querySelectorAll('.filter-btn');
+    
+    botoes.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    cards.forEach(card => {
+        const cardCat = card.getAttribute('data-categoria');
+        if (categoria === 'todas' || cardCat.includes(categoria)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
 </script>
 """
 
 def processar_noticia(titulo, resumo, categoria):
     if model:
-        # Prompt ajustado para entender a categoria política
         prompt = f"Aja como um analista de notícias. Categoria: {categoria}. Título: {titulo}. Resumo: {resumo}. Gere: [MANCHETE] (Curta) [MATERIA] (3 parágrafos focados no contexto da categoria) [FIM]"
         try:
             response = model.generate_content(prompt)
@@ -102,11 +141,11 @@ def atualizar_portal():
                 area_news = soup.find(class_='content-area')
                 area_hist = soup.find(class_='sidebar-list')
                 if area_news:
-                    cards = area_news.find_all(class_='noticia-card')[:15]
-                    modais = area_news.find_all(class_='modal')[:15]
+                    cards = area_news.find_all(class_='noticia-card')[:20]
+                    modais = area_news.find_all(class_='modal')[:20]
                     antigas_noticias = "".join([str(c) for c in cards]) + "".join([str(m) for m in modais])
                 if area_hist:
-                    itens = area_hist.find_all(class_='historico-item')[:20]
+                    itens = area_hist.find_all(class_='historico-item')[:25]
                     antigo_historico = "".join([str(i) for i in itens])
         except: pass
 
@@ -119,7 +158,6 @@ def atualizar_portal():
             entry = feed.entries[0]
             texto_ia = processar_noticia(entry.title, entry.summary, cat)
             
-            # Lógica de cor baseada na categoria
             classe_cor = "border-padrao"
             if "Esquerda" in cat: classe_cor = "border-esquerda"
             elif "Direita" in cat: classe_cor = "border-direita"
@@ -139,7 +177,7 @@ def atualizar_portal():
                     if 'image' in link.get('type', ''): img = link.get('href')
 
             novas_noticias += f'''
-            <div class="noticia-card {classe_cor}" onclick="abrirMateria('{id_noticia}')">
+            <div class="noticia-card {classe_cor}" data-categoria="{cat}" onclick="abrirMateria('{id_noticia}')">
                 <div class="img-container">
                     <img src="{img}" class="noticia-img">
                 </div>
@@ -164,7 +202,33 @@ def atualizar_portal():
             novos_historicos += f'<div class="historico-item"><b>{cat}</b>: {manchete}</div>'
             time.sleep(1)
 
-    final_html = f"<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'>{CSS}</head><body><header><h1>Portal IA News</h1></header><div class='main-wrapper'><div class='content-area'>{novas_noticias}{antigas_noticias}</div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'>{novos_historicos}{antigo_historico}</div></div></div>{JS}</body></html>"
+    botoes_filtro = """
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filtrarNoticias('todas', this)">Todas</button>
+        <button class="filter-btn" onclick="filtrarNoticias('Esquerda', this)">Esquerda</button>
+        <button class="filter-btn" onclick="filtrarNoticias('Centro', this)">Centro</button>
+        <button class="filter-btn" onclick="filtrarNoticias('Direita', this)">Direita</button>
+    </div>
+    """
+
+    final_html = f"""
+    <!DOCTYPE html>
+    <html lang='pt-BR'>
+    <head><meta charset='UTF-8'>{CSS}</head>
+    <body>
+        <header><h1>Portal IA News</h1></header>
+        {botoes_filtro}
+        <div class='main-wrapper'>
+            <div class='content-area'>{novas_noticias}{antigas_noticias}</div>
+            <div class='sidebar'>
+                <h3>Histórico</h3>
+                <div class='sidebar-list'>{novos_historicos}{antigo_historico}</div>
+            </div>
+        </div>
+        {JS}
+    </body>
+    </html>
+    """
     
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(final_html)
