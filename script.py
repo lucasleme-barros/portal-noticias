@@ -19,70 +19,51 @@ agora_str = datetime.now(fuso).strftime('%d/%m/%Y %H:%M')
 
 # --- DICIONÁRIO DE FONTES (FEEDS) ---
 FEEDS = {
-    # MUNDO
     "Mundo_BBC": "https://feeds.bbci.co.uk/portuguese/rss.xml",
     "Mundo_Reuters": "https://www.reutersagency.com/feed/",
     "Mundo_DW": "https://rss.dw.com/rdf/rss-br-top",
     "Mundo_ElPais": "https://brasil.elpais.com/rss/brasil/portada.xml",
     "Mundo_RFI": "https://www.portugues.rfi.fr/geral/rss",
-    
-    # ESPORTES
     "Esportes_GE": "https://ge.globo.com/rss/ge/",
     "Esportes_ESPN": "https://www.espn.com.br/rss/noticias",
     "Esportes_UOL": "https://noticias.uol.com.br/esporte/index.xml",
     "Esportes_Lance": "https://www.lance.com.br/rss/index.xml",
     "Esportes_Gazeta": "https://www.gazetaesportiva.com/feed/",
-
-    # GAMES
     "Games_IGN": "https://br.ign.com/feed.xml",
     "Games_Eurogamer": "https://www.eurogamer.pt/rss",
     "Games_Voxel": "https://www.voxel.com.br/rss",
     "Games_TheEnemy": "https://www.theenemy.com.br/rss",
     "Games_GameSpot": "https://www.gamespot.com/feeds/news/",
-
-    # HARDWARE
     "Hardware_Adrenaline": "https://www.adrenaline.com.br/feed/",
     "Hardware_TechPowerUp": "https://www.techpowerup.com/rss/news",
     "Hardware_Toms": "https://www.tomshardware.com/rss.xml",
     "Hardware_Guru3D": "https://www.guru3d.com/index.php?ct=news&action=rss",
     "Hardware_Wccftech": "https://wccftech.com/category/hardware/feed/",
-
-    # TECNOLOGIA
     "Tech_G1": "https://g1.globo.com/rss/g1/tecnologia/",
     "Tech_Crunch": "https://techcrunch.com/feed/",
     "Tech_Wired": "https://www.wired.com/feed/rss",
     "Tech_Gizmodo": "https://gizmodo.uol.com.br/feed/",
     "Tech_OlharDigital": "https://olhardigital.com.br/feed/",
-
-    # DOTNET & C#
     "C#_MS_Blog": "https://devblogs.microsoft.com/dotnet/feed/",
     "C#_Corner": "https://www.c-sharpcorner.com/rss/news",
     "C#_AndrewLock": "https://andrewlock.net/rss.xml",
     "C#_DZone": "https://dzone.com/feeds/zones/dotnet.rss",
     "C#_MS_Setup": "https://devblogs.microsoft.com/setup/feed/",
-
-    # DEV BRASIL
     "Dev_InfoQ": "https://www.infoq.com/br/feed/",
     "Dev_TabNews": "https://www.tabnews.com.br/recentes/rss",
     "Dev_BrazilJS": "https://braziljs.org/rss/",
     "Dev_Alura": "https://www.alura.com.br/artigos/rss",
     "Dev_Medium": "https://medium.com/feed/tag/programação",
-
-    # CYBERSECURITY
     "Cyber_CISO": "https://www.cisoadvisor.com.br/rss-feed/",
     "Cyber_HackerNews": "https://feeds.feedburner.com/TheHackersNews",
     "Cyber_DarkReading": "https://www.darkreading.com/rss.xml",
     "Cyber_WeLiveSecurity": "https://www.welivesecurity.com/br/feed/",
     "Cyber_Krebs": "https://krebsonsecurity.com/feed/",
-
-    # GERAL BRASIL
     "Geral_CNN": "https://www.cnnbrasil.com.br/feed/",
     "Geral_Folha": "https://feeds.folha.uol.com.br/emcimadahora/rss091.xml",
     "Geral_Estadao": "https://www.estadao.com.br/arc/outboundfeeds/rss/categoria/brasil/",
     "Geral_Poder360": "https://www.poder360.com.br/feed/",
     "Geral_Nexo": "https://www.nexojornal.com.br/rss/",
-
-    # POLÍTICA
     "Esquerda_247": "https://www.brasil247.com/feed",
     "Esquerda_DCM": "https://www.diariodocentrodomundo.com.br/feed/",
     "Centro_CNN": "https://www.cnnbrasil.com.br/politica/feed/",
@@ -91,76 +72,47 @@ FEEDS = {
     "Direita_Oeste": "https://revistaoeste.com/feed/"
 }
 
-# --- ESTILIZAÇÃO CSS ---
 CSS = """
 <style>
     body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; color: #1c1e21; }
     header { background: #fff; padding: 25px; text-align: center; border-bottom: 3px solid #d93025; }
-    
-    .filter-container { 
-        text-align: center; 
-        padding: 15px; 
-        position: sticky; 
-        top: 0; 
-        background: #f0f2f5; 
-        z-index: 100; 
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-    
-    .filter-btn { 
-        background: #fff; border: 2px solid #ddd; padding: 6px 14px; margin: 2px; 
-        border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.9em;
-    }
+    .filter-container { text-align: center; padding: 15px; position: sticky; top: 0; background: #f0f2f5; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 8px; }
+    .filter-btn { background: #fff; border: 2px solid #ddd; padding: 6px 14px; margin: 2px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 0.9em; }
     .filter-btn:hover { background: #e8f0fe; border-color: #1a73e8; }
     .filter-btn.active { background: #1a73e8; color: #fff; border-color: #1a73e8; }
-
     .main-wrapper { display: flex; max-width: 1250px; margin: 20px auto; gap: 20px; padding: 0 20px; }
     .content-area { flex: 3; }
     .sidebar { flex: 1.2; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 150px; }
-    
-    .noticia-card { background: #fff; margin-bottom: 30px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; }
+    .noticia-card { background: #fff; margin-bottom: 30px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; transition: 0.3s; }
     .border-esquerda { border-left: 10px solid #d93025 !important; }
     .border-direita { border-left: 10px solid #1a73e8 !important; }
     .border-centro { border-left: 10px solid #6c757d !important; }
     .border-padrao { border-left: 10px solid #00c853; }
-
     .img-container { position: relative; width: 100%; padding-top: 56.25%; background: #eee; }
     .noticia-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
     .noticia-body { padding: 20px; }
     .noticia-body h2 { margin: 10px 0; font-size: 1.4em; color: #1a73e8; line-height: 1.2; }
-    
     .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow-y: auto; }
-    .modal-content { background: #fff; margin: 30px auto; padding: 30px; width: 90%; max-width: 750px; border-radius: 12px; position: relative; }
+    .modal-content { background: #fff; margin: 30px auto; padding: 30px; width: 90%; max-width: 750px; border-radius: 12px; position: relative; line-height: 1.6; }
     .fechar-modal { position: absolute; right: 20px; top: 10px; font-size: 35px; cursor: pointer; color: #aaa; }
-    
     .historico-item { font-size: 0.85em; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
     @media (max-width: 800px) { .main-wrapper { flex-direction: column; } .sidebar { position: static; } }
 </style>
 """
 
-# --- LÓGICA JAVASCRIPT ---
 JS = """
 <script>
 function abrirMateria(id) { document.getElementById('modal-' + id).style.display = 'block'; document.body.style.overflow = 'hidden'; }
 function fecharMateria(id) { document.getElementById('modal-' + id).style.display = 'none'; document.body.style.overflow = 'auto'; }
-
 function filtrarNoticias(categoria, btn) {
     const cards = document.querySelectorAll('.noticia-card');
     const botoes = document.querySelectorAll('.filter-btn');
     botoes.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-
     cards.forEach(card => {
         const cardCat = card.getAttribute('data-categoria').toLowerCase();
         const filtro = categoria.toLowerCase();
-        if (filtro === 'todas' || cardCat.includes(filtro)) {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
-        }
+        card.style.display = (filtro === 'todas' || cardCat.includes(filtro)) ? 'block' : 'none';
     });
 }
 </script>
@@ -168,7 +120,7 @@ function filtrarNoticias(categoria, btn) {
 
 def processar_noticia(titulo, resumo, categoria):
     if model:
-        prompt = f"Aja como jornalista analítico. Categoria: {categoria}. Título: {titulo}. Resumo: {resumo}. Gere: [MANCHETE] (Curta) [MATERIA] (3 parágrafos) [FIM]"
+        prompt = f"Aja como jornalista. Categoria: {categoria}. Título: {titulo}. Resumo: {resumo}. Gere: [MANCHETE] (Curta) [MATERIA] (3 parágrafos) [FIM]"
         try:
             response = model.generate_content(prompt)
             return response.text
@@ -180,7 +132,6 @@ def atualizar_portal():
     antigo_historico = ""
     titulos_vistos = set()
     
-    # Carrega conteúdo existente para manter histórico
     if os.path.exists("index.html"):
         try:
             with open("index.html", "r", encoding="utf-8") as f:
@@ -199,7 +150,6 @@ def atualizar_portal():
     novas_noticias = ""
     novos_historicos = ""
     
-    # LOOP DE CAPTURA COM 5 NOTÍCIAS POR FONTE
     for cat, url in FEEDS.items():
         print(f"Buscando: {cat}")
         feed = feedparser.parse(url)
@@ -207,36 +157,37 @@ def atualizar_portal():
         
         for entry in feed.entries:
             if adicionadas_nesta_fonte >= 5: break
-            
             titulo_limpo = entry.title.strip()
             if titulo_limpo in titulos_vistos: continue
             titulos_vistos.add(titulo_limpo)
 
             texto_ia = processar_noticia(entry.title, entry.get('summary', ''), cat)
             
-            # Cores por Espectro Político
             classe_cor = "border-padrao"
             if "Esquerda" in cat: classe_cor = "border-esquerda"
             elif "Direita" in cat: classe_cor = "border-direita"
             elif "Centro" in cat: classe_cor = "border-centro"
 
             try:
-                partes = texto_ia.split("[MANCHETE]")
-                manchete = partes[1].split("[MATERIA]")[0].strip()
-                materia = partes[1].split("[MATERIA]")[1].split("[FIM]")[0].strip()
+                manchete = texto_ia.split("[MANCHETE]")[1].split("[MATERIA]")[0].strip()
+                materia = texto_ia.split("[MATERIA]")[1].split("[FIM]")[0].strip()
             except:
-                manchete, materia = entry.title, entry.get('summary', 'Sem resumo disponível.')
+                manchete, materia = entry.title, entry.get('summary', '')
 
             id_noticia = int(time.time() * 1000) + hash(cat + titulo_limpo)
             
-            # Busca de Imagem
+            # BUSCA DE IMAGEM ROBUSTA (CORREÇÃO KEYERROR)
             img = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"
-            if 'media_content' in entry: img = entry.media_content[0]['url']
-            elif 'links' in entry:
-                for link in entry.links:
-                    if 'image' in link.get('type', ''): img = link.get('href')
+            try:
+                if 'media_content' in entry and len(entry.media_content) > 0:
+                    img = entry.media_content[0].get('url', img)
+                elif 'links' in entry:
+                    for link in entry.links:
+                        if 'image' in link.get('type', ''): img = link.get('href', img)
+                elif 'enclosures' in entry and len(entry.enclosures) > 0:
+                    img = entry.enclosures[0].get('url', img)
+            except: pass
 
-            # Geração do HTML do Card e Modal
             novas_noticias += f'''
             <div class="noticia-card {classe_cor}" data-categoria="{cat}" onclick="abrirMateria('{id_noticia}')">
                 <div class="img-container"><img src="{img}" class="noticia-img"></div>
@@ -249,22 +200,18 @@ def atualizar_portal():
                 <div class="modal-content">
                     <span class="fechar-modal" onclick="fecharMateria('{id_noticia}')">&times;</span>
                     <div class="img-container" style="margin-bottom:20px;"><img src="{img}" class="noticia-img"></div>
-                    <small>{cat.upper()}</small>
                     <h1>{manchete}</h1>
-                    <div style="font-size:1.1em; color:#333; line-height:1.7;">{materia.replace(chr(10), '<br><br>')}</div>
+                    <div style="font-size:1.1em; color:#333;">{materia.replace(chr(10), '<br><br>')}</div>
                 </div>
             </div>
             '''
             novos_historicos += f'<div class="historico-item"><b>{cat}</b>: {manchete}</div>'
             adicionadas_nesta_fonte += 1
-            time.sleep(1.3) # Delay para evitar bloqueio da API
+            time.sleep(1.2)
 
-    # --- BOTÕES DE FILTRO ---
     botoes_filtro = """
     <div class="filter-container">
-        <div>
-            <button class="filter-btn active" onclick="filtrarNoticias('todas', this)">🏠 Todas</button>
-        </div>
+        <div><button class="filter-btn active" onclick="filtrarNoticias('todas', this)">🏠 Todas</button></div>
         <div>
             <small><b>POLÍTICA:</b></small>
             <button class="filter-btn" style="border-color:#d93025" onclick="filtrarNoticias('Esquerda', this)">Esquerda</button>
@@ -284,21 +231,7 @@ def atualizar_portal():
     </div>
     """
 
-    final_html = f"""
-    <!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><title>Portal IA News</title>{CSS}</head>
-    <body>
-        <header><h1>Portal IA News</h1><p>Última atualização: {agora_str}</p></header>
-        {botoes_filtro}
-        <div class='main-wrapper'>
-            <div class='content-area'>{novas_noticias}{antigas_noticias}</div>
-            <div class='sidebar'>
-                <h3>Histórico de Captura</h3>
-                <div class='sidebar-list'>{novos_historicos}{antigo_historico}</div>
-            </div>
-        </div>
-        {JS}
-    </body></html>
-    """
+    final_html = f"<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><title>Portal IA</title>{CSS}</head><body><header><h1>Portal IA News</h1></header>{botoes_filtro}<div class='main-wrapper'><div class='content-area'>{novas_noticias}{antigas_noticias}</div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'>{novos_historicos}{antigo_historico}</div></div></div>{JS}</body></html>"
     
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(final_html)
