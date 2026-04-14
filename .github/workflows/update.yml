@@ -2,7 +2,8 @@ name: Atualizar Site de Notícias
 
 on:
   schedule:
-    - cron: '0 * * * *' # Roda exatamente no minuto 0 de cada hora
+    - cron: '0 * * * *'   # Tenta rodar no minuto 0
+    - cron: '30 * * * *'  # Tenta rodar no minuto 30
   workflow_dispatch: # Mantém o botão de rodar manual
 
 jobs:
