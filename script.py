@@ -38,8 +38,10 @@ CSS = """
     body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; color: #1c1e21; }
     header { background: #fff; padding: 25px; text-align: center; border-bottom: 3px solid #d93025; position: relative; }
     
-    /* Clima no canto superior direito */
-    .weather-widget { position: absolute; top: 10px; right: 20px; font-size: 0.85em; color: #555; background: #f9f9f9; padding: 5px 12px; border-radius: 15px; border: 1px solid #eee; }
+    /* Clima com Banco de Dados Local */
+    .weather-widget { position: absolute; top: 10px; right: 20px; font-size: 0.85em; color: #555; background: #f9f9f9; padding: 5px 12px; border-radius: 15px; border: 1px solid #eee; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; }
+    .weather-widget:hover { background: #e8f0fe; border-color: #1a73e8; }
+    .weather-city { font-weight: bold; text-decoration: underline; }
 
     .search-container { padding: 10px; background: #fff; text-align: center; border-bottom: 1px solid #ddd; }
     #search-input { padding: 10px; width: 80%; max-width: 400px; border-radius: 20px; border: 1px solid #ccc; outline: none; }
@@ -68,7 +70,7 @@ CSS = """
     .modal-content { background: #fff; margin: 30px auto; padding: 30px; width: 90%; max-width: 750px; border-radius: 12px; position: relative; line-height: 1.7; }
     .fechar-modal { position: absolute; right: 20px; top: 10px; font-size: 30px; cursor: pointer; }
     
-    @media (max-width: 800px) { .main-wrapper { flex-direction: column; } .weather-widget { position: static; margin-bottom: 10px; } }
+    @media (max-width: 800px) { .main-wrapper { flex-direction: column; } .weather-widget { position: static; margin-top: 10px; } }
 </style>
 """
 
@@ -76,16 +78,45 @@ JS = """
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/2.0.2/timeago.min.js"></script>
 <script>
-    function carregarClima() {
+    // SISTEMA DE CLIMA COM PERSISTÊNCIA (BANCO DE DADOS LOCAL)
+    async function carregarClima(cidadeManual = null) {
         const display = document.getElementById('weather-display');
-        if (!navigator.geolocation) return;
-        navigator.geolocation.getCurrentPosition(pos => {
-            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`)
-                .then(res => res.json()).then(data => {
-                    const temp = Math.round(data.current_weather.temperature);
-                    display.innerHTML = `📍 ${temp}°C ☀️`;
-                });
-        });
+        let lat, lon, nomeCidade;
+
+        // Recupera do "Banco de Dados" do navegador
+        const cidadeSalva = cidadeManual || localStorage.getItem('user_city');
+
+        try {
+            if (cidadeSalva) {
+                const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${cidadeSalva}&count=1&language=pt`);
+                const geoData = await geoRes.json();
+                if (!geoData.results) throw new Error();
+                lat = geoData.results[0].latitude;
+                lon = geoData.results[0].longitude;
+                nomeCidade = geoData.results[0].name;
+                localStorage.setItem('user_city', nomeCidade); // Salva no banco
+            } else {
+                const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej));
+                lat = pos.coords.latitude;
+                lon = pos.coords.longitude;
+                const revGeo = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`);
+                const revData = await revGeo.json();
+                nomeCidade = revData.address.city || revData.address.town || "Sua Região";
+            }
+
+            const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+            const wData = await wRes.json();
+            const temp = Math.round(wData.current_weather.temperature);
+            display.innerHTML = `<span onclick="alterarCidade(event)" class="weather-city">📍 ${nomeCidade}</span>: <b>${temp}°C</b> ☀️`;
+        } catch (e) {
+            display.innerHTML = `<span onclick="alterarCidade(event)">📍 Definir Local</span>`;
+        }
+    }
+
+    function alterarCidade(e) {
+        e.stopPropagation();
+        const nova = prompt("Para qual cidade deseja mudar?");
+        if (nova) carregarClima(nova);
     }
 
     let idx;
@@ -213,7 +244,7 @@ def atualizar_portal():
         </div>
     </div>"""
 
-    final = f"<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'>{CSS}</head><body><header><div class='weather-widget' id='weather-display'>⏳</div><h1>Portal IA News</h1></header>{filtros}<div class='main-wrapper'><div class='content-area'>{novas}{antigas}</div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'>{novos_h}{hist_antigo}</div></div></div>{JS}</body></html>"
+    final = f"<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'>{CSS}</head><body><header><div class='weather-widget' id='weather-display' onclick='alterarCidade(event)'>⏳</div><h1>Portal IA News</h1></header>{filtros}<div class='main-wrapper'><div class='content-area'>{novas}{antigas}</div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'>{novos_h}{hist_antigo}</div></div></div>{JS}</body></html>"
     with open("index.html", "w", encoding="utf-8") as f: f.write(final)
 
 if __name__ == "__main__": atualizar_portal()
