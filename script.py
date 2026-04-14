@@ -18,7 +18,6 @@ else:
 fuso = pytz.timezone('America/Sao_Paulo')
 agora_str = datetime.now(fuso).strftime('%d/%m/%Y %H:%M')
 
-# --- DICIONÁRIO DE FONTES (FEEDS) ---
 FEEDS = {
     "Mundo_BBC": "https://feeds.bbci.co.uk/portuguese/rss.xml",
     "Mundo_Reuters": "https://www.reutersagency.com/feed/",
@@ -39,6 +38,7 @@ CSS = """
     body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; color: #1c1e21; }
     header { background: #fff; padding: 20px; text-align: center; border-bottom: 3px solid #d93025; }
     
+    .weather-widget { background: #fff; padding: 10px; text-align: center; font-size: 0.9em; border-bottom: 1px solid #eee; display: flex; justify-content: center; align-items: center; gap: 10px; color: #555; }
     .search-container { padding: 10px; background: #fff; text-align: center; border-bottom: 1px solid #ddd; }
     #search-input { padding: 10px; width: 80%; max-width: 400px; border-radius: 20px; border: 1px solid #ccc; outline: none; }
 
@@ -48,11 +48,9 @@ CSS = """
 
     .main-wrapper { display: flex; max-width: 1200px; margin: 20px auto; gap: 20px; padding: 0 20px; }
     .content-area { flex: 3; }
-    .sidebar { flex: 1.2; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 180px; }
+    .sidebar { flex: 1.2; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 220px; }
     
     .noticia-card { background: #fff; margin-bottom: 25px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; transition: 0.3s; position: relative; }
-    .noticia-card:hover { transform: translateY(-3px); }
-    
     .sentiment-tag { position: absolute; top: 10px; right: 10px; padding: 4px 8px; border-radius: 4px; font-size: 0.7em; font-weight: bold; color: #fff; z-index: 10; }
     .bg-positivo { background: #28a745; } .bg-negativo { background: #dc3545; } .bg-neutro { background: #6c757d; }
 
@@ -75,23 +73,25 @@ JS = """
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/2.0.2/timeago.min.js"></script>
 <script>
-    // Inicializar Tempo Relativo
-    timeago().render(document.querySelectorAll('.timeago'), 'pt_BR');
+    function carregarClima() {
+        const display = document.getElementById('weather-display');
+        if (!navigator.geolocation) return;
+        navigator.geolocation.getCurrentPosition(pos => {
+            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`)
+                .then(res => res.json()).then(data => {
+                    const temp = Math.round(data.current_weather.temperature);
+                    display.innerHTML = `📍 Sua localização: <b>${temp}°C</b> ☀️`;
+                });
+        });
+    }
 
-    // Inicializar Motor de Busca
     let idx;
     function buildIndex() {
         const cards = document.querySelectorAll('.noticia-card');
         idx = lunr(function () {
-            this.field('titulo');
-            this.field('categoria');
-            this.ref('id');
+            this.field('titulo'); this.field('categoria'); this.ref('id');
             cards.forEach(card => {
-                this.add({
-                    id: card.getAttribute('data-id'),
-                    titulo: card.querySelector('h2').innerText,
-                    categoria: card.getAttribute('data-categoria')
-                });
+                this.add({ id: card.getAttribute('data-id'), titulo: card.querySelector('h2').innerText, categoria: card.getAttribute('data-categoria') });
             });
         });
     }
@@ -100,55 +100,50 @@ JS = """
         const query = document.getElementById('search-input').value.toLowerCase();
         const cards = document.querySelectorAll('.noticia-card');
         if (!query) { cards.forEach(c => c.style.display = 'block'); return; }
-        
         const results = idx.search(query).map(r => r.ref);
-        cards.forEach(card => {
-            const id = card.getAttribute('data-id');
-            card.style.display = results.includes(id) ? 'block' : 'none';
-        });
+        cards.forEach(card => card.style.display = results.includes(card.getAttribute('data-id')) ? 'block' : 'none');
     }
+
+    function abrirMateria(id) { document.getElementById('modal-' + id).style.display = 'block'; document.body.style.overflow = 'hidden'; }
+    function fecharMateria(id) { document.getElementById('modal-' + id).style.display = 'none'; document.body.style.overflow = 'auto'; }
+
+    // CORREÇÃO: Fechar ao clicar fora
+    window.onclick = function(event) {
+        if (event.target.className === 'modal') {
+            event.target.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    };
 
     function filtrarNoticias(cat, btn) {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const cards = document.querySelectorAll('.noticia-card');
-        cards.forEach(card => {
+        document.querySelectorAll('.noticia-card').forEach(card => {
             const cardCat = card.getAttribute('data-categoria').toLowerCase();
             card.style.display = (cat === 'todas' || cardCat.includes(cat.toLowerCase())) ? 'block' : 'none';
         });
     }
 
-    function abrirMateria(id) { document.getElementById('modal-' + id).style.display = 'block'; }
-    function fecharMateria(id) { document.getElementById('modal-' + id).style.display = 'none'; }
-
-    window.onload = buildIndex;
+    window.onload = () => { buildIndex(); carregarClima(); timeago().render(document.querySelectorAll('.timeago'), 'pt_BR'); };
 </script>
 """
 
 def processar_noticia(titulo, resumo, categoria):
     if not model: return f"[MANCHETE] {titulo} [MATERIA] {resumo} [SENTIMENTO] Neutro [FIM]"
-    prompt = f"""Analista. Cat: {categoria}. Título: {titulo}. Resumo: {resumo}. 
-    Gere: [MANCHETE] (Curta) [MATERIA] (3 parágrafos) [SENTIMENTO] (Positivo, Negativo ou Neutro) [FIM]"""
+    prompt = f"Analista. Cat: {categoria}. Título: {titulo}. Resumo: {resumo}. Gere: [MANCHETE] (Curta) [MATERIA] (3 parágrafos) [SENTIMENTO] (Positivo, Negativo ou Neutro) [FIM]"
     try:
-        response = model.generate_content(prompt)
-        return response.text
+        res = model.generate_content(prompt); return res.text
     except: return f"[MANCHETE] {titulo} [MATERIA] {resumo} [SENTIMENTO] Neutro [FIM]"
 
 def gerar_pagina_individual(id_noticia, manchete, materia, img, cat, sentimento):
     if not os.path.exists("materia"): os.makedirs("materia")
-    html = f"""<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><title>{manchete}</title>{CSS}</head>
-    <body style='background:#fff;'><header><h1>Portal IA News</h1><a href='../index.html'>← Voltar</a></header>
-    <div class='modal-content' style='margin-top:20px; box-shadow:none;'>
-    <img src='{img}' style='width:100%; border-radius:8px;'><br><small>{cat} | Sentimento: {sentimento}</small>
-    <h1>{manchete}</h1><div style='font-size:1.2em;'>{materia.replace(chr(10), '<br><br>')}</div>
-    </div></body></html>"""
+    html = f"<!DOCTYPE html><html><head><meta charset='UTF-8'>{CSS}</head><body><header><h1>Portal IA</h1><a href='../index.html'>← Voltar</a></header><div class='modal-content'><img src='{img}' style='width:100%'><h1>{manchete}</h1><p>{materia}</p></div></body></html>"
     with open(f"materia/{id_noticia}.html", "w", encoding="utf-8") as f: f.write(html)
 
 def extrair_noticias_da_fonte(item):
     cat, url = item
     feed = feedparser.parse(url)
     cards_html, hist_html = "", ""
-    adicionadas = 0
     for entry in feed.entries[:5]:
         texto_ia = processar_noticia(entry.title, entry.get('summary', ''), cat)
         try:
@@ -156,7 +151,7 @@ def extrair_noticias_da_fonte(item):
             materia = texto_ia.split("[MATERIA]")[1].split("[SENTIMENTO]")[0].strip()
             sentimento = texto_ia.split("[SENTIMENTO]")[1].split("[FIM]")[0].strip()
         except: manchete, materia, sentimento = entry.title, entry.get('summary', ''), "Neutro"
-
+        
         id_noticia = str(int(time.time() * 1000) + hash(cat + entry.title))
         img = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"
         if 'media_content' in entry: img = entry.media_content[0].get('url', img)
@@ -165,25 +160,22 @@ def extrair_noticias_da_fonte(item):
         
         classe_sent = f"bg-{sentimento.lower()}"
         classe_cor = "border-esquerda" if "Esquerda" in cat else "border-direita" if "Direita" in cat else "border-centro" if "Centro" in cat else "border-padrao"
-        data_iso = datetime.now(fuso).isoformat()
-
+        
         cards_html += f'''
         <div class="noticia-card {classe_cor}" data-id="{id_noticia}" data-categoria="{cat}" onclick="abrirMateria('{id_noticia}')">
             <div class="sentiment-tag {classe_sent}">{sentimento}</div>
             <div class="img-container"><img src="{img}" class="noticia-img"></div>
             <div class="noticia-body">
-                <small class="timeago" datetime="{data_iso}"></small> • <small><b>{cat.upper()}</b></small>
+                <small class="timeago" datetime="{datetime.now(fuso).isoformat()}"></small> • <b>{cat.upper()}</b>
                 <h2>{manchete}</h2>
                 <a href="materia/{id_noticia}.html" style="font-size:0.8em; color:#1a73e8;" onclick="event.stopPropagation();">Link Direto</a>
             </div>
         </div>
         <div id="modal-{id_noticia}" class="modal">
             <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('{id_noticia}')">&times;</span>
-            <img src="{img}" style="width:100%; border-radius:8px;"><h1>{manchete}</h1>
-            <p>{materia.replace(chr(10), '<br><br>')}</p></div>
+            <img src="{img}" style="width:100%; border-radius:8px;"><h1>{manchete}</h1><p>{materia.replace(chr(10), '<br>')}</p></div>
         </div>'''
         hist_html += f'<div class="historico-item"><b>{cat}</b>: {manchete}</div>'
-        adicionadas += 1
     return cards_html, hist_html
 
 def atualizar_portal():
@@ -199,7 +191,9 @@ def atualizar_portal():
 
     novas = "".join([r[0] for r in res]); novos_h = "".join([r[1] for r in res])
     
-    filtros = """<div class="search-container"><input type="text" id="search-input" placeholder="Pesquisar notícias..." onkeyup="pesquisar()"></div>
+    filtros = """
+    <div class="weather-widget" id="weather-display">⏳ Carregando clima local...</div>
+    <div class="search-container"><input type="text" id="search-input" placeholder="Pesquisar notícias..." onkeyup="pesquisar()"></div>
     <div class="filter-container"><div><button class="filter-btn active" onclick="filtrarNoticias('todas', this)">🏠 Todas</button>
     <button class="filter-btn" onclick="filtrarNoticias('Esquerda', this)">🔴 Esquerda</button>
     <button class="filter-btn" onclick="filtrarNoticias('Direita', this)">🔵 Direita</button>
