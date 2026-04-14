@@ -1,18 +1,18 @@
-name: Atualizar Site de Notícias
+name: Atualizar Site de Noticias
 
 on:
   schedule:
-    - cron: '0 * * * *' # Roda a cada hora
-  workflow_dispatch: # Permite rodar manualmente
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Essencial para salvar a pasta /materia
+      contents: write
 
     steps:
-      - name: Checkout do código
+      - name: Checkout do codigo
         uses: actions/checkout@v4
 
       - name: Instalar Python
@@ -20,19 +20,25 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Instalar Dependências
+      - name: Instalar Dependencias
         run: |
           pip install google-generativeai feedparser beautifulsoup4 pytz
 
-      - name: Rodar Script de Notícias
+      - name: Rodar Script de Noticias
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: python script.py
 
-      - name: Publicar alterações
+      - name: Publicar alteracoes
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git add index.html materia/*.html # Garante que as novas matérias entrem
-          git commit -m "Update: Novas notícias e matérias individuais [$(date)]" || exit 0
-          git push
+          
+          # Garante que a pasta existe para o Git não reclamar
+          mkdir -p materia
+          
+          # Adiciona tudo o que foi alterado/criado
+          git add .
+          
+          # Commita apenas se houver mudanças reais
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update: Noticias e Materias [$(date)]" && git push)
