@@ -18,37 +18,25 @@ fuso = pytz.timezone('America/Sao_Paulo')
 agora_str = datetime.now(fuso).strftime('%d/%m/%Y %H:%M')
 
 FEEDS = {
-    # --- As que você já tem (com ajustes de categoria) ---
     "Mundo": "http://feeds.bbci.co.uk/portuguese/rss.xml",
     "Esportes": "https://ge.globo.com/rss/ge/",
     "Games": "https://br.ign.com/feed.xml",
     "Hardware": "https://www.adrenaline.com.br/feed/",
     "Tecnologia": "https://g1.globo.com/rss/g1/tecnologia/",
-    
-    # --- Novas Opções Focadas em Dev e TI ---
-    "DotNet_CS": "https://devblogs.microsoft.com/dotnet/feed/", # Foco total no seu estudo de C#
-    "Dev_Brasil": "https://www.infoq.com/br/feed/", # Conteúdo técnico em português
-    "Cybersecurity": "https://www.cisoadvisor.com.br/rss-feed/", # Essencial para quem trabalha com TI
-    "Inovacao": "https://www.inovacaotecnologica.com.br/boletim/rss.xml", # Ciência e deep tech
-    
-    # --- Extras para fechar o grid ---
+    "DotNet_CS": "https://devblogs.microsoft.com/dotnet/feed/",
+    "Dev_Brasil": "https://www.infoq.com/br/feed/",
+    "Cybersecurity": "https://www.cisoadvisor.com.br/rss-feed/",
     "Geral": "https://www.cnnbrasil.com.br/feed/",
-    "Mobile": "https://www.tudocelular.com/feed/",
     
-    # --- POLÍTICA: ESQUERDA ---
-    "Política (Esquerda)": "https://www.brasil247.com/feed",
-    "Política (Esquerda) ": "https://www.diariodocentrodomundo.com.br/feed/",
-
-    # --- POLÍTICA: CENTRO / MAINSTREAM ---
-    "Política (Centro)": "https://www.cnnbrasil.com.br/politica/feed/",
-    "Política (Centro) ": "https://g1.globo.com/rss/g1/politica/",
-
-    # --- POLÍTICA: DIREITA ---
-    "Política (Direita)": "https://www.gazetadopovo.com.br/feed/rss/rodrigo-constantino.xml",
-    "Política (Direita) ": "https://revistaoeste.com/feed/"
+    # --- POLÍTICA ORGANIZADA ---
+    "Esquerda": "https://www.brasil247.com/feed",
+    "Esquerda ": "https://www.diariodocentrodomundo.com.br/feed/",
+    "Centro": "https://www.cnnbrasil.com.br/politica/feed/",
+    "Centro ": "https://g1.globo.com/rss/g1/politica/",
+    "Direita": "https://www.gazetadopovo.com.br/feed/rss/rodrigo-constantino.xml",
+    "Direita ": "https://revistaoeste.com/feed/"
 }
 
-# CSS COM TÉCNICA DE BOX 16:9
 CSS = """
 <style>
     body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; color: #1c1e21; }
@@ -57,12 +45,17 @@ CSS = """
     .content-area { flex: 3; }
     .sidebar { flex: 1; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 10px; }
     
-    .noticia-card { background: #fff; margin-bottom: 30px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; }
+    .noticia-card { background: #fff; margin-bottom: 30px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; transition: 0.3s; }
+    .noticia-card:hover { transform: translateY(-5px); }
     
-    /* ESSA É A PARTE QUE CORRIGE AS FOTOS */
-    .img-container { position: relative; width: 100%; padding-top: 56.25%; /* Proporção 16:9 exata */ background: #eee; }
+    /* CORES DE POLÍTICA */
+    .border-esquerda { border-left: 8px solid #d93025 !important; }
+    .border-direita { border-left: 8px solid #1a73e8 !important; }
+    .border-centro { border-left: 8px solid #6c757d !important; }
+    .border-padrao { border-left: 8px solid #eee; }
+
+    .img-container { position: relative; width: 100%; padding-top: 56.25%; background: #eee; }
     .noticia-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-    
     .noticia-body { padding: 20px; }
     .noticia-body h2 { margin: 10px 0; font-size: 1.4em; color: #1a73e8; line-height: 1.2; }
     
@@ -85,18 +78,13 @@ function fecharMateria(id) {
     document.getElementById('modal-' + id).style.display = 'none';
     document.body.style.overflow = 'auto';
 }
-window.onclick = function(event) {
-    if (event.target.className === 'modal') {
-        event.target.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-}
 </script>
 """
 
-def processar_noticia(titulo, resumo):
+def processar_noticia(titulo, resumo, categoria):
     if model:
-        prompt = f"Aja como jornalista. Título: {titulo}. Resumo: {resumo}. Gere: [MANCHETE] (Curta) [MATERIA] (3 parágrafos) [FIM]"
+        # Prompt ajustado para entender a categoria política
+        prompt = f"Aja como um analista de notícias. Categoria: {categoria}. Título: {titulo}. Resumo: {resumo}. Gere: [MANCHETE] (Curta) [MATERIA] (3 parágrafos focados no contexto da categoria) [FIM]"
         try:
             response = model.generate_content(prompt)
             return response.text
@@ -107,7 +95,6 @@ def atualizar_portal():
     antigas_noticias = ""
     antigo_historico = ""
     
-    # Busca o volume anterior
     if os.path.exists("index.html"):
         try:
             with open("index.html", "r", encoding="utf-8") as f:
@@ -115,11 +102,11 @@ def atualizar_portal():
                 area_news = soup.find(class_='content-area')
                 area_hist = soup.find(class_='sidebar-list')
                 if area_news:
-                    cards = area_news.find_all(class_='noticia-card')[:12]
-                    modais = area_news.find_all(class_='modal')[:12]
+                    cards = area_news.find_all(class_='noticia-card')[:15]
+                    modais = area_news.find_all(class_='modal')[:15]
                     antigas_noticias = "".join([str(c) for c in cards]) + "".join([str(m) for m in modais])
                 if area_hist:
-                    itens = area_hist.find_all(class_='historico-item')[:15]
+                    itens = area_hist.find_all(class_='historico-item')[:20]
                     antigo_historico = "".join([str(i) for i in itens])
         except: pass
 
@@ -130,7 +117,14 @@ def atualizar_portal():
         feed = feedparser.parse(url)
         if feed.entries:
             entry = feed.entries[0]
-            texto_ia = processar_noticia(entry.title, entry.summary)
+            texto_ia = processar_noticia(entry.title, entry.summary, cat)
+            
+            # Lógica de cor baseada na categoria
+            classe_cor = "border-padrao"
+            if "Esquerda" in cat: classe_cor = "border-esquerda"
+            elif "Direita" in cat: classe_cor = "border-direita"
+            elif "Centro" in cat: classe_cor = "border-centro"
+
             try:
                 manchete = texto_ia.split("[MANCHETE]")[1].split("[MATERIA]")[0].strip()
                 materia = texto_ia.split("[MATERIA]")[1].split("[FIM]")[0].strip()
@@ -140,14 +134,17 @@ def atualizar_portal():
             id_noticia = int(time.time() * 1000) + hash(cat)
             img = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"
             if 'media_content' in entry: img = entry.media_content[0]['url']
+            elif 'links' in entry:
+                for link in entry.links:
+                    if 'image' in link.get('type', ''): img = link.get('href')
 
             novas_noticias += f'''
-            <div class="noticia-card" onclick="abrirMateria('{id_noticia}')">
+            <div class="noticia-card {classe_cor}" onclick="abrirMateria('{id_noticia}')">
                 <div class="img-container">
                     <img src="{img}" class="noticia-img">
                 </div>
                 <div class="noticia-body">
-                    <small style="color:#d93025; font-weight:bold;">{cat.upper()} • {agora_str}</small>
+                    <small style="color:#666; font-weight:bold;">{cat.upper()} • {agora_str}</small>
                     <h2>{manchete}</h2>
                 </div>
             </div>
@@ -158,12 +155,13 @@ def atualizar_portal():
                     <div class="img-container" style="margin-bottom:20px;">
                         <img src="{img}" class="noticia-img">
                     </div>
+                    <small>{cat.upper()}</small>
                     <h1>{manchete}</h1>
                     <div style="font-size:1.1em; color:#333;">{materia.replace(chr(10), '<br><br>')}</div>
                 </div>
             </div>
             '''
-            novos_historicos += f'<div class="historico-item"><b>{agora_str}</b>: {manchete}</div>'
+            novos_historicos += f'<div class="historico-item"><b>{cat}</b>: {manchete}</div>'
             time.sleep(1)
 
     final_html = f"<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'>{CSS}</head><body><header><h1>Portal IA News</h1></header><div class='main-wrapper'><div class='content-area'>{novas_noticias}{antigas_noticias}</div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'>{novos_historicos}{antigo_historico}</div></div></div>{JS}</body></html>"
