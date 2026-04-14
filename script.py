@@ -206,14 +206,16 @@ def atualizar_portal():
         </div>
     </div>"""
 
-  final = f"<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><title>Portal IA News</title>{CSS}</head><body><header><div class='weather-widget' id='weather-display' onclick='alterarCidade(event)'>⏳</div><h1>Portal IA News</h1></header>{filtros}<div class='main-wrapper'><div class='content-area'>{novas}{antigas}</div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'>{novos_h}{hist_antigo}</div></div></div>{JS}</body></html>"
+# Bloco final da função atualizar_portal
+    final = f"<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><title>Portal IA News</title>{CSS}</head><body><header><div class='weather-widget' id='weather-display' onclick='alterarCidade(event)'>⏳</div><h1>Portal IA News</h1></header>{filtros}<div class='main-wrapper'><div class='content-area'>{novas}{antigas}</div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'>{novos_h}{hist_antigo}</div></div></div>{JS}</body></html>"
     
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(final)
 
-    # CORREÇÃO: Estas linhas precisam estar dentro da função (recuadas)
+    # Criação do arquivo .nojekyll (também dentro da função)
     with open(".nojekyll", "w") as f:
         f.write("")
 
-if __name__ == "__main__": 
+# ATENÇÃO: Esta linha deve estar totalmente à esquerda (fora da função)
+if __name__ == "__main__":
     atualizar_portal()
