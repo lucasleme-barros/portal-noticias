@@ -1,33 +1,57 @@
-
-    <!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'>
+<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><title>Portal IA News</title>
 <style>
     body { font-family: 'Segoe UI', sans-serif; background: #fff; margin: 0; color: #333; }
     header { background: #fff; padding: 25px; text-align: center; border-bottom: 1px solid #eee; position: relative; }
-    .weather-widget { position: absolute; top: 10px; right: 20px; font-size: 0.85em; color: #555; cursor: pointer; }
-    .filter-container { padding: 10px; background: #fff; border-bottom: 1px solid #eee; text-align: center; position: sticky; top: 0; z-index: 100; }
-    .filter-btn { background: none; border: none; padding: 5px 12px; cursor: pointer; font-weight: bold; font-size: 0.75em; color: #d93025; text-transform: uppercase; }
-    .filter-btn.active { background: #d93025; color: #fff; border-radius: 4px; }
-    .content-area { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; padding: 20px; max-width: 1200px; margin: auto; }
-    .noticia-card { border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; cursor: pointer; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
-    .img-container { width: 100%; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
-    .noticia-img { width: 100%; height: 100%; object-fit: cover; }
-    .sentiment-tag { font-size: 0.6em; font-weight: bold; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; color: #fff; width: fit-content; margin-bottom: 5px; }
-    .bg-positivo { background: #28a745; } .bg-negativo { background: #dc3545; } .bg-neutro { background: #6c757d; }
-    h2 { font-size: 1.2em; line-height: 1.2; margin: 5px 0; }
-    p { font-size: 0.9em; color: #666; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
-</style>
-</head>
-    <body>
-        <header><h1>Portal IA News</h1></header>
-        
-    <div class="filter-container">
-        <button class="filter-btn active" onclick="filtrar('todas')">Todas</button>
-        <button class="filter-btn" onclick="filtrar('Hardware')">Hardware</button>
-        <button class="filter-btn" onclick="filtrar('Cyber')">Cyber</button>
-        <button class="filter-btn" onclick="filtrar('C#')">C#</button>
-    </div>
     
-        <div class="content-area"><div class="noticia-card" data-categoria="Mundo_BBC" data-id="4834831748236837605" onclick="abrirMateria('4834831748236837605')">
+    .weather-widget { position: absolute; top: 10px; right: 20px; font-size: 0.85em; color: #555; background: #f9f9f9; padding: 5px 12px; border-radius: 15px; border: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+    .weather-city { font-weight: bold; text-decoration: underline; }
+
+    .search-container { padding: 15px; text-align: center; background: #f6f6f6; border-bottom: 1px solid #eee; }
+    #search-input { padding: 10px 20px; width: 80%; max-width: 400px; border-radius: 25px; border: 1px solid #ddd; outline: none; }
+
+    .filter-container { padding: 10px; background: #fff; border-bottom: 1px solid #eee; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .filter-group { margin-bottom: 5px; }
+    .filter-btn { background: none; border: none; padding: 5px 12px; margin: 2px; cursor: pointer; font-weight: bold; font-size: 0.75em; color: #d93025; text-transform: uppercase; transition: 0.3s; }
+    .filter-btn.active { background: #d93025; color: #fff; border-radius: 4px; }
+
+    .main-wrapper { max-width: 1300px; margin: 20px auto; padding: 0 20px; display: flex; gap: 30px; }
+    .content-area { flex: 3; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; align-content: start; }
+
+    .noticia-card { background: #fff; padding-bottom: 20px; cursor: pointer; transition: 0.3s; position: relative; border-bottom: 1px solid #f0f0f0; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+    .noticia-card:hover { opacity: 0.8; }
+    
+    .sentiment-tag { font-size: 0.65em; font-weight: bold; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; margin-bottom: 8px; display: inline-block; color: #fff; width: fit-content; }
+    .bg-positivo { background: #28a745; } .bg-negativo { background: #dc3545; } .bg-neutro { background: #6c757d; }
+
+    .img-container { width: 100%; aspect-ratio: 16/9; background: #f8f8f8; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+    .noticia-img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .noticia-body h2 { margin: 0; font-size: 1.2em; line-height: 1.25; font-weight: 700; color: #111; }
+    .noticia-body p { font-size: 0.9em; color: #555; margin: 10px 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; }
+    
+    .tag-item { font-size: 0.7em; color: #d93025; font-weight: bold; margin-right: 8px; }
+    .sidebar { flex: 1; border-left: 1px solid #eee; padding-left: 20px; max-width: 300px; }
+    .sidebar h3 { font-size: 0.85em; text-transform: uppercase; color: #d93025; border-bottom: 2px solid #d93025; display: inline-block; margin-bottom: 15px; }
+    .historico-item { font-size: 0.85em; margin-bottom: 15px; border-bottom: 1px solid #f6f6f6; padding-bottom: 10px; }
+
+    @media (max-width: 900px) { .main-wrapper { flex-direction: column; } .content-area { grid-template-columns: 1fr; } .sidebar { border-left: none; padding-left: 0; } }
+</style>
+</head><body><header><div class='weather-widget' id='weather-display' onclick='alterarCidade(event)'>⏳</div><h1>Portal IA News</h1></header>
+    <div class="filter-container">
+        <div class="filter-group">
+            <button class="filter-btn active" onclick="filtrarNoticias('todas', this)">🏠 Todas</button>
+            <button class="filter-btn" onclick="filtrarNoticias('Esquerda', this)">Esquerda</button>
+            <button class="filter-btn" onclick="filtrarNoticias('Centro', this)">Centro</button>
+            <button class="filter-btn" onclick="filtrarNoticias('Direita', this)">Direita</button>
+        </div>
+        <div class="filter-group">
+            <button class="filter-btn" onclick="filtrarNoticias('Hardware', this)">Hardware</button>
+            <button class="filter-btn" onclick="filtrarNoticias('Games', this)">Games</button>
+            <button class="filter-btn" onclick="filtrarNoticias('C#', this)">C#</button>
+            <button class="filter-btn" onclick="filtrarNoticias('Tech', this)">Tech</button>
+            <button class="filter-btn" onclick="filtrarNoticias('Mundo', this)">Mundo</button>
+        </div>
+    </div><div class='main-wrapper'><div class='content-area'><div class="noticia-card" data-categoria="Mundo_BBC" data-id="4834831748236837605" onclick="abrirMateria('4834831748236837605')">
 <div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
 <div class="noticia-body">
 <span class="sentiment-tag bg-neutro">Neutro</span>
@@ -360,92 +384,40 @@
 <p>Criado humildemente em 1900, o Guia Michelin hoje é cercado de mistério. Um número não divulgado de ...</p>
 <small class="timeago" datetime="2026-04-14T14:36:47.534944-03:00"></small>
 </div>
-</div><div class="noticia-card" data-categoria="Mundo_BBC" data-id="-6639118501159463587" onclick="abrirMateria('-6639118501159463587')">
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Como culto liderado por pastor negro que falava a 'língua dos anjos' deu origem ao movimento evangélico há 120 anos</h2>
-<p>Uma série de cultos evangélicos realizada há 120 anos em um templo abandonado da Igreja Metodista Af...</p>
-<small class="timeago" datetime="2026-04-14T14:36:47.613757-03:00"></small>
-</div>
-</div><div class="noticia-card" data-categoria="Mundo_BBC" data-id="-6259686067430872837" onclick="abrirMateria('-6259686067430872837')">
-<div class="img-container"><img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Imagem de Trump como Jesus Cristo e embate com o papa provocam reação até entre aliados</h2>
-<p>Trump recebeu críticas não apenas de opositores, mas também de setores de sua própria base....</p>
-<small class="timeago" datetime="2026-04-14T14:36:47.656219-03:00"></small>
-</div>
-</div><div class="noticia-card" data-categoria="Geral_G1" data-id="2757086347541082975" onclick="abrirMateria('2757086347541082975')">
-<div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/BvG0YQnq5tkvcRLqknDnyJA_4WU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/p/h/mBQO2SSAKtqmIAuTqFrw/whatsapp-image-2026-04-13-at-11.44.43.jpeg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Café do Conhecimento destaca venda consultiva com Luis Pimentel</h2>
-<p><img datetime="2026-04-14T14:36:47.979184-03:00" src="https://s2-g1.glbimg.com/BvG0YQnq5tkvcRLqknDnyJA_4WU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c8...&lt;/p&gt;
-                &lt;small class=" timeago"="">
-</img></p></div>
-</div><div class="noticia-card" data-categoria="Geral_G1" data-id="-3268049331434752074" onclick="abrirMateria('-3268049331434752074')">
-<div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/vaJ9z4OY9DbJndLOhzafyRCeAVg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/X/egnBlHRwqxQfXAFiyzkw/design-sem-nome-2026-04-14t141614.841.png"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Pai de santo é morto a facadas dentro de terreiro no sudoeste da Bahia</h2>
-<p><img datetime="2026-04-14T14:36:48.030673-03:00" src="https://s2-g1.glbimg.com/vaJ9z4OY9DbJndLOhzafyRCeAVg=/i.s3.glbimg.com/v1/AUTH_59edd422c0c8...&lt;/p&gt;
-                &lt;small class=" timeago"="">
-</img></p></div>
-</div><div class="noticia-card" data-categoria="Geral_G1" data-id="5693407426934992621" onclick="abrirMateria('5693407426934992621')">
-<div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/JBukvSGVgMbTKiHeIEapviH-gj8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/l/5/dVzbFpTDSmg7wlsBM4Cg/2026-04-12t135436z-1625689504-rc2gnkaezcwq-rtrmadp-3-iran-crisis-hormuz.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Navios fazem meia-volta em meio a bloqueio no Estreito de Ormuz; EUA e Irã avaliam retomar negociações</h2>
-<p><img datetime="2026-04-14T14:36:48.068334-03:00" src="https://s2-g1.glbimg.com/JBukvSGVgMbTKiHeIEapviH-gj8=/i.s3.glbimg.com/v1/AUTH_59edd422c0c8...&lt;/p&gt;
-                &lt;small class=" timeago"="">
-</img></p></div>
-</div><div class="noticia-card" data-categoria="Geral_G1" data-id="3762168327042196876" onclick="abrirMateria('3762168327042196876')">
-<div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/XO0MWT7BG3Y638euOjaUmQ5IT2c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/B/o/Yr86mRRWa7Ke0rNopJTA/30.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Entenda como a USP apura, em Piracicaba, o principal indicador do preço comercial do café do Brasil</h2>
-<p><img datetime="2026-04-14T14:36:48.124418-03:00" src="https://s2-g1.glbimg.com/XO0MWT7BG3Y638euOjaUmQ5IT2c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c8...&lt;/p&gt;
-                &lt;small class=" timeago"="">
-</img></p></div>
-</div><div class="noticia-card" data-categoria="Geral_G1" data-id="4537375342575266718" onclick="abrirMateria('4537375342575266718')">
-<div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/AYjm0fdd3KgkRRBDT4dxArWRtkI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/Y/R/gQUSbcQA66RIPB91EUHQ/cpi.png"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>CPI do Crime Organizado tem troca de integrantes antes da votação de relatório</h2>
-<p><img datetime="2026-04-14T14:36:48.164558-03:00" src="https://s2-g1.glbimg.com/AYjm0fdd3KgkRRBDT4dxArWRtkI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c8...&lt;/p&gt;
-                &lt;small class=" timeago"="">
-</img></p></div>
-</div><div class="noticia-card" data-categoria="Geral_G1" data-id="-7681406798086383200" onclick="abrirMateria('-7681406798086383200')">
-<div class="img-container"><img class="noticia-img" src="https://s2-g1.glbimg.com/BFm3deMCHu_2BOBBa78krTw3FKA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/U/B/wZXoEgQDC3nQX417ubjg/foto-g1-2026-04-14t110223.616.png"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>VÍDEO: ladrões armados rendem casal com criança e obrigam vítima a ligar caminhonete para roubo</h2>
-<p><img datetime="2026-04-14T14:36:48.215699-03:00" src="https://s2-g1.glbimg.com/BFm3deMCHu_2BOBBa78krTw3FKA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c8...&lt;/p&gt;
-                &lt;small class=" timeago"="">
-</img></p></div>
-</div><div class="noticia-card" data-categoria="Hardware_Adrenaline" data-id="-8503244959166797366" onclick="abrirMateria('-8503244959166797366')">
-<div class="img-container"><img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/last-flag-capa-640x400.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Last Flag já está disponível: shooter 5v5 aposta em captura de bandeira sem microtransações</h2>
-<p><img alt="" class="webfeedsFeaturedVisual wp-post-image" datetime="2026-04-14T14:36:47.311426-03:00" height="400" src="https://www.adrenaline.co...&lt;/p&gt;
-                &lt;small class=" timeago"="">
-</img></p></div>
-</div><div class="noticia-card" data-categoria="Hardware_Adrenaline" data-id="-302739689934162932" onclick="abrirMateria('-302739689934162932')">
-<div class="img-container"><img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/ps3-emulador-rpcs3-requisitos-640x400.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag neutro">Neutro</span>
-<h2>Emulador de PS3 recebe requisitos de sistema exigentes e devs explicam o motivo</h2>
-<p><img alt="Foto do PS3 editada com processadores Intel e AMD" class="webfeedsFeaturedVisual wp-post-i...&lt;/p&gt; &lt;small class=" datetime="2026-04-14T14:36:47.360576-03:00" timeago"="">
-</img></p></div>
-</div></div>
-        <script>
-            function filtrar(cat) {
-                document.querySelectorAll('.noticia-card').forEach(c => {
-                    c.style.display = (cat === 'todas' || c.dataset.categoria.includes(cat)) ? 'flex' : 'none';
-                });
+</div></div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'></div></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/2.0.2/timeago.min.js"></script>
+<script>
+    async function carregarClima(cidadeManual = null) {
+        const display = document.getElementById('weather-display');
+        let lat, lon, nomeCidade;
+        const cidadeSalva = cidadeManual || localStorage.getItem('user_city');
+        try {
+            if (cidadeSalva) {
+                const geo = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${cidadeSalva}&count=1&language=pt`).then(r => r.json());
+                lat = geo.results[0].latitude; lon = geo.results[0].longitude; nomeCidade = geo.results[0].name;
+                localStorage.setItem('user_city', nomeCidade);
+            } else {
+                const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej));
+                lat = pos.coords.latitude; lon = pos.coords.longitude;
+                const rev = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`).then(r => r.json());
+                nomeCidade = rev.address.city || rev.address.town || "Sua Região";
             }
-        </script>
-    </body></html>
-    
+            const w = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`).then(r => r.json());
+            display.innerHTML = `<span onclick="alterarCidade(event)" class="weather-city">📍 ${nomeCidade}</span>: <b>${Math.round(w.current_weather.temperature)}°C</b>`;
+        } catch (e) { display.innerHTML = `<span onclick="alterarCidade(event)">📍 Definir Local</span>`; }
+    }
+
+    function alterarCidade(e) { e.stopPropagation(); const n = prompt("Cidade:"); if (n) carregarClima(n); }
+
+    function filtrarNoticias(cat, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.noticia-card').forEach(c => {
+            const cardCat = c.getAttribute('data-categoria').toLowerCase();
+            c.style.display = (cat === 'todas' || cardCat.includes(cat.toLowerCase())) ? 'flex' : 'none';
+        });
+    }
+
+    window.onload = () => { carregarClima(); timeago().render(document.querySelectorAll('.timeago'), 'pt_BR'); };
+</script>
+</body></html>
