@@ -40,6 +40,33 @@
             <button class="filter-btn" onclick="filtrarNoticias('Tech', this)">Tech</button>
             <button class="filter-btn" onclick="filtrarNoticias('Mundo', this)">Mundo</button>
         </div>
+
+        def extrair_noticias(item):
+    cat, url = item
+    feed = feedparser.parse(url)
+    cards, hists = "", ""
+    
+    # Processamos apenas 3 por fonte para garantir estabilidade e velocidade
+    for entry in feed.entries[:3]:
+        data = processar_noticia_ai(entry.title, entry.get('summary', ''), cat)
+        
+        if not data:
+            continue
+            
+        # PONTO CHAVE: Pequena pausa de 1 segundo para não estourar o limite da API
+        time.sleep(1) 
+        
+        id_n = str(uuid.uuid4())
+        img = capturar_imagem(entry)
+        data['img'] = img
+        
+        gerar_pagina_individual(id_n, data, cat)
+        
+        m_esc = html.escape(data['manchete'])
+        cards += f'''<a href="./materia/{id_n}.html" class="noticia-card" data-categoria="{cat}"><div class="img-container"><img src="{img}" class="noticia-img"></div><div class="noticia-body"><span class="sentiment-tag bg-{data['sentimento'].lower()}">{data['sentimento']}</span><h2>{m_esc}</h2><p>{html.escape(data['materia'][:120])}...</p><small class="timeago" datetime="{datetime.now(fuso).isoformat()}"></small></div></a>'''
+        hists += f'<div class="historico-item"><b>{cat}</b>: {m_esc}</div>'
+        
+    return cards, hists
     </div><div class='main-wrapper'><div class='content-area'></div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'></div></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/2.0.2/timeago.min.js"></script>
 <script>
