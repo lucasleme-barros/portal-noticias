@@ -33,7 +33,19 @@ FEEDS = {
     
     # --- Extras para fechar o grid ---
     "Geral": "https://www.cnnbrasil.com.br/feed/",
-    "Mobile": "https://www.tudocelular.com/feed/"
+    "Mobile": "https://www.tudocelular.com/feed/",
+    
+    # --- POLÍTICA: ESQUERDA ---
+    "Política (Esquerda)": "https://www.brasil247.com/feed",
+    "Política (Esquerda) ": "https://www.diariodocentrodomundo.com.br/feed/",
+
+    # --- POLÍTICA: CENTRO / MAINSTREAM ---
+    "Política (Centro)": "https://www.cnnbrasil.com.br/politica/feed/",
+    "Política (Centro) ": "https://g1.globo.com/rss/g1/politica/",
+
+    # --- POLÍTICA: DIREITA ---
+    "Política (Direita)": "https://www.gazetadopovo.com.br/feed/rss/rodrigo-constantino.xml",
+    "Política (Direita) ": "https://revistaoeste.com/feed/"
 }
 
 # CSS COM TÉCNICA DE BOX 16:9
