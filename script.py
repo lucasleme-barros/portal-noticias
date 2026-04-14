@@ -5,6 +5,7 @@ import html
 import google.generativeai as genai
 import feedparser
 import time
+import random
 from datetime import datetime
 import pytz
 from bs4 import BeautifulSoup
@@ -33,42 +34,42 @@ FEEDS = {
     "Tech_Gizmodo": "https://gizmodo.uol.com.br/feed/"
 }
 
+# Banco de imagens de backup (Tech/Mundo) para evitar repetição e erro
+IMAGENS_BACKUP = [
+    "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800", # Chip
+    "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800", # Equipe Tech
+    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800", # Planeta Rede
+    "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800", # CyberSecurity
+    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800", # Código C#
+    "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800", # DevOps
+    "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800"  # Programação
+]
+
 CSS = """
 <style>
     body { font-family: 'Segoe UI', sans-serif; background: #fff; margin: 0; color: #333; }
     header { background: #fff; padding: 25px; text-align: center; border-bottom: 1px solid #eee; position: relative; }
-    
     .weather-widget { position: absolute; top: 10px; right: 20px; font-size: 0.85em; color: #555; background: #f9f9f9; padding: 5px 12px; border-radius: 15px; border: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-    .weather-city { font-weight: bold; text-decoration: underline; }
-
     .search-container { padding: 15px; text-align: center; background: #f6f6f6; border-bottom: 1px solid #eee; }
     #search-input { padding: 10px 20px; width: 80%; max-width: 400px; border-radius: 25px; border: 1px solid #ddd; outline: none; }
-
     .filter-container { padding: 10px; background: #fff; border-bottom: 1px solid #eee; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
     .filter-group { margin-bottom: 5px; }
     .filter-btn { background: none; border: none; padding: 5px 12px; margin: 2px; cursor: pointer; font-weight: bold; font-size: 0.75em; color: #d93025; text-transform: uppercase; transition: 0.3s; }
     .filter-btn.active { background: #d93025; color: #fff; border-radius: 4px; }
-
     .main-wrapper { max-width: 1300px; margin: 20px auto; padding: 0 20px; display: flex; gap: 30px; }
     .content-area { flex: 3; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; align-content: start; }
-
     .noticia-card { background: #fff; padding-bottom: 20px; cursor: pointer; transition: 0.3s; position: relative; border-bottom: 1px solid #f0f0f0; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
     .noticia-card:hover { opacity: 0.8; }
-    
     .sentiment-tag { font-size: 0.65em; font-weight: bold; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; margin-bottom: 8px; display: inline-block; color: #fff; width: fit-content; }
     .bg-positivo { background: #28a745; } .bg-negativo { background: #dc3545; } .bg-neutro { background: #6c757d; }
-
     .img-container { width: 100%; aspect-ratio: 16/9; background: #f8f8f8; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
     .noticia-img { width: 100%; height: 100%; object-fit: cover; }
-    
     .noticia-body h2 { margin: 0; font-size: 1.2em; line-height: 1.25; font-weight: 700; color: #111; }
     .noticia-body p { font-size: 0.9em; color: #555; margin: 10px 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; }
-    
     .tag-item { font-size: 0.7em; color: #d93025; font-weight: bold; margin-right: 8px; }
     .sidebar { flex: 1; border-left: 1px solid #eee; padding-left: 20px; max-width: 300px; }
     .sidebar h3 { font-size: 0.85em; text-transform: uppercase; color: #d93025; border-bottom: 2px solid #d93025; display: inline-block; margin-bottom: 15px; }
     .historico-item { font-size: 0.85em; margin-bottom: 15px; border-bottom: 1px solid #f6f6f6; padding-bottom: 10px; }
-
     @media (max-width: 900px) { .main-wrapper { flex-direction: column; } .content-area { grid-template-columns: 1fr; } .sidebar { border-left: none; padding-left: 0; } }
 </style>
 """
@@ -95,9 +96,7 @@ JS = """
             display.innerHTML = `<span onclick="alterarCidade(event)" class="weather-city">📍 ${nomeCidade}</span>: <b>${Math.round(w.current_weather.temperature)}°C</b>`;
         } catch (e) { display.innerHTML = `<span onclick="alterarCidade(event)">📍 Definir Local</span>`; }
     }
-
     function alterarCidade(e) { e.stopPropagation(); const n = prompt("Cidade:"); if (n) carregarClima(n); }
-
     function filtrarNoticias(cat, btn) {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
@@ -106,26 +105,53 @@ JS = """
             c.style.display = (cat === 'todas' || cardCat.includes(cat.toLowerCase())) ? 'flex' : 'none';
         });
     }
-
     window.onload = () => { carregarClima(); timeago().render(document.querySelectorAll('.timeago'), 'pt_BR'); };
 </script>
 """
 
 def processar_noticia_ai(titulo, resumo, categoria):
     if not model: return None
-    prompt = f"""Analista G1. Categoria: {categoria}. Titulo: {titulo}. Contexto: {resumo}.
-    Responda EXCLUSIVAMENTE um JSON:
+    # Prompt ajustado para focar em análise e evitar repetição de conteúdo genérico
+    prompt = f"""Analista G1. Categoria: {categoria}. Titulo: {titulo}. Resumo: {resumo}.
+    Gere um JSON (sem markdown):
     {{
-        "manchete": "string curta",
-        "materia": "string 3 parágrafos",
+        "manchete": "Título curto e chamativo",
+        "materia": "Análise de 3 parágrafos sobre o impacto da notícia",
         "sentimento": "Positivo|Negativo|Neutro",
-        "tags": "tag1, tag2"
+        "tags": "tag1, tag2",
+        "sugestao_imagem": "descrição curta em inglês de uma imagem para esta notícia"
     }}"""
     try:
         res = model.generate_content(prompt)
         clean = res.text.strip().replace('```json', '').replace('```', '')
         return json.loads(clean)
     except: return None
+
+def capturar_imagem_robusta(entry):
+    """Procura a imagem em múltiplos locais do feed e usa backup aleatório se falhar"""
+    # 1. Tenta media_content (Padrão mais comum e seguro)
+    if 'media_content' in entry and entry.media_content:
+        return entry.media_content[0]['url']
+    
+    # 2. Tenta media_thumbnail (Padrão secundário)
+    if 'media_thumbnail' in entry and entry.media_thumbnail:
+        return entry.media_thumbnail[0]['url']
+
+    # 3. Tenta links com tipo 'image'
+    if 'links' in entry:
+        for link in entry.links:
+            if 'image' in link.get('type', ''):
+                return link.get('href')
+
+    # 4. Tenta procurar no conteúdo da descrição (BS4)
+    if 'summary' in entry:
+        soup = BeautifulSoup(entry.summary, 'html.parser')
+        img_tag = soup.find('img')
+        if img_tag and img_tag.get('src'):
+            return img_tag.get('src')
+
+    # 5. Se tudo falhar, usa uma imagem do banco de backup (aleatória para evitar repetição)
+    return random.choice(IMAGENS_BACKUP)
 
 def gerar_pagina_individual(id_noticia, data, cat):
     os.makedirs("materia", exist_ok=True)
@@ -153,8 +179,14 @@ def extrair_noticias_da_fonte(item):
         if not data: continue
 
         id_noticia = str(uuid.uuid4())
-        img = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"
-        if 'media_content' in entry: img = entry.media_content[0]['url']
+        
+        # CHAMA A NOVA FUNÇÃO ROBUSTA DE IMAGEM
+        img = capturar_imagem_robusta(entry)
+        
+        # Evita usar logos genéricos de portal como imagem da matéria
+        if "bbc" in img.lower() or "g1.globo" in img.lower():
+             img = random.choice(IMAGENS_BACKUP)
+
         data['img'] = img
 
         gerar_pagina_individual(id_noticia, data, cat)
@@ -163,8 +195,8 @@ def extrair_noticias_da_fonte(item):
         tags_h = "".join([f'<span class="tag-item">#{t.strip()}</span>' for t in data['tags'].split(",")])
         
         cards_html += f'''
-       <a href="./materia/{id_noticia}.html" class="noticia-card" data-categoria="{cat}">
-            <div class="img-container"><img src="{img}" class="noticia-img"></div>
+        <a href="./materia/{id_noticia}.html" class="noticia-card" data-categoria="{cat}">
+            <div class="img-container"><img src="{img}" class="noticia-img" onerror="this.src='{random.choice(IMAGENS_BACKUP)}'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-{data['sentimento'].lower()}">{data['sentimento']}</span>
                 <h2>{m_esc}</h2>
@@ -206,16 +238,9 @@ def atualizar_portal():
         </div>
     </div>"""
 
-# Bloco final da função atualizar_portal
     final = f"<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><title>Portal IA News</title>{CSS}</head><body><header><div class='weather-widget' id='weather-display' onclick='alterarCidade(event)'>⏳</div><h1>Portal IA News</h1></header>{filtros}<div class='main-wrapper'><div class='content-area'>{novas}{antigas}</div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'>{novos_h}{hist_antigo}</div></div></div>{JS}</body></html>"
-    
-    with open("index.html", "w", encoding="utf-8") as f:
-        f.write(final)
+    with open("index.html", "w", encoding="utf-8") as f: f.write(final)
 
-    # Criação do arquivo .nojekyll (também dentro da função)
-    with open(".nojekyll", "w") as f:
-        f.write("")
+    with open(".nojekyll", "w") as f: f.write("")
 
-# ATENÇÃO: Esta linha deve estar totalmente à esquerda (fora da função)
-if __name__ == "__main__":
-    atualizar_portal()
+if __name__ == "__main__": atualizar_portal()
