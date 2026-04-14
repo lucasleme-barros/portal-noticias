@@ -1,4 +1,7 @@
 import os
+import json
+import uuid
+import html
 import google.generativeai as genai
 import feedparser
 import time
@@ -16,8 +19,8 @@ else:
     model = None
 
 fuso = pytz.timezone('America/Sao_Paulo')
-agora_str = datetime.now(fuso).strftime('%d/%m/%Y %H:%M')
 
+# --- DICIONÁRIO DE FEEDS ---
 FEEDS = {
     "Mundo_BBC": "https://feeds.bbci.co.uk/portuguese/rss.xml",
     "Geral_G1": "https://g1.globo.com/rss/g1/",
@@ -31,228 +34,163 @@ FEEDS = {
     "Tech_Gizmodo": "https://gizmodo.uol.com.br/feed/"
 }
 
-CSS = """
+# --- CSS & JS (Constantes para organização) ---
+CSS_STYLE = """
 <style>
     body { font-family: 'Segoe UI', sans-serif; background: #fff; margin: 0; color: #333; }
     header { background: #fff; padding: 25px; text-align: center; border-bottom: 1px solid #eee; position: relative; }
-    
-    .weather-widget { position: absolute; top: 10px; right: 20px; font-size: 0.85em; color: #555; background: #f9f9f9; padding: 5px 12px; border-radius: 15px; border: 1px solid #eee; display: flex; align-items: center; gap: 8px; cursor: pointer; }
-    .weather-city { font-weight: bold; text-decoration: underline; }
-
-    .search-container { padding: 15px; text-align: center; background: #f6f6f6; border-bottom: 1px solid #eee; }
-    #search-input { padding: 10px 20px; width: 80%; max-width: 400px; border-radius: 25px; border: 1px solid #ddd; outline: none; }
-
-    .filter-container { padding: 10px; background: #fff; border-bottom: 1px solid #eee; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .filter-group { margin-bottom: 5px; }
-    .filter-btn { background: none; border: none; padding: 5px 12px; margin: 2px; cursor: pointer; font-weight: bold; font-size: 0.75em; color: #d93025; text-transform: uppercase; transition: 0.3s; }
+    .weather-widget { position: absolute; top: 10px; right: 20px; font-size: 0.85em; color: #555; cursor: pointer; }
+    .filter-container { padding: 10px; background: #fff; border-bottom: 1px solid #eee; text-align: center; position: sticky; top: 0; z-index: 100; }
+    .filter-btn { background: none; border: none; padding: 5px 12px; cursor: pointer; font-weight: bold; font-size: 0.75em; color: #d93025; text-transform: uppercase; }
     .filter-btn.active { background: #d93025; color: #fff; border-radius: 4px; }
-
-    .main-wrapper { max-width: 1300px; margin: 20px auto; padding: 0 20px; display: flex; gap: 30px; }
-    
-    /* GRID CORRIGIDO */
-    .content-area { 
-        flex: 3;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 25px;
-        align-content: start; /* Impede que os itens estiquem verticalmente ao filtrar */
-    }
-
-    .noticia-card { background: #fff; padding-bottom: 20px; cursor: pointer; transition: 0.3s; position: relative; border-bottom: 1px solid #f0f0f0; display: flex; flex-direction: column; }
-    .noticia-card:hover { opacity: 0.8; }
-    
-    .sentiment-tag { font-size: 0.65em; font-weight: bold; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; margin-bottom: 8px; display: inline-block; color: #fff; width: fit-content; }
-    .bg-positivo { background: #28a745; } .bg-negativo { background: #dc3545; } .bg-neutro { background: #6c757d; }
-
-    .img-container { width: 100%; aspect-ratio: 16/9; background: #f8f8f8; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
+    .content-area { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; padding: 20px; max-width: 1200px; margin: auto; }
+    .noticia-card { border-bottom: 1px solid #f0f0f0; padding-bottom: 15px; cursor: pointer; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
+    .img-container { width: 100%; aspect-ratio: 16/9; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
     .noticia-img { width: 100%; height: 100%; object-fit: cover; }
-    
-    .noticia-body h2 { margin: 0; font-size: 1.2em; line-height: 1.25; font-weight: 700; color: #111; }
-    .noticia-body p { font-size: 0.9em; color: #555; margin: 10px 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; }
-    
-    .tag-item { font-size: 0.7em; color: #d93025; font-weight: bold; margin-right: 8px; }
-
-    .ad-slot { grid-column: 1 / -1; background: #fdfdfd; padding: 20px; border: 1px dashed #ccc; text-align: center; color: #999; font-size: 0.8em; border-radius: 8px; }
-
-    .sidebar { flex: 1; border-left: 1px solid #eee; padding-left: 20px; max-width: 300px; }
-    .sidebar h3 { font-size: 0.85em; text-transform: uppercase; color: #d93025; border-bottom: 2px solid #d93025; display: inline-block; margin-bottom: 15px; }
-    .historico-item { font-size: 0.85em; margin-bottom: 15px; border-bottom: 1px solid #f6f6f6; padding-bottom: 10px; }
-
-    .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow-y: auto; }
-    .modal-content { background: #fff; margin: 2% auto; padding: 30px; width: 90%; max-width: 700px; border-radius: 12px; position: relative; }
-    .fechar-modal { position: absolute; right: 20px; top: 10px; font-size: 30px; cursor: pointer; color: #aaa; }
-
-    @media (max-width: 900px) { .main-wrapper { flex-direction: column; } .content-area { grid-template-columns: 1fr; } .sidebar { border-left: none; padding-left: 0; } }
+    .sentiment-tag { font-size: 0.6em; font-weight: bold; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; color: #fff; width: fit-content; margin-bottom: 5px; }
+    .bg-positivo { background: #28a745; } .bg-negativo { background: #dc3545; } .bg-neutro { background: #6c757d; }
+    h2 { font-size: 1.2em; line-height: 1.2; margin: 5px 0; }
+    p { font-size: 0.9em; color: #666; -webkit-line-clamp: 3; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
 </style>
 """
 
-JS = """
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/2.0.2/timeago.min.js"></script>
-<script>
-    async function carregarClima(cidadeManual = null) {
-        const display = document.getElementById('weather-display');
-        let lat, lon, nomeCidade;
-        const cidadeSalva = cidadeManual || localStorage.getItem('user_city');
-        try {
-            if (cidadeSalva) {
-                const geo = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${cidadeSalva}&count=1&language=pt`).then(r => r.json());
-                lat = geo.results[0].latitude; lon = geo.results[0].longitude; nomeCidade = geo.results[0].name;
-                localStorage.setItem('user_city', nomeCidade);
-            } else {
-                const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej));
-                lat = pos.coords.latitude; lon = pos.coords.longitude;
-                const rev = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`).then(r => r.json());
-                nomeCidade = rev.address.city || rev.address.town || "Sua Região";
-            }
-            const w = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`).then(r => r.json());
-            display.innerHTML = `<span onclick="alterarCidade(event)" class="weather-city">📍 ${nomeCidade}</span>: <b>${Math.round(w.current_weather.temperature)}°C</b>`;
-        } catch (e) { display.innerHTML = `<span onclick="alterarCidade(event)">📍 Definir Local</span>`; }
-    }
+# --- FUNÇÕES DE APOIO ---
 
-    function alterarCidade(e) { e.stopPropagation(); const n = prompt("Cidade:"); if (n) carregarClima(n); }
+def get_existing_titles():
+    """Lê o index atual para evitar processar notícias repetidas (Economia de API)"""
+    titles = set()
+    if os.path.exists("index.html"):
+        try:
+            with open("index.html", "r", encoding="utf-8") as f:
+                soup = BeautifulSoup(f.read(), 'html.parser')
+                for h2 in soup.find_all('h2'):
+                    titles.add(h2.text.strip())
+        except: pass
+    return titles
 
-    let idx;
-    function buildIndex() {
-        const cards = document.querySelectorAll('.noticia-card');
-        idx = lunr(function () {
-            this.field('titulo'); this.field('categoria'); this.ref('id');
-            cards.forEach(c => this.add({ id: c.getAttribute('data-id'), titulo: c.querySelector('h2').innerText, categoria: c.getAttribute('data-categoria') }));
-        });
-    }
-
-    function pesquisar() {
-        const q = document.getElementById('search-input').value.toLowerCase();
-        const cards = document.querySelectorAll('.noticia-card');
-        const ads = document.querySelectorAll('.ad-slot');
-        if (!q) { 
-            cards.forEach(c => c.style.display = 'flex'); 
-            ads.forEach(a => a.style.display = 'block');
-            return; 
-        }
-        const res = idx.search(q).map(r => r.ref);
-        cards.forEach(c => c.style.display = res.includes(c.getAttribute('data-id')) ? 'flex' : 'none');
-        ads.forEach(a => a.style.display = 'none'); // Esconde anúncios na busca
-    }
-
-    /* FILTRO CORRIGIDO PARA MANTER O GRID */
-    function filtrarNoticias(cat, btn) {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        const cards = document.querySelectorAll('.noticia-card');
-        const ads = document.querySelectorAll('.ad-slot');
-        const filtro = cat.toLowerCase();
-
-        cards.forEach(c => {
-            const cardCat = c.getAttribute('data-categoria').toLowerCase();
-            // Usamos 'flex' em vez de 'block' para manter a estrutura interna do card se necessário
-            // O importante é o grid do pai (.content-area) que gerencia o posicionamento
-            if (filtro === 'todas' || cardCat.includes(filtro)) {
-                c.style.display = 'flex';
-            } else {
-                c.style.display = 'none';
-            }
-        });
-
-        // Esconder anúncios quando um filtro específico estiver ativo para não quebrar o visual
-        ads.forEach(a => a.style.display = (filtro === 'todas') ? 'block' : 'none');
-    }
-
-    function abrirMateria(id) { document.getElementById('modal-' + id).style.display = 'block'; document.body.style.overflow = 'hidden'; }
-    function fecharMateria(id) { document.getElementById('modal-' + id).style.display = 'none'; document.body.style.overflow = 'auto'; }
+def processar_noticia_ai(titulo, resumo, categoria):
+    """Solicita JSON da IA para maior robustez e segurança"""
+    if not model: return None
     
-    window.onload = () => { buildIndex(); carregarClima(); timeago().render(document.querySelectorAll('.timeago'), 'pt_BR'); };
-</script>
-"""
+    prompt = f"""
+    Aja como jornalista. Analise: Título: {titulo}, Contexto: {resumo}.
+    Responda EXCLUSIVAMENTE um JSON com este formato:
+    {{
+        "manchete": "string",
+        "materia": "string (3 parágrafos)",
+        "sentimento": "Positivo|Negativo|Neutro",
+        "tags": "tag1, tag2, tag3"
+    }}
+    """
+    try:
+        response = model.generate_content(prompt)
+        # Limpeza básica caso a IA coloque blocos de código ```json
+        clean_json = response.text.strip().replace('```json', '').replace('```', '')
+        return json.loads(clean_json)
+    except Exception as e:
+        print(f"Erro IA: {e}")
+        return None
 
-def processar_noticia(titulo, resumo, categoria):
-    if not model: return f"[MANCHETE] {titulo} [MATERIA] {resumo} [SENTIMENTO] Neutro [TAGS] Notícia [FIM]"
-    prompt = f"Analista G1. Cat: {categoria}. Título: {titulo}. Resumo: {resumo}. Gere: [MANCHETE] (Curta/Forte) [MATERIA] (3 parágrafos analíticos) [SENTIMENTO] (Positivo, Negativo ou Neutro) [TAGS] (3 tags separadas por vírgula) [FIM]"
-    try: return model.generate_content(prompt).text
-    except: return f"[MANCHETE] {titulo} [MATERIA] {resumo} [SENTIMENTO] Neutro [TAGS] Geral [FIM]"
-
-def gerar_pagina_individual(id_noticia, manchete, materia, img, cat, sentimento, tags):
+def gerar_pagina_individual(id_noticia, data):
+    """Gera página individual com escape de HTML e Meta Tags de SEO"""
     os.makedirs("materia", exist_ok=True)
-    html = f"""<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><meta name="keywords" content="{tags}"><title>{manchete}</title>{CSS}</head>
-    <body style='background:#fff;'><header><a href='../index.html' style='position:absolute; left:20px; top:25px; text-decoration:none; color:#d93025; font-weight:bold;'>← VOLTAR</a><h1>Portal IA News</h1></header>
-    <article class='modal-content' style='box-shadow:none; border:1px solid #eee;'>
-    <img src='{img}' style='width:100%; border-radius:12px;'>
-    <div style='margin:20px 0;'><span class='sentiment-tag bg-{sentimento.lower()}'>{sentimento}</span> <small>| {cat}</small></div>
-    <h1>{manchete}</h1><div style='font-size:1.2em; line-height:1.6;'>{materia.replace(chr(10), '<br><br>')}</div>
-    <div style='margin-top:40px; padding-top:20px; border-top:1px solid #eee;'><small>Tags: {tags}</small></div></article></body></html>"""
-    with open(f"materia/{id_noticia}.html", "w", encoding="utf-8") as f: f.write(html)
+    
+    # Sanitização contra XSS
+    m_esc = html.escape(data['manchete'])
+    c_esc = html.escape(data['materia'])
+    
+    html_content = f"""
+    <!DOCTYPE html><html lang='pt-BR'><head>
+    <meta charset='UTF-8'>
+    <title>{m_esc}</title>
+    <meta name="description" content="{c_esc[:150]}">
+    <meta property="og:title" content="{m_esc}">
+    <meta property="og:image" content="{data['img']}">
+    {CSS_STYLE}
+    </head>
+    <body style="padding:20px; max-width:800px; margin:auto;">
+        <header><a href='../index.html'>← VOLTAR</a></header>
+        <article>
+            <img src='{data['img']}' style='width:100%; border-radius:12px;'>
+            <h1>{m_esc}</h1>
+            <p style='font-size:1.2em; line-height:1.6;'>{c_esc.replace(chr(10), '<br><br>')}</p>
+        </article>
+    </body></html>
+    """
+    with open(f"materia/{id_noticia}.html", "w", encoding="utf-8") as f:
+        f.write(html_content)
 
 def extrair_noticias_da_fonte(item):
     cat, url = item
     feed = feedparser.parse(url)
-    cards_html, hist_html = "", ""
-    adicionadas = 0
-    for entry in feed.entries[:6]:
-        raw = processar_noticia(entry.title, entry.get('summary', ''), cat)
-        try:
-            manchete = raw.split("[MANCHETE]")[1].split("[MATERIA]")[0].strip()
-            materia = raw.split("[MATERIA]")[1].split("[SENTIMENTO]")[0].strip()
-            sentimento = raw.split("[SENTIMENTO]")[1].split("[TAGS]")[0].strip()
-            tags = raw.split("[TAGS]")[1].split("[FIM]")[0].strip()
-        except: manchete, materia, sentimento, tags = entry.title, entry.get('summary', ''), "Neutro", "Geral"
+    cards_html = ""
+    existentes = get_existing_titles()
+    
+    for entry in feed.entries[:5]:
+        if entry.title.strip() in existentes: continue
         
-        id_noticia = str(int(time.time() * 1000) + hash(cat + entry.title))
-        img = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"
-        if 'media_content' in entry: img = entry.media_content[0].get('url', img)
-        
-        gerar_pagina_individual(id_noticia, manchete, materia, img, cat, sentimento, tags)
-        tags_h = "".join([f'<span class="tag-item">#{t.strip()}</span>' for t in tags.split(",")])
+        data_ia = processar_noticia_ai(entry.title, entry.get('summary', ''), cat)
+        if not data_ia: continue
+
+        id_noticia = str(uuid.uuid4())
+        img = entry.media_content[0]['url'] if 'media_content' in entry else "[https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800](https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800)"
+        data_ia['img'] = img
+
+        gerar_pagina_individual(id_noticia, data_ia)
+
+        # Sanitização para o card
+        m_esc = html.escape(data_ia['manchete'])
         
         cards_html += f'''
-        <div class="noticia-card" data-id="{id_noticia}" data-categoria="{cat}" onclick="abrirMateria('{id_noticia}')">
+        <a href="materia/{id_noticia}.html" class="noticia-card" data-categoria="{cat}">
             <div class="img-container"><img src="{img}" class="noticia-img"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-{sentimento.lower()}">{sentimento}</span>
-                <h2>{manchete}</h2>
-                <p>{materia[:150]}...</p>
-                <div style="margin-bottom:8px;">{tags_h}</div>
-                <small class="timeago" datetime="{datetime.now(fuso).isoformat()}"></small>
-            </div>
-        </div>
-        <div id="modal-{id_noticia}" class="modal">
-            <div class="modal-content"><span class="fechar-modal" onclick="fecharMateria('{id_noticia}')">&times;</span>
-            <img src="{img}" style="width:100%; border-radius:8px;"><h1>{manchete}</h1><p>{materia.replace(chr(10), '<br><br>')}</p></div>
-        </div>'''
-        
-        adicionadas += 1
-        if adicionadas == 3: cards_html += '<div class="ad-slot">🚀 Espaço para Publicidade</div>'
-        hist_html += f'<div class="historico-item"><b>{cat}</b><br>{manchete}</div>'
-    return cards_html, hist_html
+            <div class="sentiment-tag bg-{data_ia['sentimento'].lower()}">{data_ia['sentimento']}</div>
+            <h2>{m_esc}</h2>
+            <p>{html.escape(data_ia['materia'][:120])}...</p>
+        </a>
+        '''
+    return cards_html
 
 def atualizar_portal():
+    # Coleta de conteúdo antigo para persistência
+    antigos = ""
     if os.path.exists("index.html"):
         with open("index.html", "r", encoding="utf-8") as f:
             soup = BeautifulSoup(f.read(), 'html.parser')
-            antigas = "".join([str(c) for c in soup.find_all(class_='noticia-card')[:40]])
-            hist_antigo = "".join([str(i) for i in soup.find_all(class_='historico-item')[:50]])
-    else: antigas, hist_antigo = "", ""
+            antigos = "".join([str(c) for c in soup.find_all(class_='noticia-card')[:50]])
 
     with ThreadPoolExecutor(max_workers=10) as ex:
-        res = list(ex.map(extrair_noticias_da_fonte, FEEDS.items()))
+        resultados = list(ex.map(extrair_noticias_da_fonte, FEEDS.items()))
 
-    novas = "".join([r[0] for r in res]); novos_h = "".join([r[1] for r in res])
+    novas = "".join(resultados)
     
+    # Layout Final
     filtros = """
     <div class="filter-container">
-        <div class="filter-group">
-            <button class="filter-btn active" onclick="filtrarNoticias('todas', this)">🏠 Todas</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Esquerda', this)">Esquerda</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Centro', this)">Centro</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Direita', this)">Direita</button>
-        </div>
-        <div class="filter-group">
-            <button class="filter-btn" onclick="filtrarNoticias('Hardware', this)">Hardware</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Games', this)">Games</button>
-            <button class="filter-btn" onclick="filtrarNoticias('C#', this)">C#</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Tech', this)">Tech</button>
-            <button class="filter-btn" onclick="filtrarNoticias('Mundo', this)">Mundo</button>
-        </div>
-    </div>"""
+        <button class="filter-btn active" onclick="filtrar('todas')">Todas</button>
+        <button class="filter-btn" onclick="filtrar('Hardware')">Hardware</button>
+        <button class="filter-btn" onclick="filtrar('Cyber')">Cyber</button>
+        <button class="filter-btn" onclick="filtrar('C#')">C#</button>
+    </div>
+    """
 
-    final = f"<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><title>Portal IA News</title>{CSS}</head><body><header><div class='weather-widget' id='weather-display' onclick='alterarCidade(
+    final_html = f"""
+    <!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'>{CSS_STYLE}</head>
+    <body>
+        <header><h1>Portal IA News</h1></header>
+        {filtros}
+        <div class="content-area">{novas}{antigos}</div>
+        <script>
+            function filtrar(cat) {{
+                document.querySelectorAll('.noticia-card').forEach(c => {{
+                    c.style.display = (cat === 'todas' || c.dataset.categoria.includes(cat)) ? 'flex' : 'none';
+                }});
+            }}
+        </script>
+    </body></html>
+    """
+    with open("index.html", "w", encoding="utf-8") as f:
+        f.write(final_html)
+
+if __name__ == "__main__":
+    atualizar_portal()
