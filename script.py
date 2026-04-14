@@ -36,19 +36,22 @@ FEEDS = {
 CSS = """
 <style>
     body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; color: #1c1e21; }
-    header { background: #fff; padding: 20px; text-align: center; border-bottom: 3px solid #d93025; }
+    header { background: #fff; padding: 25px; text-align: center; border-bottom: 3px solid #d93025; position: relative; }
     
-    .weather-widget { background: #fff; padding: 10px; text-align: center; font-size: 0.9em; border-bottom: 1px solid #eee; display: flex; justify-content: center; align-items: center; gap: 10px; color: #555; }
+    /* Clima no canto superior direito */
+    .weather-widget { position: absolute; top: 10px; right: 20px; font-size: 0.85em; color: #555; background: #f9f9f9; padding: 5px 12px; border-radius: 15px; border: 1px solid #eee; }
+
     .search-container { padding: 10px; background: #fff; text-align: center; border-bottom: 1px solid #ddd; }
     #search-input { padding: 10px; width: 80%; max-width: 400px; border-radius: 20px; border: 1px solid #ccc; outline: none; }
 
-    .filter-container { text-align: center; padding: 15px; position: sticky; top: 0; background: #f0f2f5; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 5px; }
-    .filter-btn { background: #fff; border: 2px solid #ddd; padding: 6px 14px; margin: 2px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.85em; }
+    .filter-container { text-align: center; padding: 15px; position: sticky; top: 0; background: #f0f2f5; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .filter-group { margin-bottom: 8px; }
+    .filter-btn { background: #fff; border: 2px solid #ddd; padding: 6px 14px; margin: 2px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.85em; transition: 0.3s; }
     .filter-btn.active { background: #1a73e8; color: #fff; border-color: #1a73e8; }
 
-    .main-wrapper { display: flex; max-width: 1200px; margin: 20px auto; gap: 20px; padding: 0 20px; }
+    .main-wrapper { display: flex; max-width: 1250px; margin: 20px auto; gap: 20px; padding: 0 20px; }
     .content-area { flex: 3; }
-    .sidebar { flex: 1.2; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 220px; }
+    .sidebar { flex: 1.2; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 200px; }
     
     .noticia-card { background: #fff; margin-bottom: 25px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; transition: 0.3s; position: relative; }
     .sentiment-tag { position: absolute; top: 10px; right: 10px; padding: 4px 8px; border-radius: 4px; font-size: 0.7em; font-weight: bold; color: #fff; z-index: 10; }
@@ -59,13 +62,13 @@ CSS = """
     .img-container { position: relative; width: 100%; padding-top: 56.25%; background: #eee; }
     .noticia-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
     .noticia-body { padding: 15px; }
-    .noticia-body h2 { margin: 5px 0; font-size: 1.2em; color: #1a73e8; }
+    .noticia-body h2 { margin: 5px 0; font-size: 1.3em; color: #1a73e8; line-height: 1.3; }
     
     .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow-y: auto; }
-    .modal-content { background: #fff; margin: 30px auto; padding: 30px; width: 90%; max-width: 700px; border-radius: 12px; position: relative; line-height: 1.7; }
+    .modal-content { background: #fff; margin: 30px auto; padding: 30px; width: 90%; max-width: 750px; border-radius: 12px; position: relative; line-height: 1.7; }
     .fechar-modal { position: absolute; right: 20px; top: 10px; font-size: 30px; cursor: pointer; }
     
-    @media (max-width: 800px) { .main-wrapper { flex-direction: column; } .sidebar { position: static; } }
+    @media (max-width: 800px) { .main-wrapper { flex-direction: column; } .weather-widget { position: static; margin-bottom: 10px; } }
 </style>
 """
 
@@ -80,7 +83,7 @@ JS = """
             fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current_weather=true`)
                 .then(res => res.json()).then(data => {
                     const temp = Math.round(data.current_weather.temperature);
-                    display.innerHTML = `📍 Sua localização: <b>${temp}°C</b> ☀️`;
+                    display.innerHTML = `📍 ${temp}°C ☀️`;
                 });
         });
     }
@@ -107,7 +110,6 @@ JS = """
     function abrirMateria(id) { document.getElementById('modal-' + id).style.display = 'block'; document.body.style.overflow = 'hidden'; }
     function fecharMateria(id) { document.getElementById('modal-' + id).style.display = 'none'; document.body.style.overflow = 'auto'; }
 
-    // CORREÇÃO: Fechar ao clicar fora
     window.onclick = function(event) {
         if (event.target.className === 'modal') {
             event.target.style.display = 'none';
@@ -137,7 +139,7 @@ def processar_noticia(titulo, resumo, categoria):
 
 def gerar_pagina_individual(id_noticia, manchete, materia, img, cat, sentimento):
     if not os.path.exists("materia"): os.makedirs("materia")
-    html = f"<!DOCTYPE html><html><head><meta charset='UTF-8'>{CSS}</head><body><header><h1>Portal IA</h1><a href='../index.html'>← Voltar</a></header><div class='modal-content'><img src='{img}' style='width:100%'><h1>{manchete}</h1><p>{materia}</p></div></body></html>"
+    html = f"<!DOCTYPE html><html><head><meta charset='UTF-8'>{CSS}</head><body><header><h1>Portal IA News</h1><a href='../index.html'>← Voltar</a></header><div class='modal-content'><img src='{img}' style='width:100%'><h1>{manchete}</h1><p>{materia}</p></div></body></html>"
     with open(f"materia/{id_noticia}.html", "w", encoding="utf-8") as f: f.write(html)
 
 def extrair_noticias_da_fonte(item):
@@ -182,8 +184,8 @@ def atualizar_portal():
     if os.path.exists("index.html"):
         with open("index.html", "r", encoding="utf-8") as f:
             soup = BeautifulSoup(f.read(), 'html.parser')
-            antigas = "".join([str(c) for c in soup.find_all(class_='noticia-card')[:40]])
-            hist_antigo = "".join([str(i) for i in soup.find_all(class_='historico-item')[:50]])
+            antigas = "".join([str(c) for c in soup.find_all(class_='noticia-card')[:50]])
+            hist_antigo = "".join([str(i) for i in soup.find_all(class_='historico-item')[:60]])
     else: antigas, hist_antigo = "", ""
 
     with ThreadPoolExecutor(max_workers=10) as ex:
@@ -192,15 +194,26 @@ def atualizar_portal():
     novas = "".join([r[0] for r in res]); novos_h = "".join([r[1] for r in res])
     
     filtros = """
-    <div class="weather-widget" id="weather-display">⏳ Carregando clima local...</div>
     <div class="search-container"><input type="text" id="search-input" placeholder="Pesquisar notícias..." onkeyup="pesquisar()"></div>
-    <div class="filter-container"><div><button class="filter-btn active" onclick="filtrarNoticias('todas', this)">🏠 Todas</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Esquerda', this)">🔴 Esquerda</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Direita', this)">🔵 Direita</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Hardware', this)">💻 Hardware</button>
-    <button class="filter-btn" onclick="filtrarNoticias('C#', this)">🎯 C#</button></div></div>"""
+    <div class="filter-container">
+        <div class="filter-group">
+            <button class="filter-btn active" onclick="filtrarNoticias('todas', this)">🏠 Todas</button>
+            <button class="filter-btn" style="border-color:#d93025" onclick="filtrarNoticias('Esquerda', this)">🔴 Esquerda</button>
+            <button class="filter-btn" style="border-color:#6c757d" onclick="filtrarNoticias('Centro', this)">⚪ Centro</button>
+            <button class="filter-btn" style="border-color:#1a73e8" onclick="filtrarNoticias('Direita', this)">🔵 Direita</button>
+        </div>
+        <div class="filter-group">
+            <button class="filter-btn" onclick="filtrarNoticias('Hardware', this)">💻 Hardware</button>
+            <button class="filter-btn" onclick="filtrarNoticias('Games', this)">🎮 Games</button>
+            <button class="filter-btn" onclick="filtrarNoticias('C#', this)">🎯 C#</button>
+            <button class="filter-btn" onclick="filtrarNoticias('Cyber', this)">🛡️ Cyber</button>
+            <button class="filter-btn" onclick="filtrarNoticias('Tech', this)">🚀 Tech</button>
+            <button class="filter-btn" onclick="filtrarNoticias('Esportes', this)">⚽ Esportes</button>
+            <button class="filter-btn" onclick="filtrarNoticias('Mundo', this)">🌎 Mundo</button>
+        </div>
+    </div>"""
 
-    final = f"<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'>{CSS}</head><body><header><h1>Portal IA News</h1></header>{filtros}<div class='main-wrapper'><div class='content-area'>{novas}{antigas}</div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'>{novos_h}{hist_antigo}</div></div></div>{JS}</body></html>"
+    final = f"<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'>{CSS}</head><body><header><div class='weather-widget' id='weather-display'>⏳</div><h1>Portal IA News</h1></header>{filtros}<div class='main-wrapper'><div class='content-area'>{novas}{antigas}</div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'>{novos_h}{hist_antigo}</div></div></div>{JS}</body></html>"
     with open("index.html", "w", encoding="utf-8") as f: f.write(final)
 
 if __name__ == "__main__": atualizar_portal()
