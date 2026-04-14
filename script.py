@@ -49,18 +49,19 @@ CSS = """
 
     .main-wrapper { max-width: 1300px; margin: 20px auto; padding: 0 20px; display: flex; gap: 30px; }
     
-    /* GRID ESTILO G1 */
+    /* GRID CORRIGIDO */
     .content-area { 
         flex: 3;
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 25px;
+        align-content: start; /* Impede que os itens estiquem verticalmente ao filtrar */
     }
 
-    .noticia-card { background: #fff; padding-bottom: 20px; cursor: pointer; transition: 0.3s; position: relative; border-bottom: 1px solid #f0f0f0; }
+    .noticia-card { background: #fff; padding-bottom: 20px; cursor: pointer; transition: 0.3s; position: relative; border-bottom: 1px solid #f0f0f0; display: flex; flex-direction: column; }
     .noticia-card:hover { opacity: 0.8; }
     
-    .sentiment-tag { font-size: 0.65em; font-weight: bold; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; margin-bottom: 8px; display: inline-block; color: #fff; }
+    .sentiment-tag { font-size: 0.65em; font-weight: bold; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; margin-bottom: 8px; display: inline-block; color: #fff; width: fit-content; }
     .bg-positivo { background: #28a745; } .bg-negativo { background: #dc3545; } .bg-neutro { background: #6c757d; }
 
     .img-container { width: 100%; aspect-ratio: 16/9; background: #f8f8f8; border-radius: 8px; overflow: hidden; margin-bottom: 12px; }
@@ -76,13 +77,12 @@ CSS = """
     .sidebar { flex: 1; border-left: 1px solid #eee; padding-left: 20px; max-width: 300px; }
     .sidebar h3 { font-size: 0.85em; text-transform: uppercase; color: #d93025; border-bottom: 2px solid #d93025; display: inline-block; margin-bottom: 15px; }
     .historico-item { font-size: 0.85em; margin-bottom: 15px; border-bottom: 1px solid #f6f6f6; padding-bottom: 10px; }
-    .historico-item b { color: #d93025; font-size: 0.75em; text-transform: uppercase; }
 
     .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); overflow-y: auto; }
     .modal-content { background: #fff; margin: 2% auto; padding: 30px; width: 90%; max-width: 700px; border-radius: 12px; position: relative; }
     .fechar-modal { position: absolute; right: 20px; top: 10px; font-size: 30px; cursor: pointer; color: #aaa; }
 
-    @media (max-width: 900px) { .main-wrapper { flex-direction: column; } .content-area { grid-template-columns: 1fr; } .sidebar { border-left: none; padding-left: 0; } .weather-widget { position: static; margin: 10px auto; width: fit-content; } }
+    @media (max-width: 900px) { .main-wrapper { flex-direction: column; } .content-area { grid-template-columns: 1fr; } .sidebar { border-left: none; padding-left: 0; } }
 </style>
 """
 
@@ -124,24 +124,44 @@ JS = """
     function pesquisar() {
         const q = document.getElementById('search-input').value.toLowerCase();
         const cards = document.querySelectorAll('.noticia-card');
-        if (!q) { cards.forEach(c => c.style.display = 'block'); return; }
+        const ads = document.querySelectorAll('.ad-slot');
+        if (!q) { 
+            cards.forEach(c => c.style.display = 'flex'); 
+            ads.forEach(a => a.style.display = 'block');
+            return; 
+        }
         const res = idx.search(q).map(r => r.ref);
-        cards.forEach(c => c.style.display = res.includes(c.getAttribute('data-id')) ? 'block' : 'none');
+        cards.forEach(c => c.style.display = res.includes(c.getAttribute('data-id')) ? 'flex' : 'none');
+        ads.forEach(a => a.style.display = 'none'); // Esconde anúncios na busca
     }
 
+    /* FILTRO CORRIGIDO PARA MANTER O GRID */
     function filtrarNoticias(cat, btn) {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        document.querySelectorAll('.noticia-card').forEach(c => {
+        
+        const cards = document.querySelectorAll('.noticia-card');
+        const ads = document.querySelectorAll('.ad-slot');
+        const filtro = cat.toLowerCase();
+
+        cards.forEach(c => {
             const cardCat = c.getAttribute('data-categoria').toLowerCase();
-            c.style.display = (cat === 'todas' || cardCat.includes(cat.toLowerCase())) ? 'block' : 'none';
+            // Usamos 'flex' em vez de 'block' para manter a estrutura interna do card se necessário
+            // O importante é o grid do pai (.content-area) que gerencia o posicionamento
+            if (filtro === 'todas' || cardCat.includes(filtro)) {
+                c.style.display = 'flex';
+            } else {
+                c.style.display = 'none';
+            }
         });
+
+        // Esconder anúncios quando um filtro específico estiver ativo para não quebrar o visual
+        ads.forEach(a => a.style.display = (filtro === 'todas') ? 'block' : 'none');
     }
 
     function abrirMateria(id) { document.getElementById('modal-' + id).style.display = 'block'; document.body.style.overflow = 'hidden'; }
     function fecharMateria(id) { document.getElementById('modal-' + id).style.display = 'none'; document.body.style.overflow = 'auto'; }
-    window.onclick = (e) => { if (e.target.className === 'modal') { e.target.style.display = 'none'; document.body.style.overflow = 'auto'; } };
-
+    
     window.onload = () => { buildIndex(); carregarClima(); timeago().render(document.querySelectorAll('.timeago'), 'pt_BR'); };
 </script>
 """
@@ -180,10 +200,7 @@ def extrair_noticias_da_fonte(item):
         id_noticia = str(int(time.time() * 1000) + hash(cat + entry.title))
         img = "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"
         if 'media_content' in entry: img = entry.media_content[0].get('url', img)
-        elif 'links' in entry:
-            for l in entry.links:
-                if 'image' in l.get('type', ''): img = l.get('href', img)
-
+        
         gerar_pagina_individual(id_noticia, manchete, materia, img, cat, sentimento, tags)
         tags_h = "".join([f'<span class="tag-item">#{t.strip()}</span>' for t in tags.split(",")])
         
@@ -195,7 +212,7 @@ def extrair_noticias_da_fonte(item):
                 <h2>{manchete}</h2>
                 <p>{materia[:150]}...</p>
                 <div style="margin-bottom:8px;">{tags_h}</div>
-                <small class="timeago" datetime="{datetime.now(fuso).isoformat()}"></small> • <a href="materia/{id_noticia}.html" style="font-size:0.8em; color:#d93025; text-decoration:none;" onclick="event.stopPropagation();">Ler mais</a>
+                <small class="timeago" datetime="{datetime.now(fuso).isoformat()}"></small>
             </div>
         </div>
         <div id="modal-{id_noticia}" class="modal">
@@ -204,7 +221,7 @@ def extrair_noticias_da_fonte(item):
         </div>'''
         
         adicionadas += 1
-        if adicionadas == 3: cards_html += '<div class="ad-slot">🚀 Espaço para Publicidade / Afiliados</div>'
+        if adicionadas == 3: cards_html += '<div class="ad-slot">🚀 Espaço para Publicidade</div>'
         hist_html += f'<div class="historico-item"><b>{cat}</b><br>{manchete}</div>'
     return cards_html, hist_html
 
@@ -238,7 +255,4 @@ def atualizar_portal():
         </div>
     </div>"""
 
-    final = f"<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><title>Portal IA News</title>{CSS}</head><body><header><div class='weather-widget' id='weather-display' onclick='alterarCidade(event)'>⏳</div><h1>Portal IA News</h1></header><div class='search-container'><input type='text' id='search-input' placeholder='O que você quer ler hoje?' onkeyup='pesquisar()'></div>{filtros}<div class='main-wrapper'><div class='content-area'>{novas}{antigas}</div><div class='sidebar'><h3>Últimas Capturas</h3><div class='sidebar-list'>{novos_h}{hist_antigo}</div></div></div>{JS}</body></html>"
-    with open("index.html", "w", encoding="utf-8") as f: f.write(final)
-
-if __name__ == "__main__": atualizar_portal()
+    final = f"<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><title>Portal IA News</title>{CSS}</head><body><header><div class='weather-widget' id='weather-display' onclick='alterarCidade(
