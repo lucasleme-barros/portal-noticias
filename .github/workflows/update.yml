@@ -2,28 +2,27 @@ name: Atualizar Site de Notícias
 
 on:
   schedule:
-    - cron: '0 * * * *'   # Tenta rodar no minuto 0
-    - cron: '30 * * * *'  # Tenta rodar no minuto 30
-  workflow_dispatch: # Mantém o botão de rodar manual
+    - cron: '0 * * * *' # Roda a cada hora
+  workflow_dispatch: # Permite rodar manualmente
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    # ESSA LINHA ABAIXO É A MAIS IMPORTANTE PARA O VOLUME
     permissions:
-      contents: write 
+      contents: write # Essencial para salvar a pasta /materia
 
     steps:
       - name: Checkout do código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Instalar Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Instalar dependências
-        run: pip install -r requirements.txt
+      - name: Instalar Dependências
+        run: |
+          pip install google-generativeai feedparser beautifulsoup4 pytz
 
       - name: Rodar Script de Notícias
         env:
@@ -32,8 +31,8 @@ jobs:
 
       - name: Publicar alterações
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
-          git add index.html
-          git commit -m "Auto-update: Volume e Histórico [$(date)]" || exit 0
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add index.html materia/*.html # Garante que as novas matérias entrem
+          git commit -m "Update: Novas notícias e matérias individuais [$(date)]" || exit 0
           git push
