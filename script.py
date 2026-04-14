@@ -18,9 +18,22 @@ fuso = pytz.timezone('America/Sao_Paulo')
 agora_str = datetime.now(fuso).strftime('%d/%m/%Y %H:%M')
 
 FEEDS = {
+    # --- As que você já tem (com ajustes de categoria) ---
     "Mundo": "http://feeds.bbci.co.uk/portuguese/rss.xml",
     "Esportes": "https://ge.globo.com/rss/ge/",
-    "Tecnologia": "https://br.ign.com/feed.xml"
+    "Games": "https://br.ign.com/feed.xml",
+    "Hardware": "https://www.adrenaline.com.br/feed/",
+    "Tecnologia": "https://g1.globo.com/rss/g1/tecnologia/",
+    
+    # --- Novas Opções Focadas em Dev e TI ---
+    "DotNet_CS": "https://devblogs.microsoft.com/dotnet/feed/", # Foco total no seu estudo de C#
+    "Dev_Brasil": "https://www.infoq.com/br/feed/", # Conteúdo técnico em português
+    "Cybersecurity": "https://www.cisoadvisor.com.br/rss-feed/", # Essencial para quem trabalha com TI
+    "Inovacao": "https://www.inovacaotecnologica.com.br/boletim/rss.xml", # Ciência e deep tech
+    
+    # --- Extras para fechar o grid ---
+    "Geral": "https://www.cnnbrasil.com.br/feed/",
+    "Mobile": "https://www.tudocelular.com/feed/"
 }
 
 # CSS COM TÉCNICA DE BOX 16:9
