@@ -1,0 +1,43 @@
+1. Camada de Inteligência (Backend/IA)
+
+    Curadoria Autônoma: O script processa mais de 50 fontes de notícias simultaneamente.
+
+    Motor Gemini 1.5 Flash: Age como um editor-chefe que:
+
+        Lê o conteúdo bruto dos feeds RSS.
+
+        Reescreve as notícias em tom jornalístico (Manchete + 3 parágrafos).
+
+        Análise de Sentimento: Classifica cada matéria como Positiva, Negativa ou Neutra.
+
+    Processamento Paralelo (Multithreading): O site usa ThreadPoolExecutor para buscar e processar várias notícias ao mesmo tempo, reduzindo o tempo de atualização de minutos para segundos.
+
+2. Interface e Experiência do Usuário (Frontend)
+
+    Widget de Clima Dinâmico: Localizado no canto superior direito, detecta a localização do leitor via navegador (JS) e mostra a temperatura local.
+
+    Busca em Tempo Real: Barra de pesquisa no topo que utiliza a biblioteca Lunr.js para filtrar notícias instantaneamente sem recarregar a página.
+
+    Filtros Avançados: * Espectro Político: Botões para filtrar notícias de Esquerda, Direita e Centro.
+
+        Temas Específicos: Filtros para Hardware, Games, C#, Cyber, Tech, Esportes e Mundo.
+
+    Tempo Relativo: Em vez de datas estáticas, o site exibe "há 5 minutos", "há 1 hora", etc. (via timeago.js).
+
+3. Arquitetura de Dados e SEO
+
+    Deep Linking (Páginas Individuais): Para cada notícia gerada, o script cria um arquivo físico .html dentro da pasta /materia. Isso permite que você compartilhe o link direto de uma notícia específica.
+
+    Sistema de Modais: Permite a leitura rápida da matéria sem sair da página principal, com fechamento inteligente (clicando fora ou no "X").
+
+    Deduplicação de Conteúdo: O script rastreia títulos já processados para evitar notícias repetidas na mesma atualização.
+
+    Histórico Persistente: O site mantém uma barra lateral com o histórico das últimas capturas, preservando o contexto das atualizações anteriores.
+
+4. Infraestrutura (DevOps)
+
+    GitHub Actions: O motor que faz tudo rodar de hora em hora (ou via gatilho manual).
+
+    GitHub Pages: Hospedagem gratuita e escalável para o seu portal.
+
+    Gestão de Segredos: A sua GEMINI_API_KEY está protegida nas configurações do GitHub, fora do código público.
