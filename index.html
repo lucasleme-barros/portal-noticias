@@ -1,15 +1,41 @@
-<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'>
+
+    <!DOCTYPE html>
+    <html lang='pt-BR'>
+    <head><meta charset='UTF-8'>
 <style>
     body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; color: #1c1e21; }
     header { background: #fff; padding: 25px; text-align: center; border-bottom: 3px solid #d93025; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    
+    .filter-container { 
+        text-align: center; 
+        margin: 0; 
+        padding: 15px;
+        position: sticky;
+        top: 0;
+        background: #f0f2f5;
+        z-index: 100;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .filter-btn {
+        background: #fff;
+        border: 2px solid #ddd;
+        padding: 8px 18px;
+        margin: 5px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+    .filter-btn:hover { background: #e8f0fe; border-color: #1a73e8; }
+    .filter-btn.active { background: #1a73e8; color: #fff; border-color: #1a73e8; }
+
     .main-wrapper { display: flex; max-width: 1000px; margin: 20px auto; gap: 20px; padding: 0 20px; }
     .content-area { flex: 3; }
-    .sidebar { flex: 1; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 10px; }
+    .sidebar { flex: 1; background: #fff; padding: 20px; border-radius: 8px; border: 1px solid #ddd; height: fit-content; position: sticky; top: 80px; }
     
     .noticia-card { background: #fff; margin-bottom: 30px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #eee; cursor: pointer; transition: 0.3s; }
     .noticia-card:hover { transform: translateY(-5px); }
     
-    /* CORES DE POLÍTICA */
     .border-esquerda { border-left: 8px solid #d93025 !important; }
     .border-direita { border-left: 8px solid #1a73e8 !important; }
     .border-centro { border-left: 8px solid #6c757d !important; }
@@ -27,20 +53,32 @@
     .historico-item { font-size: 0.85em; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
     @media (max-width: 800px) { .main-wrapper { flex-direction: column; } }
 </style>
-</head><body><header><h1>Portal IA News</h1></header><div class='main-wrapper'><div class='content-area'>
-            <div class="noticia-card border-padrao" onclick="abrirMateria('-8808402455992807712')">
+</head>
+    <body>
+        <header><h1>Portal IA News</h1></header>
+        
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filtrarNoticias('todas', this)">Todas</button>
+        <button class="filter-btn" onclick="filtrarNoticias('Esquerda', this)">Esquerda</button>
+        <button class="filter-btn" onclick="filtrarNoticias('Centro', this)">Centro</button>
+        <button class="filter-btn" onclick="filtrarNoticias('Direita', this)">Direita</button>
+    </div>
+    
+        <div class='main-wrapper'>
+            <div class='content-area'>
+            <div class="noticia-card border-padrao" data-categoria="Mundo" onclick="abrirMateria('-15839162689506069')">
                 <div class="img-container">
                     <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img">
                 </div>
                 <div class="noticia-body">
-                    <small style="color:#666; font-weight:bold;">MUNDO • 14/04/2026 13:42</small>
+                    <small style="color:#666; font-weight:bold;">MUNDO • 14/04/2026 13:50</small>
                     <h2>Navios ligados ao Irã cruzam Estreito de Ormuz apesar do bloqueio dos EUA; China critica ação americana</h2>
                 </div>
             </div>
             
-            <div id="modal--8808402455992807712" class="modal">
+            <div id="modal--15839162689506069" class="modal">
                 <div class="modal-content">
-                    <span class="fechar-modal" onclick="fecharMateria('-8808402455992807712')">&times;</span>
+                    <span class="fechar-modal" onclick="fecharMateria('-15839162689506069')">&times;</span>
                     <div class="img-container" style="margin-bottom:20px;">
                         <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img">
                     </div>
@@ -50,41 +88,41 @@
                 </div>
             </div>
             
-            <div class="noticia-card border-padrao" onclick="abrirMateria('-9077243956971526237')">
+            <div class="noticia-card border-padrao" data-categoria="Esportes" onclick="abrirMateria('8407557287338535655')">
                 <div class="img-container">
-                    <img src="https://s2-ge.glbimg.com/2Nl7CfHfwK9Qj3x4pprrAWaRLM8=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/I/Z/gurCOWTCaoDVZ6htvVqg/screenshot-8.png" class="noticia-img">
+                    <img src="https://s2-ge.glbimg.com/cc1WuIruWqgdUWG5wEmi31ZbQqk=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2025/6/8/KO8WLCQuildhHsWJNp4g/000-36yr9k7.jpg" class="noticia-img">
                 </div>
                 <div class="noticia-body">
-                    <small style="color:#666; font-weight:bold;">ESPORTES • 14/04/2026 13:42</small>
-                    <h2>Sonhos, motivações e superação: conheça o Santana Jr, clube inscrito na Taça Clube Interbairros</h2>
+                    <small style="color:#666; font-weight:bold;">ESPORTES • 14/04/2026 13:50</small>
+                    <h2>Tribunal Arbitral pede presença de administradora da Eagle em Assembleia do Botafogo</h2>
                 </div>
             </div>
             
-            <div id="modal--9077243956971526237" class="modal">
+            <div id="modal-8407557287338535655" class="modal">
                 <div class="modal-content">
-                    <span class="fechar-modal" onclick="fecharMateria('-9077243956971526237')">&times;</span>
+                    <span class="fechar-modal" onclick="fecharMateria('8407557287338535655')">&times;</span>
                     <div class="img-container" style="margin-bottom:20px;">
-                        <img src="https://s2-ge.glbimg.com/2Nl7CfHfwK9Qj3x4pprrAWaRLM8=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/I/Z/gurCOWTCaoDVZ6htvVqg/screenshot-8.png" class="noticia-img">
+                        <img src="https://s2-ge.glbimg.com/cc1WuIruWqgdUWG5wEmi31ZbQqk=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2025/6/8/KO8WLCQuildhHsWJNp4g/000-36yr9k7.jpg" class="noticia-img">
                     </div>
                     <small>ESPORTES</small>
-                    <h1>Sonhos, motivações e superação: conheça o Santana Jr, clube inscrito na Taça Clube Interbairros</h1>
-                    <div style="font-size:1.1em; color:#333;"><img src="https://s2-ge.glbimg.com/2Nl7CfHfwK9Qj3x4pprrAWaRLM8=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/I/Z/gurCOWTCaoDVZ6htvVqg/screenshot-8.png" /><br />     Conheça o Santana Jr, clube inscrito na Taça Clube Interbairros 2026<br><br>Ser uma oportunidade para realizar sonhos: este é um dos intuitos da Taça Clube Interbairros 2026. Atacante do Santana Júnior, Jefferson de Abreu concilia o futebol com o trabalho de servente de pedreiro com a esperança de realizar o sonho de se tornar um jogador profissional e proporcionar uma vida melhor para sua família. Superação, a busca para conseguir um objetivo e a motivação fazem parte do espírito do Santana Júnior; assista acima na íntegra.  <br><br>+ Rede Clube lança 1ª edição da Taça Clube Interbairros: veja fórmula, datas e premiações<br><br>+ Presidente da FFP, Brown destaca a Taça Clube Interbairros como oportunidade para jovens atletas<br><br>Santana Júnior, equipe inscrita na Taça Clube Interbairros 2026<br><br>Rede Clube<br><br>Jefferson de Abreu, atacante do Santana Júnior<br><br>Rede Clube<br><br>- Desde pequeno é meu sonho (ser jogador profissional). Eu tenho que me esforçar para chegar lá. Todos nós, toda criança, tem o sonho de dar orgulho para sua família. Tem que se esforçar - declarou o atacante Jefferson de Abreu. <br><br>- Desde criança eu persisto. Estou desde os 11 anos no Santana Jr. e tenho o sonho de ajudar minha família. Uma inspiração que eu tenho é no Neymar, joga muito. E é isso, persistir até onde eu chegar, sou muito grato a Deus - pontuou Antônio Francisco, atacante da equipe. <br><br>Mateus Costa, goleiro do Santana Júnior<br><br>Rede Clube<br><br>Goleiro do Santana Júnior, Mateus Costa faz parte do time que busca realizar o sonho de se tornar um jogador profissional. O atleta contou como é ter que lidar com as dificuldades encontradas neste percurso e destacou a motivação da sua família. <br><br>- Estou aqui ainda na luta, persistindo, porque é um sonho de infância ajudar minha família, minha mãe, meu pai e dar orgulho. Para lidar com isso é o apoio da família, ter a cabeça forte. Eu ouvi muitos “nãos”, ouvi pessoas dizendo que eu era ruim, que eu não ia ser nada, mas estamos aqui na luta e com fé em Deus vamos crescer. Sempre é bom sonhar, acreditar até o fim e com fé em Deus, ele vai abençoar - disse.<br><br>Marlon Araújo, técnico do Santana Júnior<br><br>Rede Clube<br><br>Marlon Araújo, técnico do Santana Júnior, detalhou também o processo de trabalhar com atletas que têm conciliar o futebol com o emprego. O treinador ainda comentou sobre o inventivo e o processo de desenvolvimento de cada um dos jogadores.<br><br>- Essa parte do “não” faz com que a gente vire um psicólogo. A gente tem que aconselhar, orientar eles, primeiro para não desistir, segundo é que eles também têm que ter uma visão para frente, com o ser ou não ser jogador de futebol. A gente procura fazer a melhor parte, dar um incentivo, nunca abandonar. Lógico, nem todos vão conseguir ser jogador (profissional), mas eu tenho uma visão que o processo, no nosso projeto, vem dando certo - afirmou Marlon.<br><br>- Torna-se um pouco difícil, porque hoje temos muitos jogadores de 18 a 22 que estão trabalhando. Mas é o horário que eles têm (disponível) para poder desenvolver os treinos sempre à noite, durante o dia é trabalho, escola, mas eles têm ainda essa esperança de ser jogador de futebol - finalizou.<br><br>Vem aí a Taça Clube Interbairros, maior torneio de várzea de Teresina<br><br>Taça Clube Interbairros 2026<br><br>A Taça Clube Interbairros chega à sua 1ª edição com foco em unir as comunidades e valorizar novos talentos em prol do futebol amador. O torneio organizado pela Rede Clube, em parceria com a Federação de Futebol Piauiense (FFP) e Secretaria de Esportes e Lazer de Teresina (Semel), tem início marcado para o dia 16 de maio e terá cobertura completa e transmissões da Rede Clube, ge Piauí, portal Clube News e Rádio Clube News (90.9).<br><br>Semifinais e final irão ocorrer no estádio Lindolfo Monteiro, em Teresina, e a decisão do torneio vai ocorrer no dia 6 de junho.<br><br>Conheça a Taça Clube Interbairros 2026<br><br>📝 Inscrições<br><br>As inscrições dos clubes estão abertas e vão seguir até o dia 17 de abril (sexta-feira). O registro das equipes serão feitos na gerência de esportes da Semel, na Rua Jônatas Batista, 852, Centro.<br><br>🤝 Congresso técnico<br><br>Após as inscrições das equipes participantes, a Semel vai promover o congresso técnico entre os clubes. Na oportunidade, será definidos os confrontos, chaveamentos e também será oficializado o regulamento da Taça Clube Interbairros 2026. O encontro está marcado para ocorrer no dia 22 de abril, às 9h, na sede da Rede Clube (Av. Walter Alencar, 2120, Monte Castelo).<br><br>📅 Datas-base<br><br>Início da competição (oitavas de final): 16 de maio;<br><br>Quartas de final: 23 de maio;<br><br>Semifinais: 30 de maio;<br><br>Final: 6 de junho.<br><br>*OBS: Jogos das semifinal e final serão no estádio Lindolfo Monteiro.<br><br>⚽Fórmula de disputa<br><br>A Taça Clube Interbairros vai ser realizada no formato eliminatório, ou seja, no modelo "mata-mata". Ao todo, 16 clubes irão participar do torneio. Os jogos serão únicos, e em caso de empate no tempo regulamentar, o classificado será definido após disputa de pênaltis. As partidas terão duração de 40 minutos cada tempo.<br><br>As partidas das oitavas e das quartas irão ocorrer nos campos dos bairros. Semifinais e final estão marcadas para ocorrer no estádio Lindolfo Monteiro.<br><br>Formato eliminatório (mata-mata);<br><br>Oitavas e quartas nos campos dos bairros;<br><br>Tempo de cada jogo: 40 minutos (em cada);<br><br>Semifinais e final no estádio Lindolfo Monteiro;<br><br>Empate no tempo regulamentar: disputa de pênaltis.<br><br>A Taça Clube Interbairros 2026 vai contar com clubes da zona Norte, Leste, Sudeste e Sul da capital piauienses. A organização do torneio ainda vai definir os confrontos e o chavamento. O campeonato tem como um dos intuitos valorizar novos talentos e mostrar que esses espaços públicos podem ser um celeiros de promessas.<br><br>Campos da Taça Clube Interbairros 2026<br><br>🏟️ Campos dos bairros da Taça Clube Interbairros 2026<br><br>Lindolfo Monteiro (Centro) - palco das semifinais e final;<br><br>Bariri (Vila Operária l zona Norte);<br><br>Lucidão (Itararé l zona Sudeste);<br><br>Campo dos Morros (Morros l zona Leste);<br><br>Dezoitão (Lourival Parente l zona Sul).<br><br>👟 Idade dos jogadores<br><br>Entre 18 e 23 anos.<br><br>🏆 Premiação<br><br>A Taça Clube Interbairros 2026 vai somar R$ 50 mil de premiações, além de troféus e medalhas; confira abaixo.<br><br>🥇 Campeão: R$ 30 mil;<br><br>🥈 Vice: 10 mil;<br><br>🥉 3º colocado: R$ 5 mil;<br><br>4️⃣ 4º colocado: R$ 5 mil.</div>
+                    <h1>Tribunal Arbitral pede presença de administradora da Eagle em Assembleia do Botafogo</h1>
+                    <div style="font-size:1.1em; color:#333;"><img src="https://s2-ge.glbimg.com/cc1WuIruWqgdUWG5wEmi31ZbQqk=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2025/6/8/KO8WLCQuildhHsWJNp4g/000-36yr9k7.jpg" /><br />     ge Botafogo projeta confronto com o Racing pela Sul-Americana<br><br>O Tribunal Arbitral da FGV, campo jurídico no qual são decididos os próximos passos da briga societária entre Botafogo e Eagle/Ares, pediu a presença da Cork Gully - administradora judicial da Eagle Bidco - na Assembleia Geral Extraordinária do Botafogo marcada para a próxima segunda-feira. A reunião foi convocada por John Textor para debater a situação financeira da SAF e votar uma proposta de aporte de R$ 125 milhões atrelado à emissão de novas ações. <br><br>A SAF do Botafogo concordou com o pedido da arbitragem, visto que sempre entendeu a Cork Gully como parte interessada do debate. Na convocação da AGE, Textor cita não apenas o clube social, acionista minoritário da SAF, como também a administradora judicial da Eagle Bidco. A Cork Gully é a administradora responsável pela publicação do anúncio de venda da SAF do Botafogo no jornal britânico Financial Times.<br><br>Nos bastidores da SAF, a Assembleia Geral Extraordinária é vista como uma oportunidade de garantir posicionamentos públicos de todos os envolvidos: John Textor, os dirigentes do Botafogo associativo e a Ares, principal credora da Eagle Bidco. <br><br>+ Administradora coloca SAF do Botafogo à venda em anúncio de jornal britânico<br><br>Textor no Nilton Santos em jogo do Botafogo<br><br>MAURO PIMENTEL / AFP<br><br>Segundo apuração do ge, Textor decidiu convocar a AGE devido ao impasse com o clube social pela capitalização. O americano afirmou a pessoas próximas que a reunião era sua "única escolha". Em nota, o dono da SAF citou que quer desafiar os acionistas a "sair das sombras".<br><br>— Convoquei esta Assembleia com o objetivo de desafiar nossos acionistas a saírem das sombras e esclarecem suas intenções. Vocês vão apoiar a entrada de capital saudável no clube ou continuarão a agir nos bastidores em busca de controle? Este é um desafio a um grupo minoritário influente e muito ativo dentro do clube social, e também um desafio à Ares, que atua por meio da Eagle Bidco para proteger o Lyon. Aplaudo a decisão da arbitragem, que nos permite levar essas questões a voto às claras — disse Textor, em nota enviada ao ge.<br><br>Em fevereiro, o americano planejou a entrada de US$ 25 milhões - quantia que quitou, entre outras pendências, o transfer ban alvinegro - com a conversão da dívida em participação acionária da GDA Luma e da Hutton Capital.<br><br>+ Botafogo social revela conversas com potenciais investidores e indica recusa a aporte de Textor<br><br>John Textor entre João Paulo Magalhães e Durcesio Mello<br><br>Vítor Silva/Botafogo<br><br>Sem o aval do clube social para as mudanças societárias, as quantias entraram nos cofres do Botafogo como um empréstimo: Textor aprovou a verba com maioria no Conselho de Administração da SAF, e Durcesio Mello, representante da associação no órgão, se absteve. <br><br>Em comunicado na última semana, Textor reforçou o pedido de autorização do clube social à capitalização, o que não ocorreu até o momento. Em nota, o Botafogo associativo indicou que irá recusar a proposta. <br><br>O Botafogo volta a campo nesta quarta-feira, às 19h (horário de Brasília), para enfrentar o Racing em Avellaneda. A partida é válida pela segunda rodada da fase de grupos da Sul-Americana. <br><br>+ ✅Clique aqui para seguir o canal ge Botafogo no WhatsApp<br><br>🗞️ Leia mais notícias do Botafogo<br><br>🎧 Ouça o podcast ge Botafogo 🎧<br><br>Assista: tudo sobre o Botafogo no ge, na Globo e no sportv</div>
                 </div>
             </div>
             
-            <div class="noticia-card border-padrao" onclick="abrirMateria('2919505467781908333')">
+            <div class="noticia-card border-padrao" data-categoria="Games" onclick="abrirMateria('-4804887405842910792')">
                 <div class="img-container">
                     <img src="https://sm.ign.com/ign_br/news/n/new-hero-s/new-hero-sierra-returning-post-match-accolades-and-a-map-rew_xrkh.jpg" class="noticia-img">
                 </div>
                 <div class="noticia-body">
-                    <small style="color:#666; font-weight:bold;">GAMES • 14/04/2026 13:42</small>
+                    <small style="color:#666; font-weight:bold;">GAMES • 14/04/2026 13:50</small>
                     <h2>Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</h2>
                 </div>
             </div>
             
-            <div id="modal-2919505467781908333" class="modal">
+            <div id="modal--4804887405842910792" class="modal">
                 <div class="modal-content">
-                    <span class="fechar-modal" onclick="fecharMateria('2919505467781908333')">&times;</span>
+                    <span class="fechar-modal" onclick="fecharMateria('-4804887405842910792')">&times;</span>
                     <div class="img-container" style="margin-bottom:20px;">
                         <img src="https://sm.ign.com/ign_br/news/n/new-hero-s/new-hero-sierra-returning-post-match-accolades-and-a-map-rew_xrkh.jpg" class="noticia-img">
                     </div>
@@ -94,19 +132,19 @@
                 </div>
             </div>
             
-            <div class="noticia-card border-padrao" onclick="abrirMateria('-8385900105255411309')">
+            <div class="noticia-card border-padrao" data-categoria="Hardware" onclick="abrirMateria('-4433883151291706081')">
                 <div class="img-container">
                     <img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Xbox-Discussoes-Volta-Exclusivos-640x400.jpg" class="noticia-img">
                 </div>
                 <div class="noticia-body">
-                    <small style="color:#666; font-weight:bold;">HARDWARE • 14/04/2026 13:42</small>
+                    <small style="color:#666; font-weight:bold;">HARDWARE • 14/04/2026 13:50</small>
                     <h2>Xbox discute internamente uma possível volta de jogos exclusivos</h2>
                 </div>
             </div>
             
-            <div id="modal--8385900105255411309" class="modal">
+            <div id="modal--4433883151291706081" class="modal">
                 <div class="modal-content">
-                    <span class="fechar-modal" onclick="fecharMateria('-8385900105255411309')">&times;</span>
+                    <span class="fechar-modal" onclick="fecharMateria('-4433883151291706081')">&times;</span>
                     <div class="img-container" style="margin-bottom:20px;">
                         <img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Xbox-Discussoes-Volta-Exclusivos-640x400.jpg" class="noticia-img">
                     </div>
@@ -116,19 +154,19 @@
                 </div>
             </div>
             
-            <div class="noticia-card border-padrao" onclick="abrirMateria('1966047003155615815')">
+            <div class="noticia-card border-padrao" data-categoria="Tecnologia" onclick="abrirMateria('-2840777669078353151')">
                 <div class="img-container">
                     <img src="https://s2-g1.glbimg.com/S7rZaQtot2ZfuspJI-80TuFeqJA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/G/D/cK3wCrScOEI1GnIyZLlg/foto-1-.jpg" class="noticia-img">
                 </div>
                 <div class="noticia-body">
-                    <small style="color:#666; font-weight:bold;">TECNOLOGIA • 14/04/2026 13:42</small>
+                    <small style="color:#666; font-weight:bold;">TECNOLOGIA • 14/04/2026 13:50</small>
                     <h2>Nissan vai enxugar oferta de carros e ampliar uso de direção com inteligência artificial</h2>
                 </div>
             </div>
             
-            <div id="modal-1966047003155615815" class="modal">
+            <div id="modal--2840777669078353151" class="modal">
                 <div class="modal-content">
-                    <span class="fechar-modal" onclick="fecharMateria('1966047003155615815')">&times;</span>
+                    <span class="fechar-modal" onclick="fecharMateria('-2840777669078353151')">&times;</span>
                     <div class="img-container" style="margin-bottom:20px;">
                         <img src="https://s2-g1.glbimg.com/S7rZaQtot2ZfuspJI-80TuFeqJA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/G/D/cK3wCrScOEI1GnIyZLlg/foto-1-.jpg" class="noticia-img">
                     </div>
@@ -138,19 +176,19 @@
                 </div>
             </div>
             
-            <div class="noticia-card border-padrao" onclick="abrirMateria('323669788507086781')">
+            <div class="noticia-card border-padrao" data-categoria="DotNet_CS" onclick="abrirMateria('-5553619372670633134')">
                 <div class="img-container">
                     <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img">
                 </div>
                 <div class="noticia-body">
-                    <small style="color:#666; font-weight:bold;">DOTNET_CS • 14/04/2026 13:42</small>
+                    <small style="color:#666; font-weight:bold;">DOTNET_CS • 14/04/2026 13:50</small>
                     <h2>Your Migration’s Source of Truth: The Modernization Assessment</h2>
                 </div>
             </div>
             
-            <div id="modal-323669788507086781" class="modal">
+            <div id="modal--5553619372670633134" class="modal">
                 <div class="modal-content">
-                    <span class="fechar-modal" onclick="fecharMateria('323669788507086781')">&times;</span>
+                    <span class="fechar-modal" onclick="fecharMateria('-5553619372670633134')">&times;</span>
                     <div class="img-container" style="margin-bottom:20px;">
                         <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img">
                     </div>
@@ -160,19 +198,19 @@
                 </div>
             </div>
             
-            <div class="noticia-card border-esquerda" onclick="abrirMateria('3153847653848826698')">
+            <div class="noticia-card border-esquerda" data-categoria="Esquerda " onclick="abrirMateria('-7583135116707576995')">
                 <div class="img-container">
                     <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img">
                 </div>
                 <div class="noticia-body">
-                    <small style="color:#666; font-weight:bold;">ESQUERDA  • 14/04/2026 13:42</small>
+                    <small style="color:#666; font-weight:bold;">ESQUERDA  • 14/04/2026 13:50</small>
                     <h2>Lula anuncia programa para quitar dívidas dos brasileiros com bets: “Assaltam o povo”</h2>
                 </div>
             </div>
             
-            <div id="modal-3153847653848826698" class="modal">
+            <div id="modal--7583135116707576995" class="modal">
                 <div class="modal-content">
-                    <span class="fechar-modal" onclick="fecharMateria('3153847653848826698')">&times;</span>
+                    <span class="fechar-modal" onclick="fecharMateria('-7583135116707576995')">&times;</span>
                     <div class="img-container" style="margin-bottom:20px;">
                         <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img">
                     </div>
@@ -182,41 +220,41 @@
                 </div>
             </div>
             
-            <div class="noticia-card border-centro" onclick="abrirMateria('6754246876671955138')">
+            <div class="noticia-card border-centro" data-categoria="Centro " onclick="abrirMateria('7561805088455398848')">
                 <div class="img-container">
-                    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img">
+                    <img src="https://s2-g1.glbimg.com/uDBtkg3IrWz9GSU7lrnZ3Z_DU4c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/j/K/J7D788R7yo6a1umWgcDQ/55116065841-5620129e17-k.jpg" class="noticia-img">
                 </div>
                 <div class="noticia-body">
-                    <small style="color:#666; font-weight:bold;">CENTRO  • 14/04/2026 13:42</small>
-                    <h2>'É natural que tenham pressões como o comentário do ministro Dino', diz relator da CPI do Crime Organizado</h2>
+                    <small style="color:#666; font-weight:bold;">CENTRO  • 14/04/2026 13:50</small>
+                    <h2>Gilmar Mendes diz que CPI não tem 'base legal' para pedir indiciamento de ministros do STF</h2>
                 </div>
             </div>
             
-            <div id="modal-6754246876671955138" class="modal">
+            <div id="modal-7561805088455398848" class="modal">
                 <div class="modal-content">
-                    <span class="fechar-modal" onclick="fecharMateria('6754246876671955138')">&times;</span>
+                    <span class="fechar-modal" onclick="fecharMateria('7561805088455398848')">&times;</span>
                     <div class="img-container" style="margin-bottom:20px;">
-                        <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800" class="noticia-img">
+                        <img src="https://s2-g1.glbimg.com/uDBtkg3IrWz9GSU7lrnZ3Z_DU4c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/j/K/J7D788R7yo6a1umWgcDQ/55116065841-5620129e17-k.jpg" class="noticia-img">
                     </div>
                     <small>CENTRO </small>
-                    <h1>'É natural que tenham pressões como o comentário do ministro Dino', diz relator da CPI do Crime Organizado</h1>
-                    <div style="font-size:1.1em; color:#333;">O senador Alessandro Vieira (MDB-SE), relator da CPI do Crime Organizado, acredita que só será possível saber se o relatório entregue na manhã desta terça-feira (14) será aprovado quando ele estiver sendo analisado no plenário do Senado. <br><br>"A gente literalmente só vai saber no plenário. É natural que neste momento tenham pressões que podem se dar de forma aberta com base em um comentário do ministro Flávio Dino, mas ocorrem muito mais intensamente de forma velada. Acho que o Brasil tem agora uma oportunidade de acompanhar como cada um se posiciona", disse Vieira.<br><br>O ministro Flávio Dino, do Supremo Tribunal Federal (STF), que não é citado na CPI entre os ministros que Vieira quer indiciar, publicou uma mensagem em uma rede social em que saiu em defesa dos colegas.<br><br>Dino afirmou se solidarizar com os colegas aos quais chamou de "alvo de injustiças". No texto, o ministro também destacou as ações do Supremo e da PGR contra o crime organizado.<br><br>"É irresponsabilidade investigar o crime organizado e não tratar sobre milicianos, traficantes de drogas, vendedores de armas ilegais, garimpos ilegais, facções que controlam territórios, matadores e pistoleiros etc..", introduziu Dino.<br><br>"Atualmente há, por parte de alguns, o equívoco de apontar o STF como o 'maior problema nacional'. É um imenso erro, para dizer o mínimo. Friso: gigantesco erro histórico, que exige uma melhor reflexão quanto às consequências", prosseguiu. <br><br>📱 Clique aqui para seguir o canal do g1 no WhatsApp<br><br>O relatório preliminar da CPI foi entregue pelo relator na manhã desta quarta-feira (14) e a sessão que fará a leitura de um resumo do documento está marcada para as 14h de hoje. Nela, os parlamentares irão decidir se aprovam as propostas de indiciamentos e recomendações feitas por Vieira.<br><br>🔎 A CPI foi instalada no Senado Federal em novembro de 2025 para investigar omissões no combate ao crime organizado no Brasil. O Master entrou nos assuntos da comissão após suspeitas de irregularidades em operações financeiras para ocultar recursos de origem ilícita.<br><br>Veja os vídeos que estão em alta no g1<br><br>Pedido de indiciamento do PGR e ministros do STF <br><br>Entre os principais pontos do relório apresentado pelo senador Alessandro Vieira está o pedido de indiciamento dos ministros do Supremo Tribunal Federal (STF) Alexandre de Moraes, Dias Toffoli, Gilmar Mendes e do procurador-geral da República (PGR), Paulo Gonet.<br><br>De acordo com o relator da CPI, os ministros citados deveriam ter se declarado suspeitos para julgar o caso do Banco Master no Supremo, devido a supostas relações de proximidade com os envolvidos na investigação, principalmente o dono da instituição financeira, Daniel Vorcaro.<br><br>Vieira enquadra os indiciados nos seguintes critérios de descumprimento da lei:<br><br>➡️Ministros Dias Toffoli e Alexandre de Moraes<br><br>Proferir julgamento quando, por lei, seja suspeito na causa;<br><br>Proceder de modo incompatível com a honra, dignidade e decoro de suas funções.<br><br>➡️Ministro Gilmar Mendes<br><br>Proferir julgamento quando, por lei, seja suspeito na causa.<br><br>➡️Procurador-geral da República, Paulo Gonet<br><br>Ser patentemente desidioso no cumprimento de suas atribuições. Segundo a lei, isso significa "proceder de modo incompatível com a dignidade e o decoro do cargo".<br><br>Viera justificou os pedidos de indiciamento dizendo que ferramentas de investigação da comissão foram “sabotadas”. “Não conseguíamos fazer depoimentos porque os habeas corpus eram constantes”, exemplificou o senador.<br><br>Análise de declarações de IR do Master segue pendentes <br><br>A CPI terminará nesta terça sem concluir a análise dos documentos referentes a quatro anos de declarações de Imposto de Renda do Banco Master entregues à Comissão pela Receita Federal. <br><br>Entre 2022 e 2025, o banco repassou R$ 7,3 bilhões a 2.939 pessoas físicas e empresas.</div>
+                    <h1>Gilmar Mendes diz que CPI não tem 'base legal' para pedir indiciamento de ministros do STF</h1>
+                    <div style="font-size:1.1em; color:#333;"><img src="https://s2-g1.glbimg.com/uDBtkg3IrWz9GSU7lrnZ3Z_DU4c=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/j/K/J7D788R7yo6a1umWgcDQ/55116065841-5620129e17-k.jpg" /><br />     O ministro Gilmar Mendes, do Supremo Tribunal Federal (STF), afirmou nesta terça-feira (14) que o pedido do relator da CPI do Crime Organizado, Alessandro Vieira (MDB-SE), para indiciar ministros da Corte, incluindo ele, não tem base legal e extrapola as atribuições das comissões parlamentares de inquérito.<br><br>Em publicação nas redes sociais, o magistrado disse que a iniciativa leva a uma reflexão sobre os limites de atuação das CPIs, especialmente quando, segundo ele, há tentativa de criminalizar decisões judiciais.<br><br>“O pedido do relator da CPI do Crime Organizado, voltado ao indiciamento de ministros do STF sem base legal, nos leva a uma reflexão sobre o papel e os poderes das CPIs”, escreveu o ministro.<br><br>Gilmar Mendes afirmou ainda que a situação se agrava quando o pedido “flerta com arbitrariedades”, como a tentativa de enquadrar decisões que concedem habeas corpus como crime. Para o ministro, esse tipo de iniciativa representa uma forma de ataque à independência do Judiciário.<br><br>Veja os vídeos que estão em alta no g1<br><br>Segundo ele, o indiciamento é um ato que cabe exclusivamente à autoridade policial e não se aplica aos crimes de responsabilidade, que seguem um rito próprio, previsto na legislação. <br><br>Esses crimes, segundo ele, são analisados por procedimentos específicos, que envolvem o Congresso Nacional, sem previsão de atuação de CPIs nesse tipo de processo.<br><br>O ministro também criticou o que classificou como tentativa de criminalizar a interpretação da lei por magistrados, prática conhecida no meio jurídico como “crime de hermenêutica” — expressão usada para definir tentativas de punir juízes por suas decisões.<br><br>Gilmar Mendes destacou que as CPIs são instrumentos importantes de fiscalização do poder público, mas que o uso desses colegiados para constranger instituições ou alimentar disputas políticas compromete a credibilidade do mecanismo.<br><br>Para ele, excessos podem configurar abuso de autoridade e devem ser apurados pelos órgãos competentes.<br><br>Gilmar Mendes, ministro do Supremo Tribunal Federal (STF)<br><br>Luiz Silveira/STF</div>
                 </div>
             </div>
             
-            <div class="noticia-card border-direita" onclick="abrirMateria('-3334677709334427801')">
+            <div class="noticia-card border-direita" data-categoria="Direita" onclick="abrirMateria('7800827379375756603')">
                 <div class="img-container">
                     <img src="https://media.gazetadopovo.com.br/2026/02/20210307/Gilmar-Mendes-Dias-Toffoli-e-Alexandre-de-Moraes-960x540.jpg" class="noticia-img">
                 </div>
                 <div class="noticia-body">
-                    <small style="color:#666; font-weight:bold;">DIREITA • 14/04/2026 13:42</small>
+                    <small style="color:#666; font-weight:bold;">DIREITA • 14/04/2026 13:50</small>
                     <h2>Os intocáveis são indiciados</h2>
                 </div>
             </div>
             
-            <div id="modal--3334677709334427801" class="modal">
+            <div id="modal-7800827379375756603" class="modal">
                 <div class="modal-content">
-                    <span class="fechar-modal" onclick="fecharMateria('-3334677709334427801')">&times;</span>
+                    <span class="fechar-modal" onclick="fecharMateria('7800827379375756603')">&times;</span>
                     <div class="img-container" style="margin-bottom:20px;">
                         <img src="https://media.gazetadopovo.com.br/2026/02/20210307/Gilmar-Mendes-Dias-Toffoli-e-Alexandre-de-Moraes-960x540.jpg" class="noticia-img">
                     </div>
@@ -226,19 +264,19 @@
                 </div>
             </div>
             
-            <div class="noticia-card border-direita" onclick="abrirMateria('-1493203769952921300')">
+            <div class="noticia-card border-direita" data-categoria="Direita " onclick="abrirMateria('-3759758626462226569')">
                 <div class="img-container">
                     <img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/oncoclinicas.jpeg" class="noticia-img">
                 </div>
                 <div class="noticia-body">
-                    <small style="color:#666; font-weight:bold;">DIREITA  • 14/04/2026 13:42</small>
+                    <small style="color:#666; font-weight:bold;">DIREITA  • 14/04/2026 13:50</small>
                     <h2>Com prejuízo superior a R$ 3 bi, Oncoclínicas luta para não fechar</h2>
                 </div>
             </div>
             
-            <div id="modal--1493203769952921300" class="modal">
+            <div id="modal--3759758626462226569" class="modal">
                 <div class="modal-content">
-                    <span class="fechar-modal" onclick="fecharMateria('-1493203769952921300')">&times;</span>
+                    <span class="fechar-modal" onclick="fecharMateria('-3759758626462226569')">&times;</span>
                     <div class="img-container" style="margin-bottom:20px;">
                         <img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/oncoclinicas.jpeg" class="noticia-img">
                     </div>
@@ -247,125 +285,265 @@
                     <div style="font-size:1.1em; color:#333;"><p><img alt="Com prejuízo superior a R$ 3 bi, Oncoclínicas luta para não fechar" class="attachment-medium size-medium wp-post-image" height="200" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/oncoclinicas-300x200.jpeg" width="300" /></p><br><br><p><!-- wp:paragraph --></p><br><br><p>A Oncoclínicas encerrou o ano passado com prejuízo de R$ 3,67 bilhões — um salto em relação às perdas de R$ 717 milhões registradas em 2024. <strong><a href="https://revistaoeste.com/economia/oncoclinicas-esta-em-risco-diante-de-prejuizo-de-r-3-bi-com-o-master/" rel="noreferrer noopener" target="_blank">O balanço divulgado na última quinta-feira, 9</a></strong>, menciona um “cenário de incertezas significativas quanto à continuidade operacional” da empresa. </p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O caixa da companhia tem mais obrigações de curto prazo do que valores a receber: o capital circulante está negativo em R$ 2,31 bilhões. Na operação, já há reflexos, com falta de medicamentos e relatos de pacientes sobre atrasos e adiamentos em tratamentos oncológicos.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p><strong>+ Leia mais notícias de <a href="https://revistaoeste.com/economia" rel="noreferrer noopener" target="_blank">Economia</a> em Oeste</strong></p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>No relatório, a diretoria reconhece um “cenário de incertezas significativas quanto à continuidade operacional”. Entre os fatores citados estão perdas de R$ 430,8 milhões em investimentos no Banco Master e a inadimplência da <strong><a href="https://www.unimed.coop.br/site/web/riodejaneiro" rel="noreferrer noopener" target="_blank">Unimed-Ferj</a></strong>, que soma R$ 861 milhões.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:html --></p><br><br><blockquote class="instagram-media"><br><br><div style="padding: 16px;"> <a href="https://www.instagram.com/p/DTgWkYFjyvp/?utm_source=ig_embed&amp;utm_campaign=loading" style="line-height: 0; padding: 0 0; text-align: center; text-decoration: none; width: 100%;" target="_blank"> </p><br><br><div style="display: flex;"><br><br><div style="background-color: #F4F4F4; border-radius: 50%; height: 40px; margin-right: 14px; width: 40px;"></div><br><br><div style="display: flex;"><br><br><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; margin-bottom: 6px; width: 100px;"></div><br><br><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; width: 60px;"></div><br><br></div><br><br></div><br><br><div style="padding: 19% 0;"></div><br><br><div style="display: block; height: 50px; margin: 0 auto 12px; width: 50px;"></div><br><br><div style="padding-top: 8px;"><br><br><div style="color: #3897f0; font-family: Arial,sans-serif; font-size: 14px; font-style: normal; font-weight: 550; line-height: 18px;">Ver essa foto no Instagram</div><br><br></div><br><br><div style="padding: 12.5% 0;"></div><br><br><div style="display: flex; margin-bottom: 14px;"><br><br><div><br><br><div></div><br><br><div></div><br><br><div></div><br><br></div><br><br><div style="margin-left: 8px;"><br><br><div style="background-color: #F4F4F4; border-radius: 50%; height: 20px; width: 20px;"></div><br><br><div></div><br><br></div><br><br><div style="margin-left: auto;"><br><br><div></div><br><br><div></div><br><br><div></div><br><br></div><br><br></div><br><br><div style="display: flex; margin-bottom: 24px;"><br><br><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; margin-bottom: 6px; width: 224px;"></div><br><br><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; width: 144px;"></div><br><br></div><br><br><p></a></p><br><br><p style="color: #c9c8cd; font-family: Arial,sans-serif; font-size: 14px; line-height: 17px; margin-bottom: 0; margin-top: 8px; overflow: hidden; padding: 8px 0 7px; text-align: center; white-space: nowrap;"><a href="https://www.instagram.com/p/DTgWkYFjyvp/?utm_source=ig_embed&amp;utm_campaign=loading" style="color: #c9c8cd; font-family: Arial,sans-serif; font-size: 14px; font-style: normal; font-weight: normal; line-height: 17px; text-decoration: none;" target="_blank">Um post compartilhado por Unimed Ferj (@unimedferj)</a></p><br><br></div><br><br></blockquote><br><br><p><br /><br><br><!-- /wp:html --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Em parecer, a auditora Deloitte apontou que o resultado está ligado, sobretudo, ao descumprimento de indicadores financeiros previstos em contratos de empréstimos, financiamentos e debêntures — o que pode levar credores a antecipar o vencimento das dívidas.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Em teleconferência depois da divulgação do balanço, o CEO da Oncoclínicas, Carlos Gil Ferreira, afirmou que a “prioridade absoluta” é manter o atendimento aos pacientes. Segundo ele, a companhia enfrenta pressão de liquidez, mas tem adotado medidas para reforçar o caixa e reorganizar as finanças, com foco na operação ambulatorial.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Com a deterioração do caixa, aumentam os relatos de interrupções e atrasos em tratamentos, frequentemente atribuídos à “indisponibilidade temporária” de medicamentos. Em nota, a companhia reconheceu instabilidade no abastecimento de alguns insumos, mas afirmou que adota medidas para normalizar gradualmente a situação.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:image {"id":2377018,"sizeSlug":"full","linkDestination":"none","align":"center"} --></p><br><br><figure class="wp-block-image aligncenter size-full"><img alt="Com prejuízo superior a R$ 3 bi, Oncoclínicas luta para não fechar" class="wp-image-2377018" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/oncoclinicas-2.jpeg" /><figcaption class="wp-element-caption">A receita líquida da Oncoclínicas caiu 13% na comparação anual, para R$ 1,37 bilhão | Foto: Divulgação/Oncoclínicas</figcaption></figure><br><br><p><!-- /wp:image --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Segundo o BTG Pactual, a empresa apresentou “um conjunto fraco de resultados no 4º trimestre, ainda fortemente impactado pelos desafios em andamento”. A receita líquida caiu 13% na comparação anual, para R$ 1,37 bilhão, “principalmente afetada pela descontinuação de serviços para determinados planos de saúde”.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>A empresa também não conseguiu cumprir a meta contratual de alavancagem. A dívida da empresa equivalia a cerca de 3,5 vezes o que ela gera de caixa operacional (Ebitda) em um ano — ou seja, seriam necessários aproximadamente três anos e meio de geração de caixa, mantido o nível atual, para quitar todo o endividamento.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Em relatório, o BTG destaca que, mesmo desconsiderando efeitos não recorrentes, a Oncoclínicas “ainda queimou uma quantidade relevante de caixa durante o trimestre”. Analistas que a companhia deverá renegociar suas dívidas para evitar um cenário de estresse. Apesar de negociações em curso, a visibilidade sobre soluções ainda é limitada.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:file {"id":2376100,"href":"https://medias.revistaoeste.com/wp-content/uploads/2026/04/Apresentacao-de-Resultados-4T25.pdf","displayPreview":true,"align":"center"} --></p><br><br><div class="wp-block-file aligncenter"><a href="https://medias.revistaoeste.com/wp-content/uploads/2026/04/Apresentacao-de-Resultados-4T25.pdf" id="wp-block-file--media-85a58f80-ea73-4767-9ffd-252171876fff">Apresentação de Resultados 4T25</a><a class="wp-block-file__button wp-element-button" href="https://medias.revistaoeste.com/wp-content/uploads/2026/04/Apresentacao-de-Resultados-4T25.pdf">Baixar</a></div><br><br><p><!-- /wp:file --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Na mesma linha, o J.P. Morgan afirma que continuidade do negócio “depende fortemente de ajuda externa”, incluindo potenciais negociações com a Porto e o Grupo Fleury. O banco alerta para “uma incerteza relevante que pode levantar dúvidas significativas sobre a capacidade da empresa de continuar operando” nas condições atuais.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Em relatório, analistas avaliam que a queda de desempenho da Oncoclínicas reflete uma estratégia de redução de exposição a clientes de maior risco, “que exigem prazos de pagamento mais longos”, além de limitações financeiras que “estão restringindo os volumes de serviços, diante de uma oferta limitada de medicamentos”.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Na avaliação de Max Mustrangi, CEO da Excellance, os números mostram uma deterioração ainda mais profunda ao se observar o desempenho anual. “Em 2024 a empresa apresentou um resultado operacional de R$ 120 milhões de prejuízo. Em 2025, R$ 1,99 bilhão de prejuízo operacional”, afirma. “Mostra resultado, ele causa rombo, o negócio não para em pé.”</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:image {"id":2374228,"sizeSlug":"full","linkDestination":"none","align":"center"} --></p><br><br><figure class="wp-block-image aligncenter size-full"><img alt="São Paulo (SP), 19/11/2025 - Fachada do Banco Master na Rua Elvira Ferraz, e..." class="wp-image-2374228" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/Master-1.jpg" /><figcaption class="wp-element-caption">Oncoclínicas registrou perdas de R$ 430,8 milhões em investimentos no Banco Master | Foto: Rovena Rosa/Agência Brasil</figcaption></figure><br><br><p><!-- /wp:image --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O analista destacou também o crescimento explosivo da despesa financeira no comparativo anual. “Em 2024 foi um prejuízo de R$ 875 milhões de despesa financeira; em 2025, R$ 1,5 bilhão”, o que indica “o tamanho e o custo da dívida, a aceleração da piora, uma piora operacional brutal”.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Já o crescimento do prejuízo líquido “mostra claramente que o negócio é totalmente inviável e está piorando aceleradamente”, diz. Mustrangi chama atenção para o perfil da dívida, de R$ 3,8 bilhões, dos quais 85% é de curto prazo, vence em um ano. "Mortal”, classifica. </p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Para ele, o cenário reduz o apetite de investidores. “Não faz sentido nenhum, nesse momento, com esses números e com esse tamanho de dívida, alguém entrar com aportes”, afirma. Ele considera eventuais injeções de capital como “um <em>band-aid</em> muito pequenininho para o tamanho da ferida”.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:html --></p><br><br><blockquote class="instagram-media"><br><br><div style="padding: 16px;"> <a href="https://www.instagram.com/reel/DUk-NnsDvx_/?utm_source=ig_embed&amp;utm_campaign=loading" style="line-height: 0; padding: 0 0; text-align: center; text-decoration: none; width: 100%;" target="_blank"> </p><br><br><div style="display: flex;"><br><br><div style="background-color: #F4F4F4; border-radius: 50%; height: 40px; margin-right: 14px; width: 40px;"></div><br><br><div style="display: flex;"><br><br><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; margin-bottom: 6px; width: 100px;"></div><br><br><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; width: 60px;"></div><br><br></div><br><br></div><br><br><div style="padding: 19% 0;"></div><br><br><div style="display: block; height: 50px; margin: 0 auto 12px; width: 50px;"></div><br><br><div style="padding-top: 8px;"><br><br><div style="color: #3897f0; font-family: Arial,sans-serif; font-size: 14px; font-style: normal; font-weight: 550; line-height: 18px;">Ver essa foto no Instagram</div><br><br></div><br><br><div style="padding: 12.5% 0;"></div><br><br><div style="display: flex; margin-bottom: 14px;"><br><br><div><br><br><div></div><br><br><div></div><br><br><div></div><br><br></div><br><br><div style="margin-left: 8px;"><br><br><div style="background-color: #F4F4F4; border-radius: 50%; height: 20px; width: 20px;"></div><br><br><div></div><br><br></div><br><br><div style="margin-left: auto;"><br><br><div></div><br><br><div></div><br><br><div></div><br><br></div><br><br></div><br><br><div style="display: flex; margin-bottom: 24px;"><br><br><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; margin-bottom: 6px; width: 224px;"></div><br><br><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; width: 144px;"></div><br><br></div><br><br><p></a></p><br><br><p style="color: #c9c8cd; font-family: Arial,sans-serif; font-size: 14px; line-height: 17px; margin-bottom: 0; margin-top: 8px; overflow: hidden; padding: 8px 0 7px; text-align: center; white-space: nowrap;"><a href="https://www.instagram.com/reel/DUk-NnsDvx_/?utm_source=ig_embed&amp;utm_campaign=loading" style="color: #c9c8cd; font-family: Arial,sans-serif; font-size: 14px; font-style: normal; font-weight: normal; line-height: 17px; text-decoration: none;" target="_blank">Um post compartilhado por Oncoclínicas (@oncoclinicas)</a></p><br><br></div><br><br></blockquote><br><br><p><!-- /wp:html --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>O analista avalia que a tendência é de reestruturação mais profunda. “A grande tendência é que esse negócio vá para recuperação judicial”, afirma, apontando que o processo permitiria renegociar dívidas com descontos relevantes.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:heading --></p><br><br><h2 class="wp-block-heading" id="h-acoes-da-oncoclinicas-desvalorizam-continuamente"><strong>Ações da Oncoclínicas</strong> desvalorizam continuamente</h2><br><br><p><!-- /wp:heading --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Diante do quadro, o BTG mantém recomendação neutra para as ações da Oncoclínicas, enquanto o JPMorgan adota postura mais cautelosa, com classificação "underweight”, equivalente à recomendação de venda. Com preço de R$ 1,29 às 13h desta terça-feira, 14, os ativos acumulam mais de 50% de desvalorização em 2026.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Ambos os bancos destacam a baixa visibilidade sobre a recuperação da companhia em meio à elevada alavancagem, restrições operacionais e necessidade de renegociação com credores — fatores que mantêm a Oncoclínicas sob forte pressão no mercado. </p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:image {"id":1257079,"sizeSlug":"full","linkDestination":"none","align":"center"} --></p><br><br><figure class="wp-block-image aligncenter size-full"><img alt="Bancos | O JPMorgan é o maior banco do mundo | Foto: Reprodução/Instagram/..." class="wp-image-1257079" src="https://medias.revistaoeste.com/wp-content/uploads/2024/01/image_2024-01-12_150144904.jpg" /><figcaption class="wp-element-caption">O JPMorgan é o maior banco do mundo | Foto: Reprodução/Instagram/jpmorgan</figcaption></figure><br><br><p><!-- /wp:image --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>No último dia 7, a agência de classificação de risco Fitch Ratings enquadrou a situação financeira da Oncoclínicas como "inadimplência restrita", a penúltima categoria antes do calote em si. Ela significa que a companhia deixou de honrar uma obrigação financeira específica, mas segue operando e não entrou em recuperação judicial.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Na última quarta-feira, 8, a empresa informou que estuda recorrer à Justiça para obter proteção temporária contra credores. Entre as alternativas em discussão estão aportes de acionistas. </p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>A proposta liderada pela Porto prevê investimento de R$ 500 milhões e a criação de uma nova empresa, sob controle da seguradora, para a qual migrariam as 146 clínicas de oncologia e parte da dívida. Também está em análise a emissão de debêntures conversíveis em ações, de até R$ 500 milhões, com participação do Fleury nas tratativas. </p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:image {"id":413236,"sizeSlug":"full","linkDestination":"none","align":"center"} --></p><br><br><figure class="wp-block-image aligncenter size-full"><img alt="" class="wp-image-413236" src="https://medias.revistaoeste.com/wp-content/uploads/2021/06/fleury.jpg" /><figcaption class="wp-element-caption">Grupo Fleury negocia com Oncoclínicas emissão de debêntures conversíveis em ações, de até R$ 500 milhões | Foto: Reprodução</figcaption></figure><br><br><p><!-- /wp:image --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Outra possibilidade envolve um empréstimo entre R$ 100 milhões e R$ 150 milhões, além de um aporte de R$ 500 milhões do fundo norte-americano Mak Capital, hoje detentor de 6,3% das ações. </p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>A operação, porém, depende da realização de uma assembleia geral extraordinária, marcada para o próximo dia 30, que deve deliberar, entre outros pontos, sobre mudanças no Conselho de Administração.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p>Entre as iniciativas para reestruturar o caixa, estão a venda do Uberlândia Medical Center, concluída em fevereiro, e a negociação para alienação do Hospital Vila da Serra, em Belo Horizonte. Projetos de <em>cancer centers</em> em São Paulo e na capital mineira também foram cancelados.</p><br><br><p><!-- /wp:paragraph --></p><br><br><p><!-- wp:paragraph --></p><br><br><p><strong>+ Leia também: "<a href="https://revistaoeste.com/revista/edicao-297/oncoclinicas-gafisa-ambipar-light-quem-sera-a-proxima-depois-do-banco-master/" rel="noreferrer noopener" target="_blank">Oncoclínicas, Gafisa, Ambipar, Light: Quem será a próxima depois do Banco Master?</a>", reportagem de Carlo Cauti publicada na Edição 297 da Revista Oeste</strong></p><br><br><p><!-- /wp:paragraph --></p><br><br><p>O post <a href="https://revistaoeste.com/economia/com-prejuizo-superior-a-r-3-bi-oncoclinicas-luta-para-nao-fechar/">Com prejuízo superior a R$ 3 bi, Oncoclínicas luta para não fechar</a> apareceu primeiro em <a href="https://revistaoeste.com">Revista Oeste</a>.</p></div>
                 </div>
             </div>
-            <div class="noticia-card" onclick="abrirMateria('3300612838761756165')">
+            <div class="noticia-card border-padrao" onclick="abrirMateria('-8808402455992807712')">
 <div class="img-container">
 <img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
 </div>
+<div class="noticia-body">
+<small style="color:#666; font-weight:bold;">MUNDO • 14/04/2026 13:42</small>
+<h2>Navios ligados ao Irã cruzam Estreito de Ormuz apesar do bloqueio dos EUA; China critica ação americana</h2>
+</div>
+</div><div class="noticia-card border-padrao" onclick="abrirMateria('-9077243956971526237')">
+<div class="img-container">
+<img class="noticia-img" src="https://s2-ge.glbimg.com/2Nl7CfHfwK9Qj3x4pprrAWaRLM8=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/I/Z/gurCOWTCaoDVZ6htvVqg/screenshot-8.png"/>
+</div>
+<div class="noticia-body">
+<small style="color:#666; font-weight:bold;">ESPORTES • 14/04/2026 13:42</small>
+<h2>Sonhos, motivações e superação: conheça o Santana Jr, clube inscrito na Taça Clube Interbairros</h2>
+</div>
+</div><div class="noticia-card border-padrao" onclick="abrirMateria('2919505467781908333')">
+<div class="img-container">
+<img class="noticia-img" src="https://sm.ign.com/ign_br/news/n/new-hero-s/new-hero-sierra-returning-post-match-accolades-and-a-map-rew_xrkh.jpg"/>
+</div>
+<div class="noticia-body">
+<small style="color:#666; font-weight:bold;">GAMES • 14/04/2026 13:42</small>
+<h2>Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</h2>
+</div>
+</div><div class="noticia-card border-padrao" onclick="abrirMateria('-8385900105255411309')">
+<div class="img-container">
+<img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Xbox-Discussoes-Volta-Exclusivos-640x400.jpg"/>
+</div>
+<div class="noticia-body">
+<small style="color:#666; font-weight:bold;">HARDWARE • 14/04/2026 13:42</small>
+<h2>Xbox discute internamente uma possível volta de jogos exclusivos</h2>
+</div>
+</div><div class="noticia-card border-padrao" onclick="abrirMateria('1966047003155615815')">
+<div class="img-container">
+<img class="noticia-img" src="https://s2-g1.glbimg.com/S7rZaQtot2ZfuspJI-80TuFeqJA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/G/D/cK3wCrScOEI1GnIyZLlg/foto-1-.jpg"/>
+</div>
+<div class="noticia-body">
+<small style="color:#666; font-weight:bold;">TECNOLOGIA • 14/04/2026 13:42</small>
+<h2>Nissan vai enxugar oferta de carros e ampliar uso de direção com inteligência artificial</h2>
+</div>
+</div><div class="noticia-card border-padrao" onclick="abrirMateria('323669788507086781')">
+<div class="img-container">
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
+</div>
+<div class="noticia-body">
+<small style="color:#666; font-weight:bold;">DOTNET_CS • 14/04/2026 13:42</small>
+<h2>Your Migration’s Source of Truth: The Modernization Assessment</h2>
+</div>
+</div><div class="noticia-card border-esquerda" onclick="abrirMateria('3153847653848826698')">
+<div class="img-container">
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
+</div>
+<div class="noticia-body">
+<small style="color:#666; font-weight:bold;">ESQUERDA  • 14/04/2026 13:42</small>
+<h2>Lula anuncia programa para quitar dívidas dos brasileiros com bets: “Assaltam o povo”</h2>
+</div>
+</div><div class="noticia-card border-centro" onclick="abrirMateria('6754246876671955138')">
+<div class="img-container">
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
+</div>
+<div class="noticia-body">
+<small style="color:#666; font-weight:bold;">CENTRO  • 14/04/2026 13:42</small>
+<h2>'É natural que tenham pressões como o comentário do ministro Dino', diz relator da CPI do Crime Organizado</h2>
+</div>
+</div><div class="noticia-card border-direita" onclick="abrirMateria('-3334677709334427801')">
+<div class="img-container">
+<img class="noticia-img" src="https://media.gazetadopovo.com.br/2026/02/20210307/Gilmar-Mendes-Dias-Toffoli-e-Alexandre-de-Moraes-960x540.jpg"/>
+</div>
+<div class="noticia-body">
+<small style="color:#666; font-weight:bold;">DIREITA • 14/04/2026 13:42</small>
+<h2>Os intocáveis são indiciados</h2>
+</div>
+</div><div class="noticia-card border-direita" onclick="abrirMateria('-1493203769952921300')">
+<div class="img-container">
+<img class="noticia-img" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/oncoclinicas.jpeg"/>
+</div>
+<div class="noticia-body">
+<small style="color:#666; font-weight:bold;">DIREITA  • 14/04/2026 13:42</small>
+<h2>Com prejuízo superior a R$ 3 bi, Oncoclínicas luta para não fechar</h2>
+</div>
+</div><div class="noticia-card" onclick="abrirMateria('3300612838761756165')">
+<div class="img-container">
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800">
+</img></div>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">MUNDO • 14/04/2026 12:52</small>
 <h2>A personagem de IA que viraliza com críticas ao governo Lula e ao STF</h2>
 </div>
 </div><div class="noticia-card" onclick="abrirMateria('7324261652565071019')">
 <div class="img-container">
-<img class="noticia-img" src="https://s2-ge.glbimg.com/xFUO0NtXo94vBrvp3F-3msXeceQ=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/E/R/IR3L2VTzqBvXEO2CaasA/thumbnail-ge.mp4-snapshot-00.02.372.jpg.jpeg"/>
-</div>
+<img class="noticia-img" src="https://s2-ge.glbimg.com/xFUO0NtXo94vBrvp3F-3msXeceQ=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/E/R/IR3L2VTzqBvXEO2CaasA/thumbnail-ge.mp4-snapshot-00.02.372.jpg.jpeg">
+</img></div>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">ESPORTES • 14/04/2026 12:52</small>
 <h2>Assista ao Globo Esporte Edição Espírito Santo</h2>
 </div>
 </div><div class="noticia-card" onclick="abrirMateria('4977846091907094460')">
 <div class="img-container">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
-</div>
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800">
+</img></div>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">TECNOLOGIA • 14/04/2026 12:52</small>
 <h2>Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</h2>
 </div>
 </div><div class="noticia-card" onclick="abrirMateria('-1798465953405218005')">
 <div class="img-container">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800">
-</img></div>
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
+</div>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">MUNDO • 14/04/2026 07:51</small>
 <h2>A personagem de IA que viraliza com críticas ao governo Lula e ao STF</h2>
 </div>
 </div><div class="noticia-card" onclick="abrirMateria('-2576031862417994868')">
 <div class="img-container">
-<img class="noticia-img" src="https://s2-ge.glbimg.com/pxRqOybaZMB1WoPk0As_C2ujitc=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/y/W/bL4CvLSP6blKS5VHTKig/2026-04-10t110423z-1392894206-up1em4a0ur9p1-rtrmadp-3-tennis-montecarlo.jpg">
-</img></div>
+<img class="noticia-img" src="https://s2-ge.glbimg.com/pxRqOybaZMB1WoPk0As_C2ujitc=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/y/W/bL4CvLSP6blKS5VHTKig/2026-04-10t110423z-1392894206-up1em4a0ur9p1-rtrmadp-3-tennis-montecarlo.jpg"/>
+</div>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">ESPORTES • 14/04/2026 07:51</small>
 <h2>Fonseca vence algoz de Buenos Aires na estreia e vai às oitavas de final em Munique</h2>
 </div>
 </div><div class="noticia-card" onclick="abrirMateria('5602191616947838295')">
 <div class="img-container">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800">
-</img></div>
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
+</div>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">TECNOLOGIA • 14/04/2026 07:51</small>
 <h2>Por que a tela de 165Hz do Dell 16 é o upgrade que o seu gameplay precisa?</h2>
 </div>
 </div><div class="noticia-card" onclick="abrirMateria('377479053316486194')">
 <div class="img-container">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
-</div>
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800">
+</img></div>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">MUNDO • 14/04/2026 03:13</small>
 <h2>Alexandre Ramagem é preso pelo ICE nos EUA: quando ele será deportado?</h2>
 </div>
 </div><div class="noticia-card" onclick="abrirMateria('7611267041982250272')">
 <div class="img-container">
-<img class="noticia-img" src="https://s2-ge.glbimg.com/O-BSoTv8unUu68BG27qAvuseqDk=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/k/r/oJGPDHRduF2VxV3JVLdw/agif26040518314766.jpg"/>
-</div>
+<img class="noticia-img" src="https://s2-ge.glbimg.com/O-BSoTv8unUu68BG27qAvuseqDk=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/k/r/oJGPDHRduF2VxV3JVLdw/agif26040518314766.jpg">
+</img></div>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">ESPORTES • 14/04/2026 03:13</small>
 <h2>Grêmio x Deportivo Riestra: onde assistir ao vivo, horário e escalações</h2>
 </div>
 </div><div class="noticia-card" onclick="abrirMateria('4344213379152917721')">
 <div class="img-container">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
-</div>
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800">
+</img></div>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">TECNOLOGIA • 14/04/2026 03:13</small>
 <h2>Por que a tela de 165Hz do Dell 16 é o upgrade que o seu gameplay precisa?</h2>
 </div>
 </div><div class="noticia-card" onclick="abrirMateria('1685070221996118606')">
 <div class="img-container">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800">
-</img></div>
+<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
+</div>
 <div class="noticia-body">
 <small style="color:#d93025; font-weight:bold;">MUNDO • 13/04/2026 19:31</small>
 <h2>Alexandre Ramagem é preso pelo ICE nos EUA: quando ele será deportado?</h2>
 </div>
-</div><div class="noticia-card" onclick="abrirMateria('1136065456133102956')">
-<div class="img-container">
+</div><div class="modal" id="modal--8808402455992807712">
+<div class="modal-content">
+<span class="fechar-modal" onclick="fecharMateria('-8808402455992807712')">×</span>
+<div class="img-container" style="margin-bottom:20px;">
 <img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
 </div>
-<div class="noticia-body">
-<small style="color:#d93025; font-weight:bold;">ESPORTES • 13/04/2026 19:31</small>
-<h2>Minas x Osasco - Superliga Feminina de Vôlei 2025/2026 - Ao vivo - globoesporte.com</h2>
+<small>MUNDO</small>
+<h1>Navios ligados ao Irã cruzam Estreito de Ormuz apesar do bloqueio dos EUA; China critica ação americana</h1>
+<div style="font-size:1.1em; color:#333;">Bloqueio entrou em vigor na segunda-feira (13/3), após fracasso das negociações de paz entre Washington e Teerã no Paquistão.</div>
 </div>
-</div><div class="noticia-card" onclick="abrirMateria('-7256858571989939236')">
-<div class="img-container">
+</div><div class="modal" id="modal--9077243956971526237">
+<div class="modal-content">
+<span class="fechar-modal" onclick="fecharMateria('-9077243956971526237')">×</span>
+<div class="img-container" style="margin-bottom:20px;">
+<img class="noticia-img" src="https://s2-ge.glbimg.com/2Nl7CfHfwK9Qj3x4pprrAWaRLM8=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/I/Z/gurCOWTCaoDVZ6htvVqg/screenshot-8.png"/>
+</div>
+<small>ESPORTES</small>
+<h1>Sonhos, motivações e superação: conheça o Santana Jr, clube inscrito na Taça Clube Interbairros</h1>
+<div style="font-size:1.1em; color:#333;"><img src="https://s2-ge.glbimg.com/2Nl7CfHfwK9Qj3x4pprrAWaRLM8=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/I/Z/gurCOWTCaoDVZ6htvVqg/screenshot-8.png"><br/>     Conheça o Santana Jr, clube inscrito na Taça Clube Interbairros 2026<br/><br/>Ser uma oportunidade para realizar sonhos: este é um dos intuitos da Taça Clube Interbairros 2026. Atacante do Santana Júnior, Jefferson de Abreu concilia o futebol com o trabalho de servente de pedreiro com a esperança de realizar o sonho de se tornar um jogador profissional e proporcionar uma vida melhor para sua família. Superação, a busca para conseguir um objetivo e a motivação fazem parte do espírito do Santana Júnior; assista acima na íntegra.  <br/><br/>+ Rede Clube lança 1ª edição da Taça Clube Interbairros: veja fórmula, datas e premiações<br/><br/>+ Presidente da FFP, Brown destaca a Taça Clube Interbairros como oportunidade para jovens atletas<br/><br/>Santana Júnior, equipe inscrita na Taça Clube Interbairros 2026<br/><br/>Rede Clube<br/><br/>Jefferson de Abreu, atacante do Santana Júnior<br/><br/>Rede Clube<br/><br/>- Desde pequeno é meu sonho (ser jogador profissional). Eu tenho que me esforçar para chegar lá. Todos nós, toda criança, tem o sonho de dar orgulho para sua família. Tem que se esforçar - declarou o atacante Jefferson de Abreu. <br/><br/>- Desde criança eu persisto. Estou desde os 11 anos no Santana Jr. e tenho o sonho de ajudar minha família. Uma inspiração que eu tenho é no Neymar, joga muito. E é isso, persistir até onde eu chegar, sou muito grato a Deus - pontuou Antônio Francisco, atacante da equipe. <br/><br/>Mateus Costa, goleiro do Santana Júnior<br/><br/>Rede Clube<br/><br/>Goleiro do Santana Júnior, Mateus Costa faz parte do time que busca realizar o sonho de se tornar um jogador profissional. O atleta contou como é ter que lidar com as dificuldades encontradas neste percurso e destacou a motivação da sua família. <br/><br/>- Estou aqui ainda na luta, persistindo, porque é um sonho de infância ajudar minha família, minha mãe, meu pai e dar orgulho. Para lidar com isso é o apoio da família, ter a cabeça forte. Eu ouvi muitos “nãos”, ouvi pessoas dizendo que eu era ruim, que eu não ia ser nada, mas estamos aqui na luta e com fé em Deus vamos crescer. Sempre é bom sonhar, acreditar até o fim e com fé em Deus, ele vai abençoar - disse.<br/><br/>Marlon Araújo, técnico do Santana Júnior<br/><br/>Rede Clube<br/><br/>Marlon Araújo, técnico do Santana Júnior, detalhou também o processo de trabalhar com atletas que têm conciliar o futebol com o emprego. O treinador ainda comentou sobre o inventivo e o processo de desenvolvimento de cada um dos jogadores.<br/><br/>- Essa parte do “não” faz com que a gente vire um psicólogo. A gente tem que aconselhar, orientar eles, primeiro para não desistir, segundo é que eles também têm que ter uma visão para frente, com o ser ou não ser jogador de futebol. A gente procura fazer a melhor parte, dar um incentivo, nunca abandonar. Lógico, nem todos vão conseguir ser jogador (profissional), mas eu tenho uma visão que o processo, no nosso projeto, vem dando certo - afirmou Marlon.<br/><br/>- Torna-se um pouco difícil, porque hoje temos muitos jogadores de 18 a 22 que estão trabalhando. Mas é o horário que eles têm (disponível) para poder desenvolver os treinos sempre à noite, durante o dia é trabalho, escola, mas eles têm ainda essa esperança de ser jogador de futebol - finalizou.<br/><br/>Vem aí a Taça Clube Interbairros, maior torneio de várzea de Teresina<br/><br/>Taça Clube Interbairros 2026<br/><br/>A Taça Clube Interbairros chega à sua 1ª edição com foco em unir as comunidades e valorizar novos talentos em prol do futebol amador. O torneio organizado pela Rede Clube, em parceria com a Federação de Futebol Piauiense (FFP) e Secretaria de Esportes e Lazer de Teresina (Semel), tem início marcado para o dia 16 de maio e terá cobertura completa e transmissões da Rede Clube, ge Piauí, portal Clube News e Rádio Clube News (90.9).<br/><br/>Semifinais e final irão ocorrer no estádio Lindolfo Monteiro, em Teresina, e a decisão do torneio vai ocorrer no dia 6 de junho.<br/><br/>Conheça a Taça Clube Interbairros 2026<br/><br/>📝 Inscrições<br/><br/>As inscrições dos clubes estão abertas e vão seguir até o dia 17 de abril (sexta-feira). O registro das equipes serão feitos na gerência de esportes da Semel, na Rua Jônatas Batista, 852, Centro.<br/><br/>🤝 Congresso técnico<br/><br/>Após as inscrições das equipes participantes, a Semel vai promover o congresso técnico entre os clubes. Na oportunidade, será definidos os confrontos, chaveamentos e também será oficializado o regulamento da Taça Clube Interbairros 2026. O encontro está marcado para ocorrer no dia 22 de abril, às 9h, na sede da Rede Clube (Av. Walter Alencar, 2120, Monte Castelo).<br/><br/>📅 Datas-base<br/><br/>Início da competição (oitavas de final): 16 de maio;<br/><br/>Quartas de final: 23 de maio;<br/><br/>Semifinais: 30 de maio;<br/><br/>Final: 6 de junho.<br/><br/>*OBS: Jogos das semifinal e final serão no estádio Lindolfo Monteiro.<br/><br/>⚽Fórmula de disputa<br/><br/>A Taça Clube Interbairros vai ser realizada no formato eliminatório, ou seja, no modelo "mata-mata". Ao todo, 16 clubes irão participar do torneio. Os jogos serão únicos, e em caso de empate no tempo regulamentar, o classificado será definido após disputa de pênaltis. As partidas terão duração de 40 minutos cada tempo.<br/><br/>As partidas das oitavas e das quartas irão ocorrer nos campos dos bairros. Semifinais e final estão marcadas para ocorrer no estádio Lindolfo Monteiro.<br/><br/>Formato eliminatório (mata-mata);<br/><br/>Oitavas e quartas nos campos dos bairros;<br/><br/>Tempo de cada jogo: 40 minutos (em cada);<br/><br/>Semifinais e final no estádio Lindolfo Monteiro;<br/><br/>Empate no tempo regulamentar: disputa de pênaltis.<br/><br/>A Taça Clube Interbairros 2026 vai contar com clubes da zona Norte, Leste, Sudeste e Sul da capital piauienses. A organização do torneio ainda vai definir os confrontos e o chavamento. O campeonato tem como um dos intuitos valorizar novos talentos e mostrar que esses espaços públicos podem ser um celeiros de promessas.<br/><br/>Campos da Taça Clube Interbairros 2026<br/><br/>🏟️ Campos dos bairros da Taça Clube Interbairros 2026<br/><br/>Lindolfo Monteiro (Centro) - palco das semifinais e final;<br/><br/>Bariri (Vila Operária l zona Norte);<br/><br/>Lucidão (Itararé l zona Sudeste);<br/><br/>Campo dos Morros (Morros l zona Leste);<br/><br/>Dezoitão (Lourival Parente l zona Sul).<br/><br/>👟 Idade dos jogadores<br/><br/>Entre 18 e 23 anos.<br/><br/>🏆 Premiação<br/><br/>A Taça Clube Interbairros 2026 vai somar R$ 50 mil de premiações, além de troféus e medalhas; confira abaixo.<br/><br/>🥇 Campeão: R$ 30 mil;<br/><br/>🥈 Vice: 10 mil;<br/><br/>🥉 3º colocado: R$ 5 mil;<br/><br/>4️⃣ 4º colocado: R$ 5 mil.</img></div>
+</div>
+</div><div class="modal" id="modal-2919505467781908333">
+<div class="modal-content">
+<span class="fechar-modal" onclick="fecharMateria('2919505467781908333')">×</span>
+<div class="img-container" style="margin-bottom:20px;">
+<img class="noticia-img" src="https://sm.ign.com/ign_br/news/n/new-hero-s/new-hero-sierra-returning-post-match-accolades-and-a-map-rew_xrkh.jpg"/>
+</div>
+<small>GAMES</small>
+<h1>Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</h1>
+<div style="font-size:1.1em; color:#333;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/news/n/new-hero-s/new-hero-sierra-returning-post-match-accolades-and-a-map-rew_xrkh.640.jpg" vspace="5" width="120"><br/><br/>Todos os detalhes da nova atualização que chega hoje, 14 de abril</img></div>
+</div>
+</div><div class="modal" id="modal--8385900105255411309">
+<div class="modal-content">
+<span class="fechar-modal" onclick="fecharMateria('-8385900105255411309')">×</span>
+<div class="img-container" style="margin-bottom:20px;">
+<img class="noticia-img" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Xbox-Discussoes-Volta-Exclusivos-640x400.jpg"/>
+</div>
+<small>HARDWARE</small>
+<h1>Xbox discute internamente uma possível volta de jogos exclusivos</h1>
+<div style="font-size:1.1em; color:#333;"><img alt="Xbox discute internamente uma possível volta de jogos exclusivos" class="webfeedsFeaturedVisual wp-post-image" height="400" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Xbox-Discussoes-Volta-Exclusivos-640x400.jpg" width="640">Sob a direção de Asha Sharma, a divisão Xbox parece estar reavaliando várias de suas decisões antigas.</img></div>
+</div>
+</div><div class="modal" id="modal-1966047003155615815">
+<div class="modal-content">
+<span class="fechar-modal" onclick="fecharMateria('1966047003155615815')">×</span>
+<div class="img-container" style="margin-bottom:20px;">
+<img class="noticia-img" src="https://s2-g1.glbimg.com/S7rZaQtot2ZfuspJI-80TuFeqJA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/G/D/cK3wCrScOEI1GnIyZLlg/foto-1-.jpg"/>
+</div>
+<small>TECNOLOGIA</small>
+<h1>Nissan vai enxugar oferta de carros e ampliar uso de direção com inteligência artificial</h1>
+<div style="font-size:1.1em; color:#333;"><img src="https://s2-g1.glbimg.com/S7rZaQtot2ZfuspJI-80TuFeqJA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/G/D/cK3wCrScOEI1GnIyZLlg/foto-1-.jpg"><br>     Nissan Versa produzido no México<br/><br/>Divulgação<br/><br/>A Nissan Motor planeja simplificar sua linha global de automóveis, eliminando modelos de baixo desempenho e implantando tecnologia de condução com uso de inteligência artificial em 90% da frota no longo prazo, anunciou a montadora japonesa nesta terça-feira (14).<br/><br/>A estratégia segue um plano de reestruturação apresentado pelo presidente-executivo, Ivan Espinosa, no ano passado, e tem como objetivo revitalizar a quarta maior montadora do Japão após anos de turbulência.<br/><br/>A empresa reduzirá o número de modelos de 56 para 45, terá como meta a venda anual de 1 milhão de veículos nos Estados Unidos e na China até o ano fiscal de 2030 e pretende aumentar as vendas anuais no Japão para 550 mil carros até essa data.<br/><br/>"É assim que nossa estratégia de portfólio ganha vida, ancorada na lucratividade e construída em torno de uma linha mais enxuta e forte", disse Espinosa.<br/><br/>Veja os vídeos em alta no g1<br/><br/>Veja os vídeos que estão em alta no g1<br/><br/>De acordo com o amplo plano de recuperação liderado por Espinosa, a Nissan está reduzindo sua presença global de fabricação e cortando a força de trabalho em 15%.<br/><br/>A empresa também pretende produzir mais veículos nos Estados Unidos, elevando a taxa de produção local de cerca de 60% para 80% ao longo do tempo, além de rejuvenescer a marca de luxo Infiniti com novos modelos.<br/><br/>A Nissan firmou parceria com a Uber e a startup britânica Wayve para o desenvolvimento de carros autônomos, com o objetivo de implantar um programa piloto de táxis sem motorista em Tóquio até o fim de 2026.</br></img></div>
+</div>
+</div><div class="modal" id="modal-323669788507086781">
+<div class="modal-content">
+<span class="fechar-modal" onclick="fecharMateria('323669788507086781')">×</span>
+<div class="img-container" style="margin-bottom:20px;">
 <img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
 </div>
-<div class="noticia-body">
-<small style="color:#d93025; font-weight:bold;">TECNOLOGIA • 13/04/2026 19:31</small>
-<h2>CEO do Xbox admite que Game Pass se tornou "muito caro para jogadores"</h2>
+<small>DOTNET_CS</small>
+<h1>Your Migration’s Source of Truth: The Modernization Assessment</h1>
+<div style="font-size:1.1em; color:#333;"><p>Introducing GitHub Copilot Modernization and diving into the assessment report as part of cloud modernization process</p><br/><br/><p>The post <a href="https://devblogs.microsoft.com/dotnet/your-migrations-source-of-truth-the-modernization-assessment/">Your Migration’s Source of Truth: The Modernization Assessment</a> appeared first on <a href="https://devblogs.microsoft.com/dotnet">.NET Blog</a>.</p></div>
 </div>
-</div><div class="noticia-card" onclick="abrirMateria('1519507139527793461')">
-<div class="img-container">
+</div><div class="modal" id="modal-3153847653848826698">
+<div class="modal-content">
+<span class="fechar-modal" onclick="fecharMateria('3153847653848826698')">×</span>
+<div class="img-container" style="margin-bottom:20px;">
 <img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
 </div>
-<div class="noticia-body">
-<small style="color:#d93025; font-weight:bold;">MUNDO • 13/04/2026 16:57</small>
-<h2>Alexandre Ramagem é preso pelo ICE nos EUA: quando ele será deportado?</h2>
+<small>ESQUERDA </small>
+<h1>Lula anuncia programa para quitar dívidas dos brasileiros com bets: “Assaltam o povo”</h1>
+<div style="font-size:1.1em; color:#333;">Em entrevista exclusiva à mídia progressista, realizada nesta terça-feira (14), o presidente Lula falou sobre temas como o endividamento da população, especialmente em relação às apostas online, conhecidas como “bets”, e as estratégias do governo para lidar com esse problema crescente. A conversa foi transmitida ao vivo pelo DCM. O presidente criticou fortemente o impacto […]</div>
 </div>
-</div><div class="noticia-card" onclick="abrirMateria('-1968766519688262777')">
-<div class="img-container">
+</div><div class="modal" id="modal-6754246876671955138">
+<div class="modal-content">
+<span class="fechar-modal" onclick="fecharMateria('6754246876671955138')">×</span>
+<div class="img-container" style="margin-bottom:20px;">
 <img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
 </div>
-<div class="noticia-body">
-<small style="color:#d93025; font-weight:bold;">ESPORTES • 13/04/2026 16:57</small>
-<h2>Manchester United x Leeds United - Campeonato Inglês 2025/26 - Ao vivo - globoesporte.com</h2>
+<small>CENTRO </small>
+<h1>'É natural que tenham pressões como o comentário do ministro Dino', diz relator da CPI do Crime Organizado</h1>
+<div style="font-size:1.1em; color:#333;">O senador Alessandro Vieira (MDB-SE), relator da CPI do Crime Organizado, acredita que só será possível saber se o relatório entregue na manhã desta terça-feira (14) será aprovado quando ele estiver sendo analisado no plenário do Senado. <br/><br/>"A gente literalmente só vai saber no plenário. É natural que neste momento tenham pressões que podem se dar de forma aberta com base em um comentário do ministro Flávio Dino, mas ocorrem muito mais intensamente de forma velada. Acho que o Brasil tem agora uma oportunidade de acompanhar como cada um se posiciona", disse Vieira.<br/><br/>O ministro Flávio Dino, do Supremo Tribunal Federal (STF), que não é citado na CPI entre os ministros que Vieira quer indiciar, publicou uma mensagem em uma rede social em que saiu em defesa dos colegas.<br/><br/>Dino afirmou se solidarizar com os colegas aos quais chamou de "alvo de injustiças". No texto, o ministro também destacou as ações do Supremo e da PGR contra o crime organizado.<br/><br/>"É irresponsabilidade investigar o crime organizado e não tratar sobre milicianos, traficantes de drogas, vendedores de armas ilegais, garimpos ilegais, facções que controlam territórios, matadores e pistoleiros etc..", introduziu Dino.<br/><br/>"Atualmente há, por parte de alguns, o equívoco de apontar o STF como o 'maior problema nacional'. É um imenso erro, para dizer o mínimo. Friso: gigantesco erro histórico, que exige uma melhor reflexão quanto às consequências", prosseguiu. <br/><br/>📱 Clique aqui para seguir o canal do g1 no WhatsApp<br/><br/>O relatório preliminar da CPI foi entregue pelo relator na manhã desta quarta-feira (14) e a sessão que fará a leitura de um resumo do documento está marcada para as 14h de hoje. Nela, os parlamentares irão decidir se aprovam as propostas de indiciamentos e recomendações feitas por Vieira.<br/><br/>🔎 A CPI foi instalada no Senado Federal em novembro de 2025 para investigar omissões no combate ao crime organizado no Brasil. O Master entrou nos assuntos da comissão após suspeitas de irregularidades em operações financeiras para ocultar recursos de origem ilícita.<br/><br/>Veja os vídeos que estão em alta no g1<br/><br/>Pedido de indiciamento do PGR e ministros do STF <br/><br/>Entre os principais pontos do relório apresentado pelo senador Alessandro Vieira está o pedido de indiciamento dos ministros do Supremo Tribunal Federal (STF) Alexandre de Moraes, Dias Toffoli, Gilmar Mendes e do procurador-geral da República (PGR), Paulo Gonet.<br/><br/>De acordo com o relator da CPI, os ministros citados deveriam ter se declarado suspeitos para julgar o caso do Banco Master no Supremo, devido a supostas relações de proximidade com os envolvidos na investigação, principalmente o dono da instituição financeira, Daniel Vorcaro.<br/><br/>Vieira enquadra os indiciados nos seguintes critérios de descumprimento da lei:<br/><br/>➡️Ministros Dias Toffoli e Alexandre de Moraes<br/><br/>Proferir julgamento quando, por lei, seja suspeito na causa;<br/><br/>Proceder de modo incompatível com a honra, dignidade e decoro de suas funções.<br/><br/>➡️Ministro Gilmar Mendes<br/><br/>Proferir julgamento quando, por lei, seja suspeito na causa.<br/><br/>➡️Procurador-geral da República, Paulo Gonet<br/><br/>Ser patentemente desidioso no cumprimento de suas atribuições. Segundo a lei, isso significa "proceder de modo incompatível com a dignidade e o decoro do cargo".<br/><br/>Viera justificou os pedidos de indiciamento dizendo que ferramentas de investigação da comissão foram “sabotadas”. “Não conseguíamos fazer depoimentos porque os habeas corpus eram constantes”, exemplificou o senador.<br/><br/>Análise de declarações de IR do Master segue pendentes <br/><br/>A CPI terminará nesta terça sem concluir a análise dos documentos referentes a quatro anos de declarações de Imposto de Renda do Banco Master entregues à Comissão pela Receita Federal. <br/><br/>Entre 2022 e 2025, o banco repassou R$ 7,3 bilhões a 2.939 pessoas físicas e empresas.</div>
 </div>
-</div><div class="noticia-card" onclick="abrirMateria('8861093070371107470')">
-<div class="img-container">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
+</div><div class="modal" id="modal--3334677709334427801">
+<div class="modal-content">
+<span class="fechar-modal" onclick="fecharMateria('-3334677709334427801')">×</span>
+<div class="img-container" style="margin-bottom:20px;">
+<img class="noticia-img" src="https://media.gazetadopovo.com.br/2026/02/20210307/Gilmar-Mendes-Dias-Toffoli-e-Alexandre-de-Moraes-960x540.jpg"/>
 </div>
-<div class="noticia-body">
-<small style="color:#d93025; font-weight:bold;">TECNOLOGIA • 13/04/2026 16:57</small>
-<h2>Um pouco de jazz no Fortnite: Laufey será próxima estrela do modo Festival</h2>
+<small>DIREITA</small>
+<h1>Os intocáveis são indiciados</h1>
+<div style="font-size:1.1em; color:#333;"><img src="https://media.gazetadopovo.com.br/2026/02/20210307/Gilmar-Mendes-Dias-Toffoli-e-Alexandre-de-Moraes-960x540.jpg"><br>As pessoas não confiam no STF pois percebem que ele atua contra o povo e a Constituição. Leia na Gazeta do Povo.</br></img></div>
+</div>
+</div><div class="modal" id="modal--1493203769952921300">
+<div class="modal-content">
+<span class="fechar-modal" onclick="fecharMateria('-1493203769952921300')">×</span>
+<div class="img-container" style="margin-bottom:20px;">
+<img class="noticia-img" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/oncoclinicas.jpeg"/>
+</div>
+<small>DIREITA </small>
+<h1>Com prejuízo superior a R$ 3 bi, Oncoclínicas luta para não fechar</h1>
+<div style="font-size:1.1em; color:#333;"><p><img alt="Com prejuízo superior a R$ 3 bi, Oncoclínicas luta para não fechar" class="attachment-medium size-medium wp-post-image" height="200" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/oncoclinicas-300x200.jpeg" width="300"/></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>A Oncoclínicas encerrou o ano passado com prejuízo de R$ 3,67 bilhões — um salto em relação às perdas de R$ 717 milhões registradas em 2024. <strong><a href="https://revistaoeste.com/economia/oncoclinicas-esta-em-risco-diante-de-prejuizo-de-r-3-bi-com-o-master/" rel="noreferrer noopener" target="_blank">O balanço divulgado na última quinta-feira, 9</a></strong>, menciona um “cenário de incertezas significativas quanto à continuidade operacional” da empresa. </p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>O caixa da companhia tem mais obrigações de curto prazo do que valores a receber: o capital circulante está negativo em R$ 2,31 bilhões. Na operação, já há reflexos, com falta de medicamentos e relatos de pacientes sobre atrasos e adiamentos em tratamentos oncológicos.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p><strong>+ Leia mais notícias de <a href="https://revistaoeste.com/economia" rel="noreferrer noopener" target="_blank">Economia</a> em Oeste</strong></p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>No relatório, a diretoria reconhece um “cenário de incertezas significativas quanto à continuidade operacional”. Entre os fatores citados estão perdas de R$ 430,8 milhões em investimentos no Banco Master e a inadimplência da <strong><a href="https://www.unimed.coop.br/site/web/riodejaneiro" rel="noreferrer noopener" target="_blank">Unimed-Ferj</a></strong>, que soma R$ 861 milhões.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:html --></p><br/><br/><blockquote class="instagram-media"><br/><br/><div style="padding: 16px;"> <a href="https://www.instagram.com/p/DTgWkYFjyvp/?utm_source=ig_embed&amp;utm_campaign=loading" style="line-height: 0; padding: 0 0; text-align: center; text-decoration: none; width: 100%;" target="_blank"> <br/><br/><div style="display: flex;"><br/><br/><div style="background-color: #F4F4F4; border-radius: 50%; height: 40px; margin-right: 14px; width: 40px;"></div><br/><br/><div style="display: flex;"><br/><br/><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; margin-bottom: 6px; width: 100px;"></div><br/><br/><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; width: 60px;"></div><br/><br/></div><br/><br/></div><br/><br/><div style="padding: 19% 0;"></div><br/><br/><div style="display: block; height: 50px; margin: 0 auto 12px; width: 50px;"></div><br/><br/><div style="padding-top: 8px;"><br/><br/><div style="color: #3897f0; font-family: Arial,sans-serif; font-size: 14px; font-style: normal; font-weight: 550; line-height: 18px;">Ver essa foto no Instagram</div><br/><br/></div><br/><br/><div style="padding: 12.5% 0;"></div><br/><br/><div style="display: flex; margin-bottom: 14px;"><br/><br/><div><br/><br/><div></div><br/><br/><div></div><br/><br/><div></div><br/><br/></div><br/><br/><div style="margin-left: 8px;"><br/><br/><div style="background-color: #F4F4F4; border-radius: 50%; height: 20px; width: 20px;"></div><br/><br/><div></div><br/><br/></div><br/><br/><div style="margin-left: auto;"><br/><br/><div></div><br/><br/><div></div><br/><br/><div></div><br/><br/></div><br/><br/></div><br/><br/><div style="display: flex; margin-bottom: 24px;"><br/><br/><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; margin-bottom: 6px; width: 224px;"></div><br/><br/><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; width: 144px;"></div><br/><br/></div><br/><br/><p></p></a><br/><br/><p style="color: #c9c8cd; font-family: Arial,sans-serif; font-size: 14px; line-height: 17px; margin-bottom: 0; margin-top: 8px; overflow: hidden; padding: 8px 0 7px; text-align: center; white-space: nowrap;"><a href="https://www.instagram.com/p/DTgWkYFjyvp/?utm_source=ig_embed&amp;utm_campaign=loading" style="color: #c9c8cd; font-family: Arial,sans-serif; font-size: 14px; font-style: normal; font-weight: normal; line-height: 17px; text-decoration: none;" target="_blank">Um post compartilhado por Unimed Ferj (@unimedferj)</a></p><br/><br/></div><br/><br/></blockquote><br/><br/><p><br><br/><br/><!-- /wp:html --></br></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Em parecer, a auditora Deloitte apontou que o resultado está ligado, sobretudo, ao descumprimento de indicadores financeiros previstos em contratos de empréstimos, financiamentos e debêntures — o que pode levar credores a antecipar o vencimento das dívidas.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Em teleconferência depois da divulgação do balanço, o CEO da Oncoclínicas, Carlos Gil Ferreira, afirmou que a “prioridade absoluta” é manter o atendimento aos pacientes. Segundo ele, a companhia enfrenta pressão de liquidez, mas tem adotado medidas para reforçar o caixa e reorganizar as finanças, com foco na operação ambulatorial.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Com a deterioração do caixa, aumentam os relatos de interrupções e atrasos em tratamentos, frequentemente atribuídos à “indisponibilidade temporária” de medicamentos. Em nota, a companhia reconheceu instabilidade no abastecimento de alguns insumos, mas afirmou que adota medidas para normalizar gradualmente a situação.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:image {"id":2377018,"sizeSlug":"full","linkDestination":"none","align":"center"} --></p><br/><br/><figure class="wp-block-image aligncenter size-full"><img alt="Com prejuízo superior a R$ 3 bi, Oncoclínicas luta para não fechar" class="wp-image-2377018" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/oncoclinicas-2.jpeg"><figcaption class="wp-element-caption">A receita líquida da Oncoclínicas caiu 13% na comparação anual, para R$ 1,37 bilhão | Foto: Divulgação/Oncoclínicas</figcaption></img></figure><br/><br/><p><!-- /wp:image --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Segundo o BTG Pactual, a empresa apresentou “um conjunto fraco de resultados no 4º trimestre, ainda fortemente impactado pelos desafios em andamento”. A receita líquida caiu 13% na comparação anual, para R$ 1,37 bilhão, “principalmente afetada pela descontinuação de serviços para determinados planos de saúde”.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>A empresa também não conseguiu cumprir a meta contratual de alavancagem. A dívida da empresa equivalia a cerca de 3,5 vezes o que ela gera de caixa operacional (Ebitda) em um ano — ou seja, seriam necessários aproximadamente três anos e meio de geração de caixa, mantido o nível atual, para quitar todo o endividamento.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Em relatório, o BTG destaca que, mesmo desconsiderando efeitos não recorrentes, a Oncoclínicas “ainda queimou uma quantidade relevante de caixa durante o trimestre”. Analistas que a companhia deverá renegociar suas dívidas para evitar um cenário de estresse. Apesar de negociações em curso, a visibilidade sobre soluções ainda é limitada.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:file {"id":2376100,"href":"https://medias.revistaoeste.com/wp-content/uploads/2026/04/Apresentacao-de-Resultados-4T25.pdf","displayPreview":true,"align":"center"} --></p><br/><br/><div class="wp-block-file aligncenter"><a href="https://medias.revistaoeste.com/wp-content/uploads/2026/04/Apresentacao-de-Resultados-4T25.pdf" id="wp-block-file--media-85a58f80-ea73-4767-9ffd-252171876fff">Apresentação de Resultados 4T25</a><a class="wp-block-file__button wp-element-button" href="https://medias.revistaoeste.com/wp-content/uploads/2026/04/Apresentacao-de-Resultados-4T25.pdf">Baixar</a></div><br/><br/><p><!-- /wp:file --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Na mesma linha, o J.P. Morgan afirma que continuidade do negócio “depende fortemente de ajuda externa”, incluindo potenciais negociações com a Porto e o Grupo Fleury. O banco alerta para “uma incerteza relevante que pode levantar dúvidas significativas sobre a capacidade da empresa de continuar operando” nas condições atuais.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Em relatório, analistas avaliam que a queda de desempenho da Oncoclínicas reflete uma estratégia de redução de exposição a clientes de maior risco, “que exigem prazos de pagamento mais longos”, além de limitações financeiras que “estão restringindo os volumes de serviços, diante de uma oferta limitada de medicamentos”.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Na avaliação de Max Mustrangi, CEO da Excellance, os números mostram uma deterioração ainda mais profunda ao se observar o desempenho anual. “Em 2024 a empresa apresentou um resultado operacional de R$ 120 milhões de prejuízo. Em 2025, R$ 1,99 bilhão de prejuízo operacional”, afirma. “Mostra resultado, ele causa rombo, o negócio não para em pé.”</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:image {"id":2374228,"sizeSlug":"full","linkDestination":"none","align":"center"} --></p><br/><br/><figure class="wp-block-image aligncenter size-full"><img alt="São Paulo (SP), 19/11/2025 - Fachada do Banco Master na Rua Elvira Ferraz, e..." class="wp-image-2374228" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/Master-1.jpg"><figcaption class="wp-element-caption">Oncoclínicas registrou perdas de R$ 430,8 milhões em investimentos no Banco Master | Foto: Rovena Rosa/Agência Brasil</figcaption></img></figure><br/><br/><p><!-- /wp:image --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>O analista destacou também o crescimento explosivo da despesa financeira no comparativo anual. “Em 2024 foi um prejuízo de R$ 875 milhões de despesa financeira; em 2025, R$ 1,5 bilhão”, o que indica “o tamanho e o custo da dívida, a aceleração da piora, uma piora operacional brutal”.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Já o crescimento do prejuízo líquido “mostra claramente que o negócio é totalmente inviável e está piorando aceleradamente”, diz. Mustrangi chama atenção para o perfil da dívida, de R$ 3,8 bilhões, dos quais 85% é de curto prazo, vence em um ano. "Mortal”, classifica. </p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Para ele, o cenário reduz o apetite de investidores. “Não faz sentido nenhum, nesse momento, com esses números e com esse tamanho de dívida, alguém entrar com aportes”, afirma. Ele considera eventuais injeções de capital como “um <em>band-aid</em> muito pequenininho para o tamanho da ferida”.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:html --></p><br/><br/><blockquote class="instagram-media"><br/><br/><div style="padding: 16px;"> <a href="https://www.instagram.com/reel/DUk-NnsDvx_/?utm_source=ig_embed&amp;utm_campaign=loading" style="line-height: 0; padding: 0 0; text-align: center; text-decoration: none; width: 100%;" target="_blank"> <br/><br/><div style="display: flex;"><br/><br/><div style="background-color: #F4F4F4; border-radius: 50%; height: 40px; margin-right: 14px; width: 40px;"></div><br/><br/><div style="display: flex;"><br/><br/><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; margin-bottom: 6px; width: 100px;"></div><br/><br/><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; width: 60px;"></div><br/><br/></div><br/><br/></div><br/><br/><div style="padding: 19% 0;"></div><br/><br/><div style="display: block; height: 50px; margin: 0 auto 12px; width: 50px;"></div><br/><br/><div style="padding-top: 8px;"><br/><br/><div style="color: #3897f0; font-family: Arial,sans-serif; font-size: 14px; font-style: normal; font-weight: 550; line-height: 18px;">Ver essa foto no Instagram</div><br/><br/></div><br/><br/><div style="padding: 12.5% 0;"></div><br/><br/><div style="display: flex; margin-bottom: 14px;"><br/><br/><div><br/><br/><div></div><br/><br/><div></div><br/><br/><div></div><br/><br/></div><br/><br/><div style="margin-left: 8px;"><br/><br/><div style="background-color: #F4F4F4; border-radius: 50%; height: 20px; width: 20px;"></div><br/><br/><div></div><br/><br/></div><br/><br/><div style="margin-left: auto;"><br/><br/><div></div><br/><br/><div></div><br/><br/><div></div><br/><br/></div><br/><br/></div><br/><br/><div style="display: flex; margin-bottom: 24px;"><br/><br/><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; margin-bottom: 6px; width: 224px;"></div><br/><br/><div style="background-color: #F4F4F4; border-radius: 4px; height: 14px; width: 144px;"></div><br/><br/></div><br/><br/><p></p></a><br/><br/><p style="color: #c9c8cd; font-family: Arial,sans-serif; font-size: 14px; line-height: 17px; margin-bottom: 0; margin-top: 8px; overflow: hidden; padding: 8px 0 7px; text-align: center; white-space: nowrap;"><a href="https://www.instagram.com/reel/DUk-NnsDvx_/?utm_source=ig_embed&amp;utm_campaign=loading" style="color: #c9c8cd; font-family: Arial,sans-serif; font-size: 14px; font-style: normal; font-weight: normal; line-height: 17px; text-decoration: none;" target="_blank">Um post compartilhado por Oncoclínicas (@oncoclinicas)</a></p><br/><br/></div><br/><br/></blockquote><br/><br/><p><!-- /wp:html --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>O analista avalia que a tendência é de reestruturação mais profunda. “A grande tendência é que esse negócio vá para recuperação judicial”, afirma, apontando que o processo permitiria renegociar dívidas com descontos relevantes.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:heading --></p><br/><br/><h2 class="wp-block-heading" id="h-acoes-da-oncoclinicas-desvalorizam-continuamente"><strong>Ações da Oncoclínicas</strong> desvalorizam continuamente</h2><br/><br/><p><!-- /wp:heading --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Diante do quadro, o BTG mantém recomendação neutra para as ações da Oncoclínicas, enquanto o JPMorgan adota postura mais cautelosa, com classificação "underweight”, equivalente à recomendação de venda. Com preço de R$ 1,29 às 13h desta terça-feira, 14, os ativos acumulam mais de 50% de desvalorização em 2026.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Ambos os bancos destacam a baixa visibilidade sobre a recuperação da companhia em meio à elevada alavancagem, restrições operacionais e necessidade de renegociação com credores — fatores que mantêm a Oncoclínicas sob forte pressão no mercado. </p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:image {"id":1257079,"sizeSlug":"full","linkDestination":"none","align":"center"} --></p><br/><br/><figure class="wp-block-image aligncenter size-full"><img alt="Bancos | O JPMorgan é o maior banco do mundo | Foto: Reprodução/Instagram/..." class="wp-image-1257079" src="https://medias.revistaoeste.com/wp-content/uploads/2024/01/image_2024-01-12_150144904.jpg"><figcaption class="wp-element-caption">O JPMorgan é o maior banco do mundo | Foto: Reprodução/Instagram/jpmorgan</figcaption></img></figure><br/><br/><p><!-- /wp:image --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>No último dia 7, a agência de classificação de risco Fitch Ratings enquadrou a situação financeira da Oncoclínicas como "inadimplência restrita", a penúltima categoria antes do calote em si. Ela significa que a companhia deixou de honrar uma obrigação financeira específica, mas segue operando e não entrou em recuperação judicial.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Na última quarta-feira, 8, a empresa informou que estuda recorrer à Justiça para obter proteção temporária contra credores. Entre as alternativas em discussão estão aportes de acionistas. </p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>A proposta liderada pela Porto prevê investimento de R$ 500 milhões e a criação de uma nova empresa, sob controle da seguradora, para a qual migrariam as 146 clínicas de oncologia e parte da dívida. Também está em análise a emissão de debêntures conversíveis em ações, de até R$ 500 milhões, com participação do Fleury nas tratativas. </p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:image {"id":413236,"sizeSlug":"full","linkDestination":"none","align":"center"} --></p><br/><br/><figure class="wp-block-image aligncenter size-full"><img alt="" class="wp-image-413236" src="https://medias.revistaoeste.com/wp-content/uploads/2021/06/fleury.jpg"><figcaption class="wp-element-caption">Grupo Fleury negocia com Oncoclínicas emissão de debêntures conversíveis em ações, de até R$ 500 milhões | Foto: Reprodução</figcaption></img></figure><br/><br/><p><!-- /wp:image --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Outra possibilidade envolve um empréstimo entre R$ 100 milhões e R$ 150 milhões, além de um aporte de R$ 500 milhões do fundo norte-americano Mak Capital, hoje detentor de 6,3% das ações. </p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>A operação, porém, depende da realização de uma assembleia geral extraordinária, marcada para o próximo dia 30, que deve deliberar, entre outros pontos, sobre mudanças no Conselho de Administração.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p>Entre as iniciativas para reestruturar o caixa, estão a venda do Uberlândia Medical Center, concluída em fevereiro, e a negociação para alienação do Hospital Vila da Serra, em Belo Horizonte. Projetos de <em>cancer centers</em> em São Paulo e na capital mineira também foram cancelados.</p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p><!-- wp:paragraph --></p><br/><br/><p><strong>+ Leia também: "<a href="https://revistaoeste.com/revista/edicao-297/oncoclinicas-gafisa-ambipar-light-quem-sera-a-proxima-depois-do-banco-master/" rel="noreferrer noopener" target="_blank">Oncoclínicas, Gafisa, Ambipar, Light: Quem será a próxima depois do Banco Master?</a>", reportagem de Carlo Cauti publicada na Edição 297 da Revista Oeste</strong></p><br/><br/><p><!-- /wp:paragraph --></p><br/><br/><p>O post <a href="https://revistaoeste.com/economia/com-prejuizo-superior-a-r-3-bi-oncoclinicas-luta-para-nao-fechar/">Com prejuízo superior a R$ 3 bi, Oncoclínicas luta para não fechar</a> apareceu primeiro em <a href="https://revistaoeste.com">Revista Oeste</a>.</p></div>
 </div>
 </div><div class="modal" id="modal-3300612838761756165">
 <div class="modal-content">
@@ -383,7 +561,7 @@
 <img class="noticia-img" src="https://s2-ge.glbimg.com/xFUO0NtXo94vBrvp3F-3msXeceQ=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/E/R/IR3L2VTzqBvXEO2CaasA/thumbnail-ge.mp4-snapshot-00.02.372.jpg.jpeg"/>
 </div>
 <h1>Assista ao Globo Esporte Edição Espírito Santo</h1>
-<div style="font-size:1.1em; color:#333;"><img src="https://s2-ge.glbimg.com/xFUO0NtXo94vBrvp3F-3msXeceQ=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/E/R/IR3L2VTzqBvXEO2CaasA/thumbnail-ge.mp4-snapshot-00.02.372.jpg.jpeg"><br/>     Assista ao Globo Esporte Edição Espírito Santo Fique bem informado com as informações do esporte capixaba</img></div>
+<div style="font-size:1.1em; color:#333;"><img src="https://s2-ge.glbimg.com/xFUO0NtXo94vBrvp3F-3msXeceQ=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/E/R/IR3L2VTzqBvXEO2CaasA/thumbnail-ge.mp4-snapshot-00.02.372.jpg.jpeg"/><br>     Assista ao Globo Esporte Edição Espírito Santo Fique bem informado com as informações do esporte capixaba</br></div>
 </div>
 </div><div class="modal" id="modal-4977846091907094460">
 <div class="modal-content">
@@ -392,7 +570,7 @@
 <img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
 </div>
 <h1>Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</h1>
-<div style="font-size:1.1em; color:#333;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/news/n/new-hero-s/new-hero-sierra-returning-post-match-accolades-and-a-map-rew_xrkh.640.jpg" vspace="5" width="120"><br/><br/>Todos os detalhes da nova atualização que chega hoje, 14 de abril</img></div>
+<div style="font-size:1.1em; color:#333;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/news/n/new-hero-s/new-hero-sierra-returning-post-match-accolades-and-a-map-rew_xrkh.640.jpg" vspace="5" width="120"/><br><br>Todos os detalhes da nova atualização que chega hoje, 14 de abril</br></br></div>
 </div>
 </div><div class="modal" id="modal--1798465953405218005">
 <div class="modal-content">
@@ -410,7 +588,7 @@
 <img class="noticia-img" src="https://s2-ge.glbimg.com/pxRqOybaZMB1WoPk0As_C2ujitc=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/y/W/bL4CvLSP6blKS5VHTKig/2026-04-10t110423z-1392894206-up1em4a0ur9p1-rtrmadp-3-tennis-montecarlo.jpg"/>
 </div>
 <h1>Fonseca vence algoz de Buenos Aires na estreia e vai às oitavas de final em Munique</h1>
-<div style="font-size:1.1em; color:#333;"><img src="https://s2-ge.glbimg.com/pxRqOybaZMB1WoPk0As_C2ujitc=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/y/W/bL4CvLSP6blKS5VHTKig/2026-04-10t110423z-1392894206-up1em4a0ur9p1-rtrmadp-3-tennis-montecarlo.jpg"/><br>     João Fonseca é eliminado nas quartas do Masters 1000 de Monte Carlo, em Mônaco<br><br/>João Fonseca estreou com vitória no ATP 500 de Munique. Nesta terça-feira, o brasileiro de 19 anos superou o chileno Alejandro Tabilo, seu algoz no ATP 250 de Buenos Aires, em fevereiro. Desta vez, o número 35 do mundo despachou o 45º do ranking em sets diretos para avançar às oitavas de final no saibro alemão - parciais de 7/6 (1) e 6/3.<br/><br/>+ Premiação do ATP de Munique 2026: veja valores por fase<br/><br/>+ João Fonseca sobe cinco posições no ranking da ATP e volta ao top 35<br/><br/>João Fonseca comemora ponto contra Zverev em Monte Carlo<br/><br/>REUTERS/Manon Cruz<br/><br/>Vindo da melhor campanha em Masters 1.000 ao parar nas quartas de final de Monte Carlo, Fonseca conseguiu a revanche contra um adversário que ainda não tinha derrotado. Tabilo havia vencido o brasileiro nos dois confrontos anteriores: nos ATP 250 de Bucareste 2024 e de Buenos Aires 2026.<br/><br/>Agora Fonseca volta a medir forças com o francês Arthur Rinderknech, cabeça de chave número 7 de Munique. O brasileiro despachou o 26º do ranking na segunda rodada de Monte Carlo, na última semana.<br/><br/>Sem defender pontos nesta semana, Fonseca tem chance de crescer bastante no ranking com uma boa campanha em Munique. Graças à vitória sobre Tabilo, o brasileiro vai subindo quatro posições no ranking provisório, que conta os pontos somados nesta semana, figurando na 31ª posição. Um título na Alemanha pode colocar Fonseca até na 25ª colocação.<br/><br/>O jogo<br/><br/>O primeiro set seguiu o roteiro dos confrontos anteriores entre Fonseca e Tabilo, com muito equilíbrio e bolas incríveis dos dois lados. Os dois encontraram condições climáticas e de quadra bem diferentes do Masters 1.000 de Monte Carlo, na semana passada. E o chileno se adaptou mais rápido ao frio e ao saibro mais lento de Munique. Tabilo quebrou o serviço de Fonseca logo no terceiro game. Só que o brasileiro deu o troco logo na sequência, empatando a parcial: 2/2. Os tenistas confirmaram seus serviços seguintes e levaram o set ao tie-break. Aí Tabilo se perdeu. O único ponto do chileno no game de desempate foi em um erro não forçado de Fonseca, uma tentativa de deixadinha. Aproveitando-se das falhas do rival, o brasileiro dominou o tie-break para levar o set: 7/6 (1).<br/><br/>Initial plugin text<br/><br/>Tabilo voltou aos trilhos no segundo set, e o jogo ficou aberto, com muitos break points. Fonseca teve três chances de quebra no quinto game. O chileno teve duas no sexto. Mas a primeira quebra veio só no sétimo game, quando Fonseca teve o duplo break e contou com um erro não forçado do rival para pular na frente do placar: 4/3.</br></br></div>
+<div style="font-size:1.1em; color:#333;"><img src="https://s2-ge.glbimg.com/pxRqOybaZMB1WoPk0As_C2ujitc=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/y/W/bL4CvLSP6blKS5VHTKig/2026-04-10t110423z-1392894206-up1em4a0ur9p1-rtrmadp-3-tennis-montecarlo.jpg"/><br/>     João Fonseca é eliminado nas quartas do Masters 1000 de Monte Carlo, em Mônaco<br/><br>João Fonseca estreou com vitória no ATP 500 de Munique. Nesta terça-feira, o brasileiro de 19 anos superou o chileno Alejandro Tabilo, seu algoz no ATP 250 de Buenos Aires, em fevereiro. Desta vez, o número 35 do mundo despachou o 45º do ranking em sets diretos para avançar às oitavas de final no saibro alemão - parciais de 7/6 (1) e 6/3.<br><br>+ Premiação do ATP de Munique 2026: veja valores por fase<br><br>+ João Fonseca sobe cinco posições no ranking da ATP e volta ao top 35<br><br>João Fonseca comemora ponto contra Zverev em Monte Carlo<br><br>REUTERS/Manon Cruz<br><br>Vindo da melhor campanha em Masters 1.000 ao parar nas quartas de final de Monte Carlo, Fonseca conseguiu a revanche contra um adversário que ainda não tinha derrotado. Tabilo havia vencido o brasileiro nos dois confrontos anteriores: nos ATP 250 de Bucareste 2024 e de Buenos Aires 2026.<br><br>Agora Fonseca volta a medir forças com o francês Arthur Rinderknech, cabeça de chave número 7 de Munique. O brasileiro despachou o 26º do ranking na segunda rodada de Monte Carlo, na última semana.<br><br>Sem defender pontos nesta semana, Fonseca tem chance de crescer bastante no ranking com uma boa campanha em Munique. Graças à vitória sobre Tabilo, o brasileiro vai subindo quatro posições no ranking provisório, que conta os pontos somados nesta semana, figurando na 31ª posição. Um título na Alemanha pode colocar Fonseca até na 25ª colocação.<br><br>O jogo<br><br>O primeiro set seguiu o roteiro dos confrontos anteriores entre Fonseca e Tabilo, com muito equilíbrio e bolas incríveis dos dois lados. Os dois encontraram condições climáticas e de quadra bem diferentes do Masters 1.000 de Monte Carlo, na semana passada. E o chileno se adaptou mais rápido ao frio e ao saibro mais lento de Munique. Tabilo quebrou o serviço de Fonseca logo no terceiro game. Só que o brasileiro deu o troco logo na sequência, empatando a parcial: 2/2. Os tenistas confirmaram seus serviços seguintes e levaram o set ao tie-break. Aí Tabilo se perdeu. O único ponto do chileno no game de desempate foi em um erro não forçado de Fonseca, uma tentativa de deixadinha. Aproveitando-se das falhas do rival, o brasileiro dominou o tie-break para levar o set: 7/6 (1).<br><br>Initial plugin text<br><br>Tabilo voltou aos trilhos no segundo set, e o jogo ficou aberto, com muitos break points. Fonseca teve três chances de quebra no quinto game. O chileno teve duas no sexto. Mas a primeira quebra veio só no sétimo game, quando Fonseca teve o duplo break e contou com um erro não forçado do rival para pular na frente do placar: 4/3.</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></div>
 </div>
 </div><div class="modal" id="modal-5602191616947838295">
 <div class="modal-content">
@@ -419,7 +597,7 @@
 <img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
 </div>
 <h1>Por que a tela de 165Hz do Dell 16 é o upgrade que o seu gameplay precisa?</h1>
-<div style="font-size:1.1em; color:#333;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/ign-1_y969.640.jpg" vspace="5" width="120"/>Entenda de uma vez por todas como a tela do seu notebook gamer faz toda a diferença na sua experiência de jogo<br/><br/>Confira a potência gamer do Dell 16!</div>
+<div style="font-size:1.1em; color:#333;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/ign-1_y969.640.jpg" vspace="5" width="120"/>Entenda de uma vez por todas como a tela do seu notebook gamer faz toda a diferença na sua experiência de jogo<br><br>Confira a potência gamer do Dell 16!</br></br></div>
 </div>
 </div><div class="modal" id="modal-377479053316486194">
 <div class="modal-content">
@@ -437,7 +615,7 @@
 <img class="noticia-img" src="https://s2-ge.glbimg.com/O-BSoTv8unUu68BG27qAvuseqDk=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/k/r/oJGPDHRduF2VxV3JVLdw/agif26040518314766.jpg"/>
 </div>
 <h1>Grêmio x Deportivo Riestra: onde assistir ao vivo, horário e escalações</h1>
-<div style="font-size:1.1em; color:#333;"><img src="https://s2-ge.glbimg.com/O-BSoTv8unUu68BG27qAvuseqDk=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/k/r/oJGPDHRduF2VxV3JVLdw/agif26040518314766.jpg"/><br/>     Grêmio joga mal e começa campanha na Sul-Americana com derrota<br/><br/>O Grêmio recebe o Deportivo Riestra às 19h desta terça-feira, na Arena, pela segunda rodada da fase de grupos da Copa Sul-Americana. O ge acompanha a partida em tempo real. <br/><br/>+ Confira a tabela completa da Sul-Americana<br/><br/>O time de Luís Castro vem de empate no clássico Gre-Nal, pelo Brasileirão, e chegou ao quinto jogo sem vitória. Diante do torcedor, o Tricolor tem a missão de apresentar melhor futebol e somar os primeiros pontos na Sul-Americana, depois do revés na estreia. <br/><br/>+ Sete fatos que deixam a Sul-Americana com cara de Libertadores<br/><br/>O Deportivo Riestra ainda não venceu no Campeonato Argentino, após 13 rodadas, e é o lanterna do Grupo A. Na temporada, soma apenas uma vitória em 15 jogos e tem somente quatro gols marcados. O clube debuta na Sul-Americana e estreou com empate contra o Palestino. A vinda para Porto Alegre é a primeira viagem internacional do clube. <br/><br/>Initial plugin text<br/><br/>Onde assistir<br/><br/>Transmissão:  Paramount+. <br/><br/>Tempo real: o ge acompanha lance a lance.<br/><br/>Escalações prováveis<br/><br/>Grêmio - técnico: Luís Castro<br/><br/>O time pode ter preservações nesta terça-feira. Arthur é um dos jogadores que podem ser poupados. O zagueiro Gustavo Martins sequer foi relacionado. Luís Castro avalia que a sequência de partidas é pesada ao elenco, que precisa dar resposta na Sul-Americana. <br/><br>Provável escalação: Weverton, Pavon, Balbuena, Viery e Pedro Gabriel; Noriega, Dodi, Enamorado (Tetê), Nardoni (Monsalve) e Amuzu (Gabriel Mec); Carlos Vinicius. <br><br>Initial plugin text<br><br>Quem está fora: Gustavo Martins (preservado), Marlon (fratura no tornozelo direito), João Pedro (fase final lesão muscular na coxa esquerda) e Villasanti (fase final de recuperação de lesão ligamentar no joelho esquerdo). <br><br>Deportivo Riestra - técnico: Gustavo Benítez<br><br>A equipe disputou a última rodada do Campeonato Argentino com formação diferente da estreia da Sul-Americana, em possível preservação para o duelo da Arena. A tendência é a escalação de força máxima. <br><br>Provável escalação: Arce; Sansotre, Randazzo, Miño e Gallo; Watson, Goitía, Monje e Alonso; Smarra (Herrera) e Obredor (Alexander Díaz). <br><br>Initial plugin text<br><br>Quem está fora: Mariano Bracamonte (entorse no joelho direito); Pedro Ramírez (lesão muscular); Manuel Aiello (contusão e corte no peito do pé direito); Nicolás Benegas (lesão muscular); Alexander Diaz e Mateo Ramírez (sobrecarga muscular). <br><br>Arbitragem<br><br>Árbitro: Gery Vargas (BOL) <br><br>Assistente 1: Jose Antelo (BOL)<br><br>Assistente 2: Edwar Saavedra (BOL)<br><br>VAR: Jorge Justiniano (BOL) <br><br/>Quarto árbitro: Crhistian Aleman (BOL) <br/><br/>Arena do Grêmio<br/><br/>Maxi Franzoi/AGIF</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></div>
+<div style="font-size:1.1em; color:#333;"><img src="https://s2-ge.glbimg.com/O-BSoTv8unUu68BG27qAvuseqDk=/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2026/k/r/oJGPDHRduF2VxV3JVLdw/agif26040518314766.jpg"/><br>     Grêmio joga mal e começa campanha na Sul-Americana com derrota<br><br>O Grêmio recebe o Deportivo Riestra às 19h desta terça-feira, na Arena, pela segunda rodada da fase de grupos da Copa Sul-Americana. O ge acompanha a partida em tempo real. <br><br>+ Confira a tabela completa da Sul-Americana<br><br>O time de Luís Castro vem de empate no clássico Gre-Nal, pelo Brasileirão, e chegou ao quinto jogo sem vitória. Diante do torcedor, o Tricolor tem a missão de apresentar melhor futebol e somar os primeiros pontos na Sul-Americana, depois do revés na estreia. <br><br>+ Sete fatos que deixam a Sul-Americana com cara de Libertadores<br><br>O Deportivo Riestra ainda não venceu no Campeonato Argentino, após 13 rodadas, e é o lanterna do Grupo A. Na temporada, soma apenas uma vitória em 15 jogos e tem somente quatro gols marcados. O clube debuta na Sul-Americana e estreou com empate contra o Palestino. A vinda para Porto Alegre é a primeira viagem internacional do clube. <br><br>Initial plugin text<br><br>Onde assistir<br><br>Transmissão:  Paramount+. <br><br>Tempo real: o ge acompanha lance a lance.<br><br>Escalações prováveis<br><br>Grêmio - técnico: Luís Castro<br><br>O time pode ter preservações nesta terça-feira. Arthur é um dos jogadores que podem ser poupados. O zagueiro Gustavo Martins sequer foi relacionado. Luís Castro avalia que a sequência de partidas é pesada ao elenco, que precisa dar resposta na Sul-Americana. <br><br/>Provável escalação: Weverton, Pavon, Balbuena, Viery e Pedro Gabriel; Noriega, Dodi, Enamorado (Tetê), Nardoni (Monsalve) e Amuzu (Gabriel Mec); Carlos Vinicius. <br/><br/>Initial plugin text<br/><br/>Quem está fora: Gustavo Martins (preservado), Marlon (fratura no tornozelo direito), João Pedro (fase final lesão muscular na coxa esquerda) e Villasanti (fase final de recuperação de lesão ligamentar no joelho esquerdo). <br/><br/>Deportivo Riestra - técnico: Gustavo Benítez<br/><br/>A equipe disputou a última rodada do Campeonato Argentino com formação diferente da estreia da Sul-Americana, em possível preservação para o duelo da Arena. A tendência é a escalação de força máxima. <br/><br/>Provável escalação: Arce; Sansotre, Randazzo, Miño e Gallo; Watson, Goitía, Monje e Alonso; Smarra (Herrera) e Obredor (Alexander Díaz). <br/><br/>Initial plugin text<br/><br/>Quem está fora: Mariano Bracamonte (entorse no joelho direito); Pedro Ramírez (lesão muscular); Manuel Aiello (contusão e corte no peito do pé direito); Nicolás Benegas (lesão muscular); Alexander Diaz e Mateo Ramírez (sobrecarga muscular). <br/><br/>Arbitragem<br/><br/>Árbitro: Gery Vargas (BOL) <br/><br/>Assistente 1: Jose Antelo (BOL)<br/><br/>Assistente 2: Edwar Saavedra (BOL)<br/><br/>VAR: Jorge Justiniano (BOL) <br/><br>Quarto árbitro: Crhistian Aleman (BOL) <br><br>Arena do Grêmio<br><br>Maxi Franzoi/AGIF</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></div>
 </div>
 </div><div class="modal" id="modal-4344213379152917721">
 <div class="modal-content">
@@ -446,7 +624,7 @@
 <img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
 </div>
 <h1>Por que a tela de 165Hz do Dell 16 é o upgrade que o seu gameplay precisa?</h1>
-<div style="font-size:1.1em; color:#333;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/ign-1_y969.640.jpg" vspace="5" width="120"/>Entenda de uma vez por todas como a tela do seu notebook gamer faz toda a diferença na sua experiência de jogo<br/><br/>Confira a potência gamer do Dell 16!</div>
+<div style="font-size:1.1em; color:#333;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/ign-1_y969.640.jpg" vspace="5" width="120"/>Entenda de uma vez por todas como a tela do seu notebook gamer faz toda a diferença na sua experiência de jogo<br><br>Confira a potência gamer do Dell 16!</br></br></div>
 </div>
 </div><div class="modal" id="modal-1685070221996118606">
 <div class="modal-content">
@@ -457,52 +635,13 @@
 <h1>Alexandre Ramagem é preso pelo ICE nos EUA: quando ele será deportado?</h1>
 <div style="font-size:1.1em; color:#333;">Aliado do ex-presidente Jair Bolsonaro (PL), ex-deputado está foragido desde o ano passado, quando foi condenado por golpe de Estado e teve sua prisão preventiva decretada pelo STF.</div>
 </div>
-</div><div class="modal" id="modal-1136065456133102956">
-<div class="modal-content">
-<span class="fechar-modal" onclick="fecharMateria('1136065456133102956')">×</span>
-<div class="img-container" style="margin-bottom:20px;">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
-</div>
-<h1>Minas x Osasco - Superliga Feminina de Vôlei 2025/2026 - Ao vivo - globoesporte.com</h1>
-<div style="font-size:1.1em; color:#333;">Superliga Feminina de Vôlei 2025/2026 no globoesporte.com - acompanhe tudo sobre Minas x Osasco: escalação, informações sobre o jogo, fotos e muito mais</div>
-</div>
-</div><div class="modal" id="modal--7256858571989939236">
-<div class="modal-content">
-<span class="fechar-modal" onclick="fecharMateria('-7256858571989939236')">×</span>
-<div class="img-container" style="margin-bottom:20px;">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
-</div>
-<h1>CEO do Xbox admite que Game Pass se tornou "muito caro para jogadores"</h1>
-<div style="font-size:1.1em; color:#333;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/news/n/new-xbox-c/new-xbox-ceo-comments-on-game-pass_fgd3.640.jpg" vspace="5" width="120"/><br/><br/>Asha Sharma está analisando a possibilidade de um "sistema mais flexível"</div>
-</div>
-</div><div class="modal" id="modal-1519507139527793461">
-<div class="modal-content">
-<span class="fechar-modal" onclick="fecharMateria('1519507139527793461')">×</span>
-<div class="img-container" style="margin-bottom:20px;">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
-</div>
-<h1>Alexandre Ramagem é preso pelo ICE nos EUA: quando ele será deportado?</h1>
-<div style="font-size:1.1em; color:#333;">Aliado do ex-presidente Jair Bolsonaro (PL), ex-deputado está foragido desde o ano passado, quando foi condenado por golpe de Estado e teve sua prisão preventiva decretada pelo STF.</div>
-</div>
-</div><div class="modal" id="modal--1968766519688262777">
-<div class="modal-content">
-<span class="fechar-modal" onclick="fecharMateria('-1968766519688262777')">×</span>
-<div class="img-container" style="margin-bottom:20px;">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
-</div>
-<h1>Manchester United x Leeds United - Campeonato Inglês 2025/26 - Ao vivo - globoesporte.com</h1>
-<div style="font-size:1.1em; color:#333;">Campeonato Inglês 2025/26 no globoesporte.com - acompanhe tudo sobre Manchester United x Leeds United: escalação, informações sobre o jogo, fotos e muito mais</div>
-</div>
-</div><div class="modal" id="modal-8861093070371107470">
-<div class="modal-content">
-<span class="fechar-modal" onclick="fecharMateria('8861093070371107470')">×</span>
-<div class="img-container" style="margin-bottom:20px;">
-<img class="noticia-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800"/>
-</div>
-<h1>Um pouco de jazz no Fortnite: Laufey será próxima estrela do modo Festival</h1>
-<div style="font-size:1.1em; color:#333;"><img align="left" alt="" hspace="5" src="https://sm.ign.com/t/ign_br/screenshot/default/design-sem-nome-12_b525.640.jpg" vspace="5" width="120"/><br/><br/>O lobby ficará mais romântico</div>
-</div>
-</div></div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'><div class="historico-item"><b>Mundo</b>: Navios ligados ao Irã cruzam Estreito de Ormuz apesar do bloqueio dos EUA; China critica ação americana</div><div class="historico-item"><b>Esportes</b>: Sonhos, motivações e superação: conheça o Santana Jr, clube inscrito na Taça Clube Interbairros</div><div class="historico-item"><b>Games</b>: Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</div><div class="historico-item"><b>Hardware</b>: Xbox discute internamente uma possível volta de jogos exclusivos</div><div class="historico-item"><b>Tecnologia</b>: Nissan vai enxugar oferta de carros e ampliar uso de direção com inteligência artificial</div><div class="historico-item"><b>DotNet_CS</b>: Your Migration’s Source of Truth: The Modernization Assessment</div><div class="historico-item"><b>Esquerda </b>: Lula anuncia programa para quitar dívidas dos brasileiros com bets: “Assaltam o povo”</div><div class="historico-item"><b>Centro </b>: 'É natural que tenham pressões como o comentário do ministro Dino', diz relator da CPI do Crime Organizado</div><div class="historico-item"><b>Direita</b>: Os intocáveis são indiciados</div><div class="historico-item"><b>Direita </b>: Com prejuízo superior a R$ 3 bi, Oncoclínicas luta para não fechar</div><div class="historico-item"><b>14/04/2026 12:52</b>: A personagem de IA que viraliza com críticas ao governo Lula e ao STF</div><div class="historico-item"><b>14/04/2026 12:52</b>: Assista ao Globo Esporte Edição Espírito Santo</div><div class="historico-item"><b>14/04/2026 12:52</b>: Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</div><div class="historico-item"><b>14/04/2026 07:51</b>: A personagem de IA que viraliza com críticas ao governo Lula e ao STF</div><div class="historico-item"><b>14/04/2026 07:51</b>: Fonseca vence algoz de Buenos Aires na estreia e vai às oitavas de final em Munique</div><div class="historico-item"><b>14/04/2026 07:51</b>: Por que a tela de 165Hz do Dell 16 é o upgrade que o seu gameplay precisa?</div><div class="historico-item"><b>14/04/2026 03:13</b>: Alexandre Ramagem é preso pelo ICE nos EUA: quando ele será deportado?</div><div class="historico-item"><b>14/04/2026 03:13</b>: Grêmio x Deportivo Riestra: onde assistir ao vivo, horário e escalações</div><div class="historico-item"><b>14/04/2026 03:13</b>: Por que a tela de 165Hz do Dell 16 é o upgrade que o seu gameplay precisa?</div><div class="historico-item"><b>13/04/2026 19:31</b>: Alexandre Ramagem é preso pelo ICE nos EUA: quando ele será deportado?</div><div class="historico-item"><b>13/04/2026 19:31</b>: Minas x Osasco - Superliga Feminina de Vôlei 2025/2026 - Ao vivo - globoesporte.com</div><div class="historico-item"><b>13/04/2026 19:31</b>: CEO do Xbox admite que Game Pass se tornou "muito caro para jogadores"</div><div class="historico-item"><b>13/04/2026 16:57</b>: Alexandre Ramagem é preso pelo ICE nos EUA: quando ele será deportado?</div><div class="historico-item"><b>13/04/2026 16:57</b>: Manchester United x Leeds United - Campeonato Inglês 2025/26 - Ao vivo - globoesporte.com</div><div class="historico-item"><b>13/04/2026 16:57</b>: Um pouco de jazz no Fortnite: Laufey será próxima estrela do modo Festival</div><div class="historico-item"><b>13/04/2026 12:05</b>: EUA bloqueiam estreiro de Ormuz e Trump ameaça destruir 'navios de ataque'</div><div class="historico-item"><b>13/04/2026 12:05</b>: Haas surpreende com início inédito e surge como “melhor do resto” na F1 2026</div><div class="historico-item"><b>13/04/2026 12:05</b>: "Como eles vão adaptar?": estrela de Frieren e a Jornada para o Além está preocupada com um detalhe da 3ª temporada</div></div></div></div>
+</div></div>
+            <div class='sidebar'>
+                <h3>Histórico</h3>
+                <div class='sidebar-list'><div class="historico-item"><b>Mundo</b>: Navios ligados ao Irã cruzam Estreito de Ormuz apesar do bloqueio dos EUA; China critica ação americana</div><div class="historico-item"><b>Esportes</b>: Tribunal Arbitral pede presença de administradora da Eagle em Assembleia do Botafogo</div><div class="historico-item"><b>Games</b>: Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</div><div class="historico-item"><b>Hardware</b>: Xbox discute internamente uma possível volta de jogos exclusivos</div><div class="historico-item"><b>Tecnologia</b>: Nissan vai enxugar oferta de carros e ampliar uso de direção com inteligência artificial</div><div class="historico-item"><b>DotNet_CS</b>: Your Migration’s Source of Truth: The Modernization Assessment</div><div class="historico-item"><b>Esquerda </b>: Lula anuncia programa para quitar dívidas dos brasileiros com bets: “Assaltam o povo”</div><div class="historico-item"><b>Centro </b>: Gilmar Mendes diz que CPI não tem 'base legal' para pedir indiciamento de ministros do STF</div><div class="historico-item"><b>Direita</b>: Os intocáveis são indiciados</div><div class="historico-item"><b>Direita </b>: Com prejuízo superior a R$ 3 bi, Oncoclínicas luta para não fechar</div><div class="historico-item"><b>Mundo</b>: Navios ligados ao Irã cruzam Estreito de Ormuz apesar do bloqueio dos EUA; China critica ação americana</div><div class="historico-item"><b>Esportes</b>: Sonhos, motivações e superação: conheça o Santana Jr, clube inscrito na Taça Clube Interbairros</div><div class="historico-item"><b>Games</b>: Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</div><div class="historico-item"><b>Hardware</b>: Xbox discute internamente uma possível volta de jogos exclusivos</div><div class="historico-item"><b>Tecnologia</b>: Nissan vai enxugar oferta de carros e ampliar uso de direção com inteligência artificial</div><div class="historico-item"><b>DotNet_CS</b>: Your Migration’s Source of Truth: The Modernization Assessment</div><div class="historico-item"><b>Esquerda </b>: Lula anuncia programa para quitar dívidas dos brasileiros com bets: “Assaltam o povo”</div><div class="historico-item"><b>Centro </b>: 'É natural que tenham pressões como o comentário do ministro Dino', diz relator da CPI do Crime Organizado</div><div class="historico-item"><b>Direita</b>: Os intocáveis são indiciados</div><div class="historico-item"><b>Direita </b>: Com prejuízo superior a R$ 3 bi, Oncoclínicas luta para não fechar</div><div class="historico-item"><b>14/04/2026 12:52</b>: A personagem de IA que viraliza com críticas ao governo Lula e ao STF</div><div class="historico-item"><b>14/04/2026 12:52</b>: Assista ao Globo Esporte Edição Espírito Santo</div><div class="historico-item"><b>14/04/2026 12:52</b>: Nova heroína Sierra, retorno dos elogios pós-jogo e reformulação de mapa — todas as novidades da 2ª temporada de Overwatch</div><div class="historico-item"><b>14/04/2026 07:51</b>: A personagem de IA que viraliza com críticas ao governo Lula e ao STF</div><div class="historico-item"><b>14/04/2026 07:51</b>: Fonseca vence algoz de Buenos Aires na estreia e vai às oitavas de final em Munique</div><div class="historico-item"><b>14/04/2026 07:51</b>: Por que a tela de 165Hz do Dell 16 é o upgrade que o seu gameplay precisa?</div><div class="historico-item"><b>14/04/2026 03:13</b>: Alexandre Ramagem é preso pelo ICE nos EUA: quando ele será deportado?</div><div class="historico-item"><b>14/04/2026 03:13</b>: Grêmio x Deportivo Riestra: onde assistir ao vivo, horário e escalações</div><div class="historico-item"><b>14/04/2026 03:13</b>: Por que a tela de 165Hz do Dell 16 é o upgrade que o seu gameplay precisa?</div><div class="historico-item"><b>13/04/2026 19:31</b>: Alexandre Ramagem é preso pelo ICE nos EUA: quando ele será deportado?</div><div class="historico-item"><b>13/04/2026 19:31</b>: Minas x Osasco - Superliga Feminina de Vôlei 2025/2026 - Ao vivo - globoesporte.com</div><div class="historico-item"><b>13/04/2026 19:31</b>: CEO do Xbox admite que Game Pass se tornou "muito caro para jogadores"</div><div class="historico-item"><b>13/04/2026 16:57</b>: Alexandre Ramagem é preso pelo ICE nos EUA: quando ele será deportado?</div><div class="historico-item"><b>13/04/2026 16:57</b>: Manchester United x Leeds United - Campeonato Inglês 2025/26 - Ao vivo - globoesporte.com</div><div class="historico-item"><b>13/04/2026 16:57</b>: Um pouco de jazz no Fortnite: Laufey será próxima estrela do modo Festival</div></div>
+            </div>
+        </div>
+        
 <script>
 function abrirMateria(id) {
     document.getElementById('modal-' + id).style.display = 'block';
@@ -512,5 +651,25 @@ function fecharMateria(id) {
     document.getElementById('modal-' + id).style.display = 'none';
     document.body.style.overflow = 'auto';
 }
+
+function filtrarNoticias(categoria, btn) {
+    const cards = document.querySelectorAll('.noticia-card');
+    const botoes = document.querySelectorAll('.filter-btn');
+    
+    botoes.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    cards.forEach(card => {
+        const cardCat = card.getAttribute('data-categoria');
+        if (categoria === 'todas' || cardCat.includes(categoria)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
 </script>
-</body></html>
+
+    </body>
+    </html>
+    
