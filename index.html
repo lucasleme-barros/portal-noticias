@@ -19,182 +19,339 @@
     @media (max-width: 900px) { .main-wrapper { flex-direction: column; } .content-area { grid-template-columns: 1fr; } .sidebar { border-left: none; padding-left: 0; } }
 </style>
 </head><body><header><div class='weather-widget' id='weather-display' onclick='alterarCidade(event)'>⏳</div><h1>Portal IA News</h1></header><div class="filter-container"><div class="filter-group"><button class="filter-btn active" onclick="filtrarNoticias('todas', this)">🏠 Todas</button><button class="filter-btn" onclick="filtrarNoticias('Esquerda', this)">Esquerda</button><button class="filter-btn" onclick="filtrarNoticias('Centro', this)">Centro</button><button class="filter-btn" onclick="filtrarNoticias('Direita', this)">Direita</button></div><div class="filter-group"><button class="filter-btn" onclick="filtrarNoticias('Hardware', this)">Hardware</button><button class="filter-btn" onclick="filtrarNoticias('Games', this)">Games</button><button class="filter-btn" onclick="filtrarNoticias('C#', this)">C#</button><button class="filter-btn" onclick="filtrarNoticias('Tech', this)">Tech</button><button class="filter-btn" onclick="filtrarNoticias('Mundo', this)">Mundo</button></div></div><div class='main-wrapper'><div class='content-area'>
-        <a href="./materia/8fe12c12-7ef1-4ca6-b3ac-da5f0f11fd6c.html" class="noticia-card" data-categoria="Mundo_BBC">
-            <div class="img-container"><img src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/bd85/live/c77b6970-3da8-11f1-b377-d7765ac78768.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800'"></div>
+        <a href="./materia/23daf1ee-2534-4bc1-acc6-8102ab51fb88.html" class="noticia-card" data-categoria="Mundo_BBC">
+            <div class="img-container"><img src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/3e40/live/a02398e0-39b4-11f1-8897-e7b75af1cf66.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'"></div>
+            <div class="noticia-body">
+                <span class="sentiment-tag bg-neutro">Neutro</span>
+                <h2>O &#x27;Super El Niño&#x27; está chegando?</h2>
+                <p>Últimas previsões apontam que o fenômeno, que causa aquecimento anormal das águas do Pacífico e tem repercussão em diferentes regi...</p>
+                <small class="timeago" datetime="2026-04-21T17:52:58.368606-03:00"></small>
+            </div>
+        </a>
+        <a href="./materia/504af09c-888b-4c67-a859-60e64b926488.html" class="noticia-card" data-categoria="Mundo_BBC">
+            <div class="img-container"><img src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/bd85/live/c77b6970-3da8-11f1-b377-d7765ac78768.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>Lula ameaça adotar &#x27;reciprocidade&#x27; após EUA pedirem saída de delegado da PF envolvido em caso Ramagem</h2>
                 <p>Lula disse ter sido informado sobre o caso na manhã desta terça-feira (21/4) e criticou a postura das autoridades americanas....</p>
-                <small class="timeago" datetime="2026-04-21T16:11:43.396673-03:00"></small>
+                <small class="timeago" datetime="2026-04-21T17:53:00.088821-03:00"></small>
             </div>
         </a>
-        <a href="./materia/a70638e5-524c-4d2b-be07-c543120d584e.html" class="noticia-card" data-categoria="Mundo_BBC">
-            <div class="img-container"><img src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/8bf4/live/c6fb9440-3d6a-11f1-bb8a-374117ea6afa.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'"></div>
+        <a href="./materia/f01d4a38-9ac2-4c90-8e11-6ac218c9539b.html" class="noticia-card" data-categoria="Mundo_BBC">
+            <div class="img-container"><img src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/8bf4/live/c6fb9440-3d6a-11f1-bb8a-374117ea6afa.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>Caso Ramagem: Quem é o delegado da PF alvo de ordem do governo Trump para deixar os EUA</h2>
                 <p>A medida veio após sua atuação na detenção do ex-deputado federal Alexandre Ramagem (PL-RJ), na semana passada, em território amer...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:44.968859-03:00"></small>
+                <small class="timeago" datetime="2026-04-21T17:53:01.681521-03:00"></small>
             </div>
         </a>
-        <a href="./materia/e49a996d-b23d-4afd-8101-7e0378cc7e04.html" class="noticia-card" data-categoria="Mundo_BBC">
-            <div class="img-container"><img src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/8f6f/live/3d01e630-3c9e-11f1-bfee-83c7643042f8.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'"></div>
+        <a href="./materia/28e735f4-8f5d-48fe-ad3f-ee0d9a4ea7f0.html" class="noticia-card" data-categoria="Geral_G1">
+            <div class="img-container"><img src="https://s2-g1.glbimg.com/BjMYfEtRKVTZA47ZT6oeLmwpkFA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/6/A/Fc8CH1TZOmjnaAJJ8j7g/caxias.01-frame-339.jpeg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Como a Terra mudou em 58 anos: o que revelam as fotos icônicas das missões Apollo 8 e Artemis 2</h2>
-                <p>Após a tripulação da Apollo 8 ter capturado a icônica fotografia do nascer do sol na Terra em 1968, os astronautas do programa Art...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:46.563776-03:00"></small>
+                <h2>Bandidos usam ônibus como barricada durante operação para prender foragido em Caxias, no RJ</h2>
+                <p>     Um ônibus foi usado como barricada por criminosos durante uma operação policial na tarde desta terça-feira (21) na comunidade...</p>
+                <small class="timeago" datetime="2026-04-21T17:52:59.926202-03:00"></small>
             </div>
         </a>
-        <a href="./materia/14174921-64e8-44f5-ab21-07aecc75e38a.html" class="noticia-card" data-categoria="Geral_G1">
-            <div class="img-container"><img src="https://s2-g1.glbimg.com/VYKdA__wX_0H_L17bNyH8fBFAUM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/K/N/P9pxAbQimaKIMZOUUsFA/design-sem-nome-4-.png" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'"></div>
+        <a href="./materia/6d24cf61-8b05-42c6-8e32-6bac4617c665.html" class="noticia-card" data-categoria="Geral_G1">
+            <div class="img-container"><img src="https://s2-g1.glbimg.com/l5Z72nSMBjRQL85VlxD--ObHcGA=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/z/T/h7ucp8SuubORYh3j5mCw/whatsapp-image-2026-04-21-at-17.43.44-1-.jpeg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Criança de 2 anos é levada ao quartel dos bombeiros com ralo preso no dedo em MG</h2>
-                <p>     Menina de dois anos prendeu o dedo no ralo do banheiro e foi ajudada pelos bombeiros em Araguari
-Corpo de Bombeiros de Aragua...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:44.420362-03:00"></small>
+                <h2>Engavetamento entre carros interdita trecho da Serra das Araras, em Piraí</h2>
+                <p>     Engavetamento interdita trecho da Serra das Araras, em Piraí
+Divulgação/Polícia Rodoviária Federal
+Um engavetamento interdito...</p>
+                <small class="timeago" datetime="2026-04-21T17:53:01.527045-03:00"></small>
             </div>
         </a>
-        <a href="./materia/707b50b2-6a8c-4efa-9083-21c21639951f.html" class="noticia-card" data-categoria="Geral_G1">
-            <div class="img-container"><img src="https://s2-g1.glbimg.com/OVa74OFwAuG-Qc101JB7pdXr3lU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/9/k/vEvBhbRBGuBpyqbKSfyg/pm-geladeira-.jpeg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'"></div>
+        <a href="./materia/0bc4bb05-0baf-47d5-87c7-3fa86da23553.html" class="noticia-card" data-categoria="Geral_G1">
+            <div class="img-container"><img src="https://s2-g1.glbimg.com/TEt71jJZFdTeR9F2qMOJDVsKUIs=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/v/T/DtfmKBRRujXTKSBrpGsg/soldado-ok.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Dez PMs do Bope viram réus por invasão de casas e uso irregular de câmeras em operação na Maré</h2>
-                <p>     MPRJ denuncia 10 PMs do Bope por invasão de casas e uso irregular de câmeras na Maré
-A Justiça Militar aceitou duas denúncias...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:45.990668-03:00"></small>
+                <h2>Despedida de militar morto com disparo acidental é marcada por emoção em São Cristóvão</h2>
+                <p>     Despedida de militar morto com disparo acidental é marcada por emoção em São Cristóvão
+A despedida de José Renaldo Santana de...</p>
+                <small class="timeago" datetime="2026-04-21T17:53:03.111388-03:00"></small>
             </div>
         </a>
-        <a href="./materia/8379408d-a17a-440a-8c2c-804cf81cbefb.html" class="noticia-card" data-categoria="Geral_G1">
-            <div class="img-container"><img src="https://s2-g1.glbimg.com/weGG_NuQrctJAYCdSainLIotRHM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/V/K/TRXWABSK6r5F2GBcaASQ/whatsapp-image-2026-04-21-at-14.45.54.jpeg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800'"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Homem é investigado suspeito de matar os próprios irmãos e tentar matar a mãe no interior do AM</h2>
-                <p>     Homem é investigado suspeito de matar os próprios irmãos e tentar matar a mãe no AM.
-Divulgação/Polícia Civil
-Um homem de 25 ...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:47.549604-03:00"></small>
-            </div>
-        </a>
-        <a href="./materia/41e2860a-5677-420d-9701-54af7e1acc2c.html" class="noticia-card" data-categoria="Hardware_Adrenaline">
-            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/ps-plus-jogos-saindo-maio-640x400.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=800'"></div>
+        <a href="./materia/2668b38b-789b-4396-ace6-a074022b7bf4.html" class="noticia-card" data-categoria="Hardware_Adrenaline">
+            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/ps-plus-jogos-saindo-maio-640x400.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>7 jogos sairão do catálogo da PS Plus em maio: veja quais!</h2>
                 <p>Assinantes da PS Plus Deluxe e Extra têm até o dia 19 de maio para aproveitar alguns games...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:43.514911-03:00"></small>
+                <small class="timeago" datetime="2026-04-21T17:52:58.652767-03:00"></small>
             </div>
         </a>
-        <a href="./materia/e49c054f-573b-4ec0-8286-9751598e5c65.html" class="noticia-card" data-categoria="Hardware_Adrenaline">
-            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/msi-mouse-versa-300-wireless-8k-640x400.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'"></div>
+        <a href="./materia/fb3212a9-1508-4e10-ae57-60977892d0b0.html" class="noticia-card" data-categoria="Hardware_Adrenaline">
+            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/msi-mouse-versa-300-wireless-8k-640x400.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>MSI lança nova versão do mouse VERSA 300 com polling de 8.000Hz</h2>
                 <p>MSI VERSA 300 Wireless 8K ganha nova versão com opções em preto e branco...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:45.081230-03:00"></small>
+                <small class="timeago" datetime="2026-04-21T17:53:00.241244-03:00"></small>
             </div>
         </a>
-        <a href="./materia/466c54c6-b398-4116-b00e-99ba3a5410d0.html" class="noticia-card" data-categoria="Hardware_Adrenaline">
-            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/thrustmaster-capa-640x400.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'"></div>
+        <a href="./materia/81b8c85f-bf2b-4bbf-826b-f869aa7d5dd6.html" class="noticia-card" data-categoria="Hardware_Adrenaline">
+            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/thrustmaster-capa-640x400.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>T248R e T598: conheça os dois volantes da Thrustmaster que vão transformar a diversão nos seus jogos de corrida</h2>
                 <p>Para fãs de simulação de corridas, o uso de um volante é fundamental para tornar a experiência mais imersiva. Conheça duas das mel...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:46.637556-03:00"></small>
+                <small class="timeago" datetime="2026-04-21T17:53:01.851748-03:00"></small>
             </div>
         </a>
-        <a href="./materia/1e4f55a3-103a-4d6a-bddf-12b194149bea.html" class="noticia-card" data-categoria="C#_MS_Blog">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=800'"></div>
+        <a href="./materia/d9c68a07-6fce-490c-9775-21f46fed5b96.html" class="noticia-card" data-categoria="C#_MS_Blog">
+            <div class="img-container"><img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>.NET 10.0.7 Out-of-Band Security Update</h2>
                 <p>We are releasing .NET 10.0.7 as an out-of-band security update to address CVE-2026-40372.
 The post .NET 10.0.7 Out-of-Band Securit...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:43.319670-03:00"></small>
+                <small class="timeago" datetime="2026-04-21T17:52:58.425103-03:00"></small>
             </div>
         </a>
-        <a href="./materia/89c02ab3-3c26-4230-a119-95e571908d21.html" class="noticia-card" data-categoria="C#_MS_Blog">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'"></div>
+        <a href="./materia/2863f19c-a42d-4c53-b1ef-c32a832d808a.html" class="noticia-card" data-categoria="C#_MS_Blog">
+            <div class="img-container"><img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>Writing Node.js addons with .NET Native AOT</h2>
                 <p>The C# Dev Kit team replaced C++ Node.js addons with C# and Native AOT, removing a dependency on Python. This post walks through b...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:44.879847-03:00"></small>
+                <small class="timeago" datetime="2026-04-21T17:53:00.131175-03:00"></small>
             </div>
         </a>
-        <a href="./materia/b674f871-ad14-4c0d-9c82-d24d78516c0a.html" class="noticia-card" data-categoria="C#_MS_Blog">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=800'"></div>
+        <a href="./materia/53cfcd7e-04c2-45a9-9445-b60508c9bac4.html" class="noticia-card" data-categoria="C#_MS_Blog">
+            <div class="img-container"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>Pin Clustering in .NET MAUI Maps</h2>
                 <p>.NET MAUI 11 adds pin clustering to the Map control, automatically grouping nearby pins into cluster markers. Learn how to enable ...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:46.448105-03:00"></small>
+                <small class="timeago" datetime="2026-04-21T17:53:01.732279-03:00"></small>
             </div>
         </a>
-        <a href="./materia/fa863d60-5dad-4c70-b341-6f4e410c43e3.html" class="noticia-card" data-categoria="Games_IGN">
-            <div class="img-container"><img src="https://sm.ign.com/t/ign_br/screenshot/default/sw_1vek.640.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'"></div>
+        <a href="./materia/6423f6d3-c9ad-4fec-9fd3-4065de39e955.html" class="noticia-card" data-categoria="Games_IGN">
+            <div class="img-container"><img src="https://sm.ign.com/t/ign_br/screenshot/default/ps5-ghost-of-yotei-edicao-limitada-thumb_meg8.640.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800'"></div>
+            <div class="noticia-body">
+                <span class="sentiment-tag bg-neutro">Neutro</span>
+                <h2>PlayStation 5 de Ghost of Yōtei com R$ 100 OFF por tempo limitado</h2>
+                <p>
+Bundle especial do PS5 traz visual temático inspirado em Ghost of Yōtei, com controle exclusivo e voucher do jogo...</p>
+                <small class="timeago" datetime="2026-04-21T17:52:59.550970-03:00"></small>
+            </div>
+        </a>
+        <a href="./materia/2b597169-960c-4486-827f-4c8d8400a38d.html" class="noticia-card" data-categoria="Games_IGN">
+            <div class="img-container"><img src="https://sm.ign.com/t/ign_br/screenshot/default/sw_1vek.640.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>Já sabíamos que Star Wars: A Ascensão Skywalker foi feito às pressas e agora Oscar Isaac confirma que uma das frases mais enigmáticas do filme veio durante as refilmagens</h2>
                 <p>De algum modo, Palpatine retornou
 O ator de Star Wars, Oscar Isaac, admitiu que sua icônica frase &quot;De alguma forma, Palpatine reto...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:44.195527-03:00"></small>
+                <small class="timeago" datetime="2026-04-21T17:53:01.147003-03:00"></small>
             </div>
         </a>
-        <a href="./materia/43fdf3ed-ca55-40a8-8678-d33c9b4e702f.html" class="noticia-card" data-categoria="Games_IGN">
-            <div class="img-container"><img src="https://sm.ign.com/t/ign_br/screenshot/default/philips_5k7k.640.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800'"></div>
+        <a href="./materia/ddc569dc-2c75-472e-9547-4fb559edbd88.html" class="noticia-card" data-categoria="Games_IGN">
+            <div class="img-container"><img src="https://sm.ign.com/t/ign_br/screenshot/default/philips_5k7k.640.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>Smart TV Philips de 50 polegadas entra em oferta no Mercado Livre com cupom de R$ 200 OFF</h2>
                 <p>
 Modelo 50PUG7300/78 combina resolução 4K, HDR10+ e áudio com Dolby Atmos em promoção da loja oficial da Casas Bahia...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:45.766767-03:00"></small>
+                <small class="timeago" datetime="2026-04-21T17:53:02.736102-03:00"></small>
             </div>
         </a>
-        <a href="./materia/8cc7989f-3af2-447f-9011-73998c2cbf19.html" class="noticia-card" data-categoria="Games_IGN">
-            <div class="img-container"><img src="https://sm.ign.com/t/ign_br/photo/default/starfield-ps5pro-gameplay-br-1775149156492_hh7b.640.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'"></div>
+        <a href="./materia/150f8144-c322-4bde-8639-41653f7388bb.html" class="noticia-card" data-categoria="Direita_Oeste">
+            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/donald-trump-coletiva-6-de-abril.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Starfield no PS5: vale a pena dar uma chance ao polêmico RPG dois anos depois?</h2>
+                <h2>Trump estende cessar-fogo com o Irã a pedido do Paquistão</h2>
                 <p>
+
+O presidente dos Estados Unidos, Donald Trump, anunciou nesta terça-feira, 21, a manutenção do bloqueio marítimo ao Estreito de ...</p>
+                <small class="timeago" datetime="2026-04-21T17:53:03.666248-03:00"></small>
+            </div>
+        </a>
+        <a href="./materia/1ad3fb53-c542-4d65-8922-df4844802ff0.html" class="noticia-card" data-categoria="Direita_Oeste">
+            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/oeste-sem-filtro-21-de-abril-.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800'"></div>
+            <div class="noticia-body">
+                <span class="sentiment-tag bg-neutro">Neutro</span>
+                <h2>Oeste Sem Filtro: assista ao programa de 21/4/2026</h2>
+                <p>
+
+Acompanhe mais uma edição do programa Oeste Sem Filtro. A atração vai ao ar de segunda a sexta-feira, das 17h45 às 19h45. Aprese...</p>
+                <small class="timeago" datetime="2026-04-21T17:53:05.267217-03:00"></small>
+            </div>
+        </a>
+        <a href="./materia/189f0b17-449b-48d7-b113-b242aacf7ed6.html" class="noticia-card" data-categoria="Direita_Oeste">
+            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2025/03/perserverance.webp" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'"></div>
+            <div class="noticia-body">
+                <span class="sentiment-tag bg-neutro">Neutro</span>
+                <h2>Nasa identifica novos compostos orgânicos em Marte</h2>
+                <p>
+
+O rover Curiosity, da Nasa, identificou novos compostos orgânicos em Marte. Cientistas investigam se o planeta já reuniu condiçõ...</p>
+                <small class="timeago" datetime="2026-04-21T17:53:06.870834-03:00"></small>
+            </div>
+        </a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/8fe12c12-7ef1-4ca6-b3ac-da5f0f11fd6c.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800'" src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/bd85/live/c77b6970-3da8-11f1-b377-d7765ac78768.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Lula ameaça adotar 'reciprocidade' após EUA pedirem saída de delegado da PF envolvido em caso Ramagem</h2>
+<p>Lula disse ter sido informado sobre o caso na manhã desta terça-feira (21/4) e criticou a postura das autoridades americanas....</p>
+<small class="timeago" datetime="2026-04-21T16:11:43.396673-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/a70638e5-524c-4d2b-be07-c543120d584e.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'" src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/8bf4/live/c6fb9440-3d6a-11f1-bb8a-374117ea6afa.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Caso Ramagem: Quem é o delegado da PF alvo de ordem do governo Trump para deixar os EUA</h2>
+<p>A medida veio após sua atuação na detenção do ex-deputado federal Alexandre Ramagem (PL-RJ), na semana passada, em território amer...</p>
+<small class="timeago" datetime="2026-04-21T16:11:44.968859-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/e49a996d-b23d-4afd-8101-7e0378cc7e04.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'" src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/8f6f/live/3d01e630-3c9e-11f1-bfee-83c7643042f8.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Como a Terra mudou em 58 anos: o que revelam as fotos icônicas das missões Apollo 8 e Artemis 2</h2>
+<p>Após a tripulação da Apollo 8 ter capturado a icônica fotografia do nascer do sol na Terra em 1968, os astronautas do programa Art...</p>
+<small class="timeago" datetime="2026-04-21T16:11:46.563776-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Geral_G1" href="./materia/14174921-64e8-44f5-ab21-07aecc75e38a.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'" src="https://s2-g1.glbimg.com/VYKdA__wX_0H_L17bNyH8fBFAUM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/K/N/P9pxAbQimaKIMZOUUsFA/design-sem-nome-4-.png"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Criança de 2 anos é levada ao quartel dos bombeiros com ralo preso no dedo em MG</h2>
+<p>     Menina de dois anos prendeu o dedo no ralo do banheiro e foi ajudada pelos bombeiros em Araguari
+Corpo de Bombeiros de Aragua...</p>
+<small class="timeago" datetime="2026-04-21T16:11:44.420362-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Geral_G1" href="./materia/707b50b2-6a8c-4efa-9083-21c21639951f.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'" src="https://s2-g1.glbimg.com/OVa74OFwAuG-Qc101JB7pdXr3lU=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/9/k/vEvBhbRBGuBpyqbKSfyg/pm-geladeira-.jpeg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Dez PMs do Bope viram réus por invasão de casas e uso irregular de câmeras em operação na Maré</h2>
+<p>     MPRJ denuncia 10 PMs do Bope por invasão de casas e uso irregular de câmeras na Maré
+A Justiça Militar aceitou duas denúncias...</p>
+<small class="timeago" datetime="2026-04-21T16:11:45.990668-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Geral_G1" href="./materia/8379408d-a17a-440a-8c2c-804cf81cbefb.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800'" src="https://s2-g1.glbimg.com/weGG_NuQrctJAYCdSainLIotRHM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/V/K/TRXWABSK6r5F2GBcaASQ/whatsapp-image-2026-04-21-at-14.45.54.jpeg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Homem é investigado suspeito de matar os próprios irmãos e tentar matar a mãe no interior do AM</h2>
+<p>     Homem é investigado suspeito de matar os próprios irmãos e tentar matar a mãe no AM.
+Divulgação/Polícia Civil
+Um homem de 25 ...</p>
+<small class="timeago" datetime="2026-04-21T16:11:47.549604-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Hardware_Adrenaline" href="./materia/41e2860a-5677-420d-9701-54af7e1acc2c.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=800'" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/ps-plus-jogos-saindo-maio-640x400.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>7 jogos sairão do catálogo da PS Plus em maio: veja quais!</h2>
+<p>Assinantes da PS Plus Deluxe e Extra têm até o dia 19 de maio para aproveitar alguns games...</p>
+<small class="timeago" datetime="2026-04-21T16:11:43.514911-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Hardware_Adrenaline" href="./materia/e49c054f-573b-4ec0-8286-9751598e5c65.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/msi-mouse-versa-300-wireless-8k-640x400.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>MSI lança nova versão do mouse VERSA 300 com polling de 8.000Hz</h2>
+<p>MSI VERSA 300 Wireless 8K ganha nova versão com opções em preto e branco...</p>
+<small class="timeago" datetime="2026-04-21T16:11:45.081230-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Hardware_Adrenaline" href="./materia/466c54c6-b398-4116-b00e-99ba3a5410d0.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/thrustmaster-capa-640x400.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>T248R e T598: conheça os dois volantes da Thrustmaster que vão transformar a diversão nos seus jogos de corrida</h2>
+<p>Para fãs de simulação de corridas, o uso de um volante é fundamental para tornar a experiência mais imersiva. Conheça duas das mel...</p>
+<small class="timeago" datetime="2026-04-21T16:11:46.637556-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="C#_MS_Blog" href="./materia/1e4f55a3-103a-4d6a-bddf-12b194149bea.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=800'" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>.NET 10.0.7 Out-of-Band Security Update</h2>
+<p>We are releasing .NET 10.0.7 as an out-of-band security update to address CVE-2026-40372.
+The post .NET 10.0.7 Out-of-Band Securit...</p>
+<small class="timeago" datetime="2026-04-21T16:11:43.319670-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="C#_MS_Blog" href="./materia/89c02ab3-3c26-4230-a119-95e571908d21.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'" src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Writing Node.js addons with .NET Native AOT</h2>
+<p>The C# Dev Kit team replaced C++ Node.js addons with C# and Native AOT, removing a dependency on Python. This post walks through b...</p>
+<small class="timeago" datetime="2026-04-21T16:11:44.879847-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="C#_MS_Blog" href="./materia/b674f871-ad14-4c0d-9c82-d24d78516c0a.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=800'" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Pin Clustering in .NET MAUI Maps</h2>
+<p>.NET MAUI 11 adds pin clustering to the Map control, automatically grouping nearby pins into cluster markers. Learn how to enable ...</p>
+<small class="timeago" datetime="2026-04-21T16:11:46.448105-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Games_IGN" href="./materia/fa863d60-5dad-4c70-b341-6f4e410c43e3.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'" src="https://sm.ign.com/t/ign_br/screenshot/default/sw_1vek.640.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Já sabíamos que Star Wars: A Ascensão Skywalker foi feito às pressas e agora Oscar Isaac confirma que uma das frases mais enigmáticas do filme veio durante as refilmagens</h2>
+<p>De algum modo, Palpatine retornou
+O ator de Star Wars, Oscar Isaac, admitiu que sua icônica frase "De alguma forma, Palpatine reto...</p>
+<small class="timeago" datetime="2026-04-21T16:11:44.195527-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Games_IGN" href="./materia/43fdf3ed-ca55-40a8-8678-d33c9b4e702f.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800'" src="https://sm.ign.com/t/ign_br/screenshot/default/philips_5k7k.640.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Smart TV Philips de 50 polegadas entra em oferta no Mercado Livre com cupom de R$ 200 OFF</h2>
+<p>
+Modelo 50PUG7300/78 combina resolução 4K, HDR10+ e áudio com Dolby Atmos em promoção da loja oficial da Casas Bahia...</p>
+<small class="timeago" datetime="2026-04-21T16:11:45.766767-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Games_IGN" href="./materia/8cc7989f-3af2-447f-9011-73998c2cbf19.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'" src="https://sm.ign.com/t/ign_br/photo/default/starfield-ps5pro-gameplay-br-1775149156492_hh7b.640.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Starfield no PS5: vale a pena dar uma chance ao polêmico RPG dois anos depois?</h2>
+<p>
 Novos conteúdos e o fim das limitações técnicas transformam o título da Bethesda. Veja o que esperar dessa nova fase do game no X...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:47.340624-03:00"></small>
-            </div>
-        </a>
-        <a href="./materia/2891df89-5ca3-4555-b271-d6e48a2444e1.html" class="noticia-card" data-categoria="Direita_Oeste">
-            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/israel-cristo-reproducao-x.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Soldado israelense que depredou imagem de Jesus vai ficar um mês preso</h2>
-                <p>
+<small class="timeago" datetime="2026-04-21T16:11:47.340624-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Direita_Oeste" href="./materia/2891df89-5ca3-4555-b271-d6e48a2444e1.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/israel-cristo-reproducao-x.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Soldado israelense que depredou imagem de Jesus vai ficar um mês preso</h2>
+<p>
 
 As Forças de Defesa de Israel (FDI) concluíram o inquérito que investigava a conduta de um soldado que aparece em vídeo danifica...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:48.318032-03:00"></small>
-            </div>
-        </a>
-        <a href="./materia/b96c5684-3126-454c-9d1b-41009a0c8dd0.html" class="noticia-card" data-categoria="Direita_Oeste">
-            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/jornal-da-oeste-21-de-abril-.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Jornal da Oeste, Segunda Edição: assista ao noticiário de 21/4/2026</h2>
-                <p>
+<small class="timeago" datetime="2026-04-21T16:11:48.318032-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Direita_Oeste" href="./materia/b96c5684-3126-454c-9d1b-41009a0c8dd0.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/jornal-da-oeste-21-de-abril-.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Jornal da Oeste, Segunda Edição: assista ao noticiário de 21/4/2026</h2>
+<p>
 
 O Jornal da Oeste, Segunda Edição integra a grade de programação audiovisual da Revista Oeste e vai ao ar de segunda a sexta-fei...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:49.883337-03:00"></small>
-            </div>
-        </a>
-        <a href="./materia/4b9b9a12-734a-47d2-b1cf-4725ff25036e.html" class="noticia-card" data-categoria="Direita_Oeste">
-            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2025/01/mca_abr_numero_de_serie_de_4_digitos_090620_1.webp" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Deputado apresenta proposta para barrar comitê LGBT do Ministério da Saúde</h2>
-                <p>
+<small class="timeago" datetime="2026-04-21T16:11:49.883337-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Direita_Oeste" href="./materia/4b9b9a12-734a-47d2-b1cf-4725ff25036e.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'" src="https://medias.revistaoeste.com/wp-content/uploads/2025/01/mca_abr_numero_de_serie_de_4_digitos_090620_1.webp"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Deputado apresenta proposta para barrar comitê LGBT do Ministério da Saúde</h2>
+<p>
 
 O deputado federal Diego Garcia (Republicanos-PR) apresentou na Câmara um projeto de decreto legislativo para barrar um comitê s...</p>
-                <small class="timeago" datetime="2026-04-21T16:11:51.448601-03:00"></small>
-            </div>
-        </a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/436fe91c-ce97-422b-a5e1-2f2828074365.html">
+<small class="timeago" datetime="2026-04-21T16:11:51.448601-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/436fe91c-ce97-422b-a5e1-2f2828074365.html">
 <div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'" src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/19c3/live/256a6470-3d7a-11f1-bfda-3be022b870c2.jpg"/></div>
 <div class="noticia-body">
 <span class="sentiment-tag bg-neutro">Neutro</span>
@@ -295,166 +452,7 @@ Um adolescente de 13 anos foi atropelado por um carro ao tenta...</p>
 The post .NET and .NET Framework April 2026 se...</p>
 <small class="timeago" datetime="2026-04-21T14:01:43.412078-03:00"></small>
 </div>
-</a><a class="noticia-card" data-categoria="Games_IGN" href="./materia/e38b5461-bec7-4f55-a5f7-0ed7b2bb8bcb.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'" src="https://sm.ign.com/t/ign_br/news/m/microsoft-/microsoft-drops-price-of-xbox-game-pass-ultimate_by6v.640.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Microsoft anuncia redução no preço do Xbox Game Pass Ultimate e mudança na disponibilidade de games da franquia Call of Duty</h2>
-<p>PC Game Pass também terá preço menor
-A Microsoft reduziu o preço do Xbox Game Pass Ultimate de R$ 119,90 para R$ 76,90 por mês, en...</p>
-<small class="timeago" datetime="2026-04-21T14:01:40.903469-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Games_IGN" href="./materia/7f602dc2-74f8-4fbf-8156-53d4dbf9acac.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'" src="https://sm.ign.com/t/ign_br/photo/default/nintendoswitch2-pragmata-screenshot-3-1771360017548_b1q8.640.png"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>"Sei muito sobre a maldita Lua": ator de Pragmata ficou com tanto medo de quebrar embargo do jogo que evitou publicar qualquer foto relacionada ao espaço (até da Missão Artemis 2)</h2>
-<p>Ator de Hugh ficou com medo de levar bronca da Capcom
-Fazer parte de um dos jogos mais esperados do ano pode ser uma tarefa difíci...</p>
-<small class="timeago" datetime="2026-04-21T14:01:42.508449-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Games_IGN" href="./materia/237d04af-ca33-4db3-948d-49824ea67242.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'" src="https://sm.ign.com/t/ign_br/news/s/skyrim-mod/skyrim-mod-goes-viral_gdj9.640.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Novo mod de Skyrim cria método inusitado para matar dragões: na base da discussão de geopolítica (e memes)</h2>
-<p>Criaturas inteligentes...
-Existem centenas de maneiras de lutar contra dragões em Skyrim, mas você já tentou enfrentá-los na base ...</p>
-<small class="timeago" datetime="2026-04-21T14:01:44.105634-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Direita_Oeste" href="./materia/70318c23-f85d-4e60-8791-dfaed18d0209.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800'" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/faroeste-dia-21-de-abril-.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Faroeste à Brasileira: assista ao programa de 21/4/2026</h2>
-<p>
-
-O programa Faroeste à Brasileira vai ao ar de segunda a sexta-feira, das 14h às 16h, com apresentação de Gustavo Segré e comentá...</p>
-<small class="timeago" datetime="2026-04-21T14:01:45.388200-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Direita_Oeste" href="./materia/1c57d533-7a00-423b-a0ea-4b65f641a7af.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/pzzb9082.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Ex-número 2 do Planejamento terá quarentena remunerada por 6 meses</h2>
-<p>
-
-A Comissão de Ética Pública (CEP) determinou que o ex-secretário-executivo do Ministério do Planejamento e Orçamento, Gustavo Gu...</p>
-<small class="timeago" datetime="2026-04-21T14:01:46.994615-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Direita_Oeste" href="./materia/834cfd76-895c-469e-93ea-d60e1fba030d.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800'" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/petroleiro-ira.jpeg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>EUA interceptam petroleiro associado ao Irã</h2>
-<p>
-
-Forças dos Estados Unidos abordaram um petroleiro associado ao Irã na região do Indo-Pacífico, em mais um movimento de pressão s...</p>
-<small class="timeago" datetime="2026-04-21T14:01:48.601495-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/40439549-c25c-4f86-850a-e7f68b8abb18.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=800'" src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/19c3/live/256a6470-3d7a-11f1-bfda-3be022b870c2.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Lula ameaça adotar 'reciprocidade' após EUA pedirem saída de delegado da PF envolvido em caso Ramagem</h2>
-<p>Lula disse ter sido informado sobre o caso na manhã desta terça-feira (21/4) e criticou a postura das autoridades americanas...</p>
-<small class="timeago" datetime="2026-04-21T12:12:57.393240-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/d351a6d8-d1be-44f9-beca-2e8e8d6f684e.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'" src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/8bf4/live/c6fb9440-3d6a-11f1-bb8a-374117ea6afa.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Quem é o delegado da PF alvo de ordem do governo Trump para deixar os EUA</h2>
-<p>A medida veio após sua atuação na detenção do ex-deputado federal Alexandre Ramagem (PL-RJ), na semana passada, em território amer...</p>
-<small class="timeago" datetime="2026-04-21T12:12:58.957477-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/66f0856e-3668-47ee-9e3b-6dbaf07e92ba.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'" src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/f73a/live/bb9467a0-3cd2-11f1-9d5c-8ba507d7dbde.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Livro revela como o papa Francisco atuou para fazer de Leão 14 seu sucessor</h2>
-<p>Correspondente em Roma do jornal argentino La Nación há mais de vinte anos e uma das mais respeitadas vaticanistas do mundo, Elisa...</p>
-<small class="timeago" datetime="2026-04-21T12:13:00.517496-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Geral_G1" href="./materia/ec49ce0a-bbeb-4d69-9bf1-2b035f227c6d.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'" src="https://s2-g1.glbimg.com/lWxljYxW2Fvy7-R7navgTRUlryE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/1/Z/5lVKuRSAGLQR6JsTkfGw/whatsapp-image-2026-04-21-at-11.59.20.jpeg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Mulher ferida em explosão na Via Dutra é transferida em estado grave no RJ</h2>
-<p>     Mulher ferida em explosão na Via Dutra é transferida em estado grave no RJ
-Reprodução/Redes Sociais
-Júlia De Lara Prado, de 2...</p>
-<small class="timeago" datetime="2026-04-21T12:12:58.178332-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Geral_G1" href="./materia/a0a9fe02-015e-417a-814b-19e7d38f77d6.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800'" src="https://s2-g1.glbimg.com/DbLT6qjV0HOe8Wp34uHVHdLzBlM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/D/n/VJy5S8Q3ivS4vuPLyJbg/whatsapp-image-2026-04-21-at-08.58.31.jpeg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Corpo em decomposição é encontrado na rodovia Mogi-Salesópolis</h2>
-<p>     Corpo foi encontrado as margens da rodovia Mogi-Salesópolis
-Divulgação / PM
-Um corpo em estado avançado de decomposição foi e...</p>
-<small class="timeago" datetime="2026-04-21T12:12:59.742368-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Geral_G1" href="./materia/407022e9-24c8-4920-afbf-58672d808c09.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'" src="https://s2-g1.glbimg.com/Xhx5wL9LkIE7cs9854o6HD5SF6w=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/h/v/S0Qr7uRrubhgtB4cpugA/confusao.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Confusão generalizada é registrada na Orla da Atalaia em Aracaju</h2>
-<p>     Confusão generalizada é registrada na Orla da Atalaia em Aracaju
-Uma confusão generalizada foi registrada na madrugada desta ...</p>
-<small class="timeago" datetime="2026-04-21T12:13:01.303373-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Hardware_Adrenaline" href="./materia/f3810fb6-0535-48c9-b87d-088c1d994130.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/50-dragonwilds-update-de-pesca-640x400.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Runescape: Dragonwilds receba nova atualização com pescaria e mais missões</h2>
-<p>Pacote também traz melhorias de qualidade de vida para melhorar a experiência dos jogadores....</p>
-<small class="timeago" datetime="2026-04-21T12:12:57.522305-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Hardware_Adrenaline" href="./materia/04b9824b-f947-4eac-9175-2b4fb1bb9a84.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800'" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/pragmata-pssr-2-ps5-pro-update-02-640x400.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Pragmata recebe otimização para PSSR 2 no PS5 Pro em novo update</h2>
-<p>Game já usava recurso pelo ajuste do PS5 Pro, mas agora otimização é direta...</p>
-<small class="timeago" datetime="2026-04-21T12:12:59.105410-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Hardware_Adrenaline" href="./materia/e2a45743-4e66-443b-8f75-146de6732bca.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800'" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Fallout-Bethesda-Remaster-New-Vegas-640x400.jpeg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Bethesda não tem o conhecimento para remasterizar Fallout: New Vegas</h2>
-<p>Chris Avellone afirma que somente a Obsidian tem o conhecimento necessário para trabalhar em Fallout: New Vegas....</p>
-<small class="timeago" datetime="2026-04-21T12:13:00.657279-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="C#_MS_Blog" href="./materia/d36c72f6-c72f-49f9-826e-3cc97150f9c5.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'" src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Writing Node.js addons with .NET Native AOT</h2>
-<p>The C# Dev Kit team replaced C++ Node.js addons with C# and Native AOT, removing a dependency on Python. This post walks through b...</p>
-<small class="timeago" datetime="2026-04-21T12:12:57.329998-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="C#_MS_Blog" href="./materia/a6dc33ff-e518-481a-998c-f9184e10581c.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'" src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Pin Clustering in .NET MAUI Maps</h2>
-<p>.NET MAUI 11 adds pin clustering to the Map control, automatically grouping nearby pins into cluster markers. Learn how to enable ...</p>
-<small class="timeago" datetime="2026-04-21T12:12:58.905613-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="C#_MS_Blog" href="./materia/26a70b11-1c88-4267-be30-9dc179b83fa8.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'" src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>.NET and .NET Framework April 2026 servicing releases updates</h2>
-<p>A recap of the latest servicing updates for .NET and .NET Framework for April 2026.
-The post .NET and .NET Framework April 2026 se...</p>
-<small class="timeago" datetime="2026-04-21T12:13:00.491755-03:00"></small>
-</div>
-</a></div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'><div class="historico-item"><b>Mundo_BBC</b>: Lula ameaça adotar &#x27;reciprocidade&#x27; após EUA pedirem saída de delegado da PF envolvido em caso Ramagem</div><div class="historico-item"><b>Mundo_BBC</b>: Caso Ramagem: Quem é o delegado da PF alvo de ordem do governo Trump para deixar os EUA</div><div class="historico-item"><b>Mundo_BBC</b>: Como a Terra mudou em 58 anos: o que revelam as fotos icônicas das missões Apollo 8 e Artemis 2</div><div class="historico-item"><b>Geral_G1</b>: Criança de 2 anos é levada ao quartel dos bombeiros com ralo preso no dedo em MG</div><div class="historico-item"><b>Geral_G1</b>: Dez PMs do Bope viram réus por invasão de casas e uso irregular de câmeras em operação na Maré</div><div class="historico-item"><b>Geral_G1</b>: Homem é investigado suspeito de matar os próprios irmãos e tentar matar a mãe no interior do AM</div><div class="historico-item"><b>Hardware_Adrenaline</b>: 7 jogos sairão do catálogo da PS Plus em maio: veja quais!</div><div class="historico-item"><b>Hardware_Adrenaline</b>: MSI lança nova versão do mouse VERSA 300 com polling de 8.000Hz</div><div class="historico-item"><b>Hardware_Adrenaline</b>: T248R e T598: conheça os dois volantes da Thrustmaster que vão transformar a diversão nos seus jogos de corrida</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET 10.0.7 Out-of-Band Security Update</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div><div class="historico-item"><b>C#_MS_Blog</b>: Pin Clustering in .NET MAUI Maps</div><div class="historico-item"><b>Games_IGN</b>: Já sabíamos que Star Wars: A Ascensão Skywalker foi feito às pressas e agora Oscar Isaac confirma que uma das frases mais enigmáticas do filme veio durante as refilmagens</div><div class="historico-item"><b>Games_IGN</b>: Smart TV Philips de 50 polegadas entra em oferta no Mercado Livre com cupom de R$ 200 OFF</div><div class="historico-item"><b>Games_IGN</b>: Starfield no PS5: vale a pena dar uma chance ao polêmico RPG dois anos depois?</div><div class="historico-item"><b>Direita_Oeste</b>: Soldado israelense que depredou imagem de Jesus vai ficar um mês preso</div><div class="historico-item"><b>Direita_Oeste</b>: Jornal da Oeste, Segunda Edição: assista ao noticiário de 21/4/2026</div><div class="historico-item"><b>Direita_Oeste</b>: Deputado apresenta proposta para barrar comitê LGBT do Ministério da Saúde</div><div class="historico-item"><b>Mundo_BBC</b>: Lula ameaça adotar 'reciprocidade' após EUA pedirem saída de delegado da PF envolvido em caso Ramagem</div><div class="historico-item"><b>Mundo_BBC</b>: Caso Ramagem: Quem é o delegado da PF alvo de ordem do governo Trump para deixar os EUA</div><div class="historico-item"><b>Mundo_BBC</b>: Novo 'O Diabo Veste Prada' é uma versão 'água com açúcar' do original?</div><div class="historico-item"><b>Geral_G1</b>: Auxiliar de cozinha é preso por matar motociclista a tiros em Boa Vista</div><div class="historico-item"><b>Geral_G1</b>: Corpo de acreana que morreu após cirurgia no pâncreas deve chegar em Rio Branco na quinta-feira (23)</div><div class="historico-item"><b>Geral_G1</b>: Adolescente é atropelado ao tentar atravessar a rua em Palmas; VÍDEO</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Microsoft reduz preços do Game Pass Ultimate e da versão para PC no Brasil</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Jogador profissional de Counter-Strike 2 é banido após agredir adversário</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Wild Gunman: jogo arcade raro da Nintendo é restaurado por YouTuber</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div><div class="historico-item"><b>C#_MS_Blog</b>: Pin Clustering in .NET MAUI Maps</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET and .NET Framework April 2026 servicing releases updates</div><div class="historico-item"><b>Games_IGN</b>: Microsoft anuncia redução no preço do Xbox Game Pass Ultimate e mudança na disponibilidade de games da franquia Call of Duty</div><div class="historico-item"><b>Games_IGN</b>: "Sei muito sobre a maldita Lua": ator de Pragmata ficou com tanto medo de quebrar embargo do jogo que evitou publicar qualquer foto relacionada ao espaço (até da Missão Artemis 2)</div><div class="historico-item"><b>Games_IGN</b>: Novo mod de Skyrim cria método inusitado para matar dragões: na base da discussão de geopolítica (e memes)</div><div class="historico-item"><b>Direita_Oeste</b>: Faroeste à Brasileira: assista ao programa de 21/4/2026</div><div class="historico-item"><b>Direita_Oeste</b>: Ex-número 2 do Planejamento terá quarentena remunerada por 6 meses</div><div class="historico-item"><b>Direita_Oeste</b>: EUA interceptam petroleiro associado ao Irã</div><div class="historico-item"><b>Mundo_BBC</b>: Lula ameaça adotar 'reciprocidade' após EUA pedirem saída de delegado da PF envolvido em caso Ramagem</div><div class="historico-item"><b>Mundo_BBC</b>: Quem é o delegado da PF alvo de ordem do governo Trump para deixar os EUA</div><div class="historico-item"><b>Mundo_BBC</b>: Livro revela como o papa Francisco atuou para fazer de Leão 14 seu sucessor</div><div class="historico-item"><b>Geral_G1</b>: Mulher ferida em explosão na Via Dutra é transferida em estado grave no RJ</div><div class="historico-item"><b>Geral_G1</b>: Corpo em decomposição é encontrado na rodovia Mogi-Salesópolis</div><div class="historico-item"><b>Geral_G1</b>: Confusão generalizada é registrada na Orla da Atalaia em Aracaju</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Runescape: Dragonwilds receba nova atualização com pescaria e mais missões</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Pragmata recebe otimização para PSSR 2 no PS5 Pro em novo update</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Bethesda não tem o conhecimento para remasterizar Fallout: New Vegas</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div><div class="historico-item"><b>C#_MS_Blog</b>: Pin Clustering in .NET MAUI Maps</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET and .NET Framework April 2026 servicing releases updates</div></div></div></div>
+</a></div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'><div class="historico-item"><b>Mundo_BBC</b>: O &#x27;Super El Niño&#x27; está chegando?</div><div class="historico-item"><b>Mundo_BBC</b>: Lula ameaça adotar &#x27;reciprocidade&#x27; após EUA pedirem saída de delegado da PF envolvido em caso Ramagem</div><div class="historico-item"><b>Mundo_BBC</b>: Caso Ramagem: Quem é o delegado da PF alvo de ordem do governo Trump para deixar os EUA</div><div class="historico-item"><b>Geral_G1</b>: Bandidos usam ônibus como barricada durante operação para prender foragido em Caxias, no RJ</div><div class="historico-item"><b>Geral_G1</b>: Engavetamento entre carros interdita trecho da Serra das Araras, em Piraí</div><div class="historico-item"><b>Geral_G1</b>: Despedida de militar morto com disparo acidental é marcada por emoção em São Cristóvão</div><div class="historico-item"><b>Hardware_Adrenaline</b>: 7 jogos sairão do catálogo da PS Plus em maio: veja quais!</div><div class="historico-item"><b>Hardware_Adrenaline</b>: MSI lança nova versão do mouse VERSA 300 com polling de 8.000Hz</div><div class="historico-item"><b>Hardware_Adrenaline</b>: T248R e T598: conheça os dois volantes da Thrustmaster que vão transformar a diversão nos seus jogos de corrida</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET 10.0.7 Out-of-Band Security Update</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div><div class="historico-item"><b>C#_MS_Blog</b>: Pin Clustering in .NET MAUI Maps</div><div class="historico-item"><b>Games_IGN</b>: PlayStation 5 de Ghost of Yōtei com R$ 100 OFF por tempo limitado</div><div class="historico-item"><b>Games_IGN</b>: Já sabíamos que Star Wars: A Ascensão Skywalker foi feito às pressas e agora Oscar Isaac confirma que uma das frases mais enigmáticas do filme veio durante as refilmagens</div><div class="historico-item"><b>Games_IGN</b>: Smart TV Philips de 50 polegadas entra em oferta no Mercado Livre com cupom de R$ 200 OFF</div><div class="historico-item"><b>Direita_Oeste</b>: Trump estende cessar-fogo com o Irã a pedido do Paquistão</div><div class="historico-item"><b>Direita_Oeste</b>: Oeste Sem Filtro: assista ao programa de 21/4/2026</div><div class="historico-item"><b>Direita_Oeste</b>: Nasa identifica novos compostos orgânicos em Marte</div><div class="historico-item"><b>Mundo_BBC</b>: Lula ameaça adotar 'reciprocidade' após EUA pedirem saída de delegado da PF envolvido em caso Ramagem</div><div class="historico-item"><b>Mundo_BBC</b>: Caso Ramagem: Quem é o delegado da PF alvo de ordem do governo Trump para deixar os EUA</div><div class="historico-item"><b>Mundo_BBC</b>: Como a Terra mudou em 58 anos: o que revelam as fotos icônicas das missões Apollo 8 e Artemis 2</div><div class="historico-item"><b>Geral_G1</b>: Criança de 2 anos é levada ao quartel dos bombeiros com ralo preso no dedo em MG</div><div class="historico-item"><b>Geral_G1</b>: Dez PMs do Bope viram réus por invasão de casas e uso irregular de câmeras em operação na Maré</div><div class="historico-item"><b>Geral_G1</b>: Homem é investigado suspeito de matar os próprios irmãos e tentar matar a mãe no interior do AM</div><div class="historico-item"><b>Hardware_Adrenaline</b>: 7 jogos sairão do catálogo da PS Plus em maio: veja quais!</div><div class="historico-item"><b>Hardware_Adrenaline</b>: MSI lança nova versão do mouse VERSA 300 com polling de 8.000Hz</div><div class="historico-item"><b>Hardware_Adrenaline</b>: T248R e T598: conheça os dois volantes da Thrustmaster que vão transformar a diversão nos seus jogos de corrida</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET 10.0.7 Out-of-Band Security Update</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div><div class="historico-item"><b>C#_MS_Blog</b>: Pin Clustering in .NET MAUI Maps</div><div class="historico-item"><b>Games_IGN</b>: Já sabíamos que Star Wars: A Ascensão Skywalker foi feito às pressas e agora Oscar Isaac confirma que uma das frases mais enigmáticas do filme veio durante as refilmagens</div><div class="historico-item"><b>Games_IGN</b>: Smart TV Philips de 50 polegadas entra em oferta no Mercado Livre com cupom de R$ 200 OFF</div><div class="historico-item"><b>Games_IGN</b>: Starfield no PS5: vale a pena dar uma chance ao polêmico RPG dois anos depois?</div><div class="historico-item"><b>Direita_Oeste</b>: Soldado israelense que depredou imagem de Jesus vai ficar um mês preso</div><div class="historico-item"><b>Direita_Oeste</b>: Jornal da Oeste, Segunda Edição: assista ao noticiário de 21/4/2026</div><div class="historico-item"><b>Direita_Oeste</b>: Deputado apresenta proposta para barrar comitê LGBT do Ministério da Saúde</div><div class="historico-item"><b>Mundo_BBC</b>: Lula ameaça adotar 'reciprocidade' após EUA pedirem saída de delegado da PF envolvido em caso Ramagem</div><div class="historico-item"><b>Mundo_BBC</b>: Caso Ramagem: Quem é o delegado da PF alvo de ordem do governo Trump para deixar os EUA</div><div class="historico-item"><b>Mundo_BBC</b>: Novo 'O Diabo Veste Prada' é uma versão 'água com açúcar' do original?</div><div class="historico-item"><b>Geral_G1</b>: Auxiliar de cozinha é preso por matar motociclista a tiros em Boa Vista</div><div class="historico-item"><b>Geral_G1</b>: Corpo de acreana que morreu após cirurgia no pâncreas deve chegar em Rio Branco na quinta-feira (23)</div><div class="historico-item"><b>Geral_G1</b>: Adolescente é atropelado ao tentar atravessar a rua em Palmas; VÍDEO</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Microsoft reduz preços do Game Pass Ultimate e da versão para PC no Brasil</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Jogador profissional de Counter-Strike 2 é banido após agredir adversário</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Wild Gunman: jogo arcade raro da Nintendo é restaurado por YouTuber</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div><div class="historico-item"><b>C#_MS_Blog</b>: Pin Clustering in .NET MAUI Maps</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET and .NET Framework April 2026 servicing releases updates</div></div></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/2.0.2/timeago.min.js"></script>
 <script>
     async function carregarClima(cidadeManual = null) {
