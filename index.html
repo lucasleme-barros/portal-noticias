@@ -19,182 +19,340 @@
     @media (max-width: 900px) { .main-wrapper { flex-direction: column; } .content-area { grid-template-columns: 1fr; } .sidebar { border-left: none; padding-left: 0; } }
 </style>
 </head><body><header><div class='weather-widget' id='weather-display' onclick='alterarCidade(event)'>⏳</div><h1>Portal IA News</h1></header><div class="filter-container"><div class="filter-group"><button class="filter-btn active" onclick="filtrarNoticias('todas', this)">🏠 Todas</button><button class="filter-btn" onclick="filtrarNoticias('Esquerda', this)">Esquerda</button><button class="filter-btn" onclick="filtrarNoticias('Centro', this)">Centro</button><button class="filter-btn" onclick="filtrarNoticias('Direita', this)">Direita</button></div><div class="filter-group"><button class="filter-btn" onclick="filtrarNoticias('Hardware', this)">Hardware</button><button class="filter-btn" onclick="filtrarNoticias('Games', this)">Games</button><button class="filter-btn" onclick="filtrarNoticias('C#', this)">C#</button><button class="filter-btn" onclick="filtrarNoticias('Tech', this)">Tech</button><button class="filter-btn" onclick="filtrarNoticias('Mundo', this)">Mundo</button></div></div><div class='main-wrapper'><div class='content-area'>
-        <a href="./materia/05703060-5dad-4069-9964-bbe806aa91a8.html" class="noticia-card" data-categoria="Mundo_BBC">
-            <div class="img-container"><img src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/7c5c/live/426d7f90-3d01-11f1-9d5c-8ba507d7dbde.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'"></div>
+        <a href="./materia/effc3e75-2ae0-46e7-b3ce-c4134fe2efd6.html" class="noticia-card" data-categoria="Mundo_BBC">
+            <div class="img-container"><img src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/7c5c/live/426d7f90-3d01-11f1-9d5c-8ba507d7dbde.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>Governo Trump manda delegado da PF que ajudou ICE a prender Ramagem deixar os EUA</h2>
                 <p>Em nota, Escritório de Assuntos do Hemisfério Ocidental dos EUA não cita o nome de Marcelo Ivo de Carvalho, mas classifica sua atu...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:08.804183-03:00"></small>
+                <small class="timeago" datetime="2026-04-20T23:34:28.937733-03:00"></small>
             </div>
         </a>
-        <a href="./materia/8f8f081b-9754-4268-b280-81ece77f7d6c.html" class="noticia-card" data-categoria="Mundo_BBC">
-            <div class="img-container"><img src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/1d8c/live/85077ab0-3cf5-11f1-8633-a9194cd26ecf.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Ataque a tiros em pirâmides do México deixa turista morta e várias pessoas feridas</h2>
-                <p>Presidente Claudia Sheinbaum, anunciou uma investigação federal sobre o ataque; atirador tirou a própria vida após os disparos, se...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:10.363264-03:00"></small>
-            </div>
-        </a>
-        <a href="./materia/f8ffcf7c-0cc5-4bc7-ab01-32d3762ab20d.html" class="noticia-card" data-categoria="Mundo_BBC">
-            <div class="img-container"><img src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/d2ed/live/7b63b010-0743-11f1-b5e2-dd58fc65f0f6.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'"></div>
+        <a href="./materia/f63e3fe1-c20f-4e83-a7e3-df4ef51d7ba4.html" class="noticia-card" data-categoria="Mundo_BBC">
+            <div class="img-container"><img src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/d2ed/live/7b63b010-0743-11f1-b5e2-dd58fc65f0f6.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>&#x27;Minha avó mutilou minha filha às escondidas com apenas 6 meses&#x27;: o ciclo da mutilação genital que mulheres colombianas lutam para encerrar</h2>
                 <p>A Colômbia é o único país da América Latina onde ainda se registram casos de mutilação genital feminina....</p>
-                <small class="timeago" datetime="2026-04-20T20:42:11.920427-03:00"></small>
+                <small class="timeago" datetime="2026-04-20T23:34:30.639813-03:00"></small>
             </div>
         </a>
-        <a href="./materia/d1688a1e-7769-460b-be2c-72f2399996c1.html" class="noticia-card" data-categoria="Geral_G1">
-            <div class="img-container"><img src="https://s2-g1.glbimg.com/cv3Z4cC_ioUa-I89gOvZkZ-w8q0=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/k/e/HZbvZHQQeBpXlCIwgcJw/videoframe-6594386.png" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800'"></div>
+        <a href="./materia/8e7d6196-a6c2-4196-9ef6-2ae42900d2e2.html" class="noticia-card" data-categoria="Mundo_BBC">
+            <div class="img-container"><img src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/1d8c/live/85077ab0-3cf5-11f1-8633-a9194cd26ecf.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Novos vídeos mostram suspeitos em outra abordagem na Rodovia dos Imigrantes, perto de onde GCM foi morta</h2>
-                <p>     Novos vídeos de câmeras de segurança mostram suspeitos em outra abordagem perto de local onde guarda civil foi morta
-Novos ví...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:09.516205-03:00"></small>
+                <h2>Ataque a tiros em pirâmides do México deixa turista morta e várias pessoas feridas</h2>
+                <p>Presidente Claudia Sheinbaum, anunciou uma investigação federal sobre o ataque; atirador tirou a própria vida após os disparos, se...</p>
+                <small class="timeago" datetime="2026-04-20T23:34:32.244698-03:00"></small>
             </div>
         </a>
-        <a href="./materia/a3688815-e6b3-40c0-80bc-0958bea2be97.html" class="noticia-card" data-categoria="Geral_G1">
-            <div class="img-container"><img src="https://s2-g1.glbimg.com/BT_-dFFV5Hi0lgWqb3-5pq_NWPE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/g/y/n0rLgJSEWYjO0paMqzYg/copia-de-edicao-imagens-g1-19-.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800'"></div>
+        <a href="./materia/de3a5f7b-1c4a-4fc4-82e0-851bdfa56ac9.html" class="noticia-card" data-categoria="Geral_G1">
+            <div class="img-container"><img src="https://s2-g1.glbimg.com/a7jlWwqdwKk-VKtiUehUBv8XorM=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/0/V/JjNXVyRI6DEPaGLsvB1g/sem-titulo.png" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Suspeito de estuprar e engravidar menina de 12 anos é preso quase 10 anos após crime no PI</h2>
-                <p>     Suspeito de estuprar e engravidar menina de 12 anos é preso quase 10 anos após crime no PI
-Divulgação/Polícia Civil
-Um homem,...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:11.074370-03:00"></small>
+                <h2>Governo e prefeitura lançam ação emergencial após temporal que afetou 42 mil em Belém</h2>
+                <p>     Prefeitura de Belém decreta situação de emergência por causa da chuva do fim de semana
+Cerca de 42 mil pessoas foram afetadas...</p>
+                <small class="timeago" datetime="2026-04-20T23:34:30.172757-03:00"></small>
             </div>
         </a>
-        <a href="./materia/c7beca97-0f8c-44d5-a649-6007143188d2.html" class="noticia-card" data-categoria="Geral_G1">
-            <div class="img-container"><img src="https://s2-g1.glbimg.com/OK1hYjE_Yg5j7hcKtVBIGzLtQaY=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/6/K/fVUiRAQMSK6DQRvZZBbA/caminhonete-atropela-.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800'"></div>
+        <a href="./materia/23a17b49-bc72-4803-bdb2-0a0ecfa42c96.html" class="noticia-card" data-categoria="Geral_G1">
+            <div class="img-container"><img src="https://s2-g1.glbimg.com/VyBF8--UjEh0-Tf6LKMjgb96G9Y=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/K/l/MB9ZJzQfmK0fuo2aSUrw/de1a7df0-0604-11f1-b5e2-dd58fc65f0f6.jpg.webp" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Caminhonete invade praça, atropela 4 clientes de quiosque e mata mulher que lanchava com o marido no RJ; vídeo</h2>
-                <p>     Vídeo: caminhonete invade praça e atropela 4 clientes de quiosque; mulher morre
-Uma mulher morreu e outras três pessoas ficar...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:12.634032-03:00"></small>
+                <h2>BRB anuncia acordo com gestora de fundos para vender R$ 15 bilhões em ativos ligados ao Banco Master</h2>
+                <p>     Sede do Banco BRB
+Getty Images via BBC
+O Banco de Brasília (BRB) informou nesta segunda-feira (20) que assinou um memorando d...</p>
+                <small class="timeago" datetime="2026-04-20T23:34:31.749576-03:00"></small>
             </div>
         </a>
-        <a href="./materia/1f00a18e-ec17-49ab-9e1d-42dd5afacab3.html" class="noticia-card" data-categoria="Hardware_Adrenaline">
+        <a href="./materia/acc94d02-8b15-4eba-88b8-9e69f3cee745.html" class="noticia-card" data-categoria="Geral_G1">
+            <div class="img-container"><img src="https://s2-g1.glbimg.com/o6CPy_KmyXWcSvyWClpGw-vEyLo=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/A/I/3GqZx4TyaQ6Omt2wPczQ/f793628a-dc1c-4b8f-a784-0ed55a355f49.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'"></div>
+            <div class="noticia-body">
+                <span class="sentiment-tag bg-neutro">Neutro</span>
+                <h2>Estudante suspeito de fazer delivery de drogas é preso ao tentar fugir de blitz e jogar moto contra policiais</h2>
+                <p>     Estudante suspeito de fazer delivery de drogas é preso ao tentar fugir de blitz e jogar moto contra policiais
+PMMG/Divulgação...</p>
+                <small class="timeago" datetime="2026-04-20T23:34:33.328977-03:00"></small>
+            </div>
+        </a>
+        <a href="./materia/5ed324bd-26f1-4344-a8ae-2f51d921d2f1.html" class="noticia-card" data-categoria="Hardware_Adrenaline">
+            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/msi-lanca-monitores-qd-oled-de-32″-que-eliminam-tom-roxo-e-melhoram-pretos-em-40-cover-640x400.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'"></div>
+            <div class="noticia-body">
+                <span class="sentiment-tag bg-neutro">Neutro</span>
+                <h2>MSI lança monitores QD-OLED de 32″ que eliminam tom roxo e melhoram pretos em 40%</h2>
+                <p>Veja as especificações atualizadas dos monitores gamer MSI MPG 322UR e MAG 321UP QD-OLED X24 com painel Tandem OLED de 5 camadas!...</p>
+                <small class="timeago" datetime="2026-04-20T23:34:28.875174-03:00"></small>
+            </div>
+        </a>
+        <a href="./materia/9f6aed32-4ba7-4676-84ed-78eb0d31000f.html" class="noticia-card" data-categoria="Hardware_Adrenaline">
+            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/homem-e-condenado-a-prisao-no-japao-por-postar-spoilers-de-filmes-e-series-cover-640x400.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800'"></div>
+            <div class="noticia-body">
+                <span class="sentiment-tag bg-neutro">Neutro</span>
+                <h2>Homem é condenado à prisão no Japão por postar spoilers de filmes e séries</h2>
+                <p>Tribunal do Japão condena administrador de site de spoilers a prisão por violação de direitos autorais em Godzilla Minus One e Ove...</p>
+                <small class="timeago" datetime="2026-04-20T23:34:30.482878-03:00"></small>
+            </div>
+        </a>
+        <a href="./materia/0b989832-14df-4b95-9bb5-390bc59257ca.html" class="noticia-card" data-categoria="Hardware_Adrenaline">
             <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/dan-mac-reynolds-640x400.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>EXCLUSIVO | Conversamos com Dan Reynolds, um dos criadores do game Last Flag</h2>
                 <p>Nesta entrevista exclusiva com Dan Reynolds, mergulhamos nos bastidores da criação e na filosofia &quot;diversão em primeiro lugar&quot; de ...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:08.702594-03:00"></small>
+                <small class="timeago" datetime="2026-04-20T23:34:32.133616-03:00"></small>
             </div>
         </a>
-        <a href="./materia/56696592-de4f-46ed-b833-5cfd6a2a0163.html" class="noticia-card" data-categoria="Hardware_Adrenaline">
-            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/quanto-tempo-leva-para-zerar-pragmata-cover-640x400.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800'"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Quanto tempo leva para zerar Pragmata?</h2>
-                <p>Veja quanto tempo dura a campanha de Pragmata, como acessar o modo Sinal Desconhecido e o que é necessário para ver o final real!...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:10.271748-03:00"></small>
-            </div>
-        </a>
-        <a href="./materia/b9a94bd0-9461-4604-95a8-9d58adc01d84.html" class="noticia-card" data-categoria="Hardware_Adrenaline">
-            <div class="img-container"><img src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Playnix-PC-Compacto-Steam-Machine-640x400.jpeg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Playnix lança PC compacto que pode antecipar o preço da Steam Machine</h2>
-                <p>O Playnix promete comodidade, mas o preço salgado deve afastar a maioria dos consumidores....</p>
-                <small class="timeago" datetime="2026-04-20T20:42:11.831332-03:00"></small>
-            </div>
-        </a>
-        <a href="./materia/79c1b2ac-e79b-49a0-b03f-046ff4e397b1.html" class="noticia-card" data-categoria="C#_MS_Blog">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'"></div>
+        <a href="./materia/bed419d8-d16c-408d-a702-77bad33b4227.html" class="noticia-card" data-categoria="C#_MS_Blog">
+            <div class="img-container"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>Writing Node.js addons with .NET Native AOT</h2>
                 <p>The C# Dev Kit team replaced C++ Node.js addons with C# and Native AOT, removing a dependency on Python. This post walks through b...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:08.511930-03:00"></small>
+                <small class="timeago" datetime="2026-04-20T23:34:28.723793-03:00"></small>
             </div>
         </a>
-        <a href="./materia/dc22c122-e21d-4dc3-ab22-80b77c7fa9dc.html" class="noticia-card" data-categoria="C#_MS_Blog">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'"></div>
+        <a href="./materia/0d226768-1db7-4585-8a94-fce09bf16a72.html" class="noticia-card" data-categoria="C#_MS_Blog">
+            <div class="img-container"><img src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>Pin Clustering in .NET MAUI Maps</h2>
                 <p>.NET MAUI 11 adds pin clustering to the Map control, automatically grouping nearby pins into cluster markers. Learn how to enable ...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:10.072892-03:00"></small>
+                <small class="timeago" datetime="2026-04-20T23:34:30.373684-03:00"></small>
             </div>
         </a>
-        <a href="./materia/89235fdc-ad76-40e9-9917-02d943128149.html" class="noticia-card" data-categoria="C#_MS_Blog">
-            <div class="img-container"><img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'"></div>
+        <a href="./materia/862dd1f7-f7ef-4a23-b855-cb1bf47560db.html" class="noticia-card" data-categoria="C#_MS_Blog">
+            <div class="img-container"><img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>.NET and .NET Framework April 2026 servicing releases updates</h2>
                 <p>A recap of the latest servicing updates for .NET and .NET Framework for April 2026.
 The post .NET and .NET Framework April 2026 se...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:11.635120-03:00"></small>
+                <small class="timeago" datetime="2026-04-20T23:34:31.956033-03:00"></small>
             </div>
         </a>
-        <a href="./materia/8285b8f7-745c-4f7a-9da1-043d48a909ed.html" class="noticia-card" data-categoria="Games_IGN">
-            <div class="img-container"><img src="https://sm.ign.com/t/ign_br/news/u/ubisoft-fi/ubisoft-finally-confirms-assassins-creed-black-flag-resynced_qzea.640.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'"></div>
+        <a href="./materia/f0c962c4-00a6-49c3-8d82-830f9464ba86.html" class="noticia-card" data-categoria="Games_IGN">
+            <div class="img-container"><img src="https://sm.ign.com/t/ign_br/news/u/ubisoft-fi/ubisoft-finally-confirms-assassins-creed-black-flag-resynced_qzea.640.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>Assassin’s Creed: Black Flag Resynced terá showcase dedicado a novos detalhes do game nesta quarta-feira (23)</h2>
                 <p>Showcase será transmitido pelo YouTube e Twitch da Ubisoft
 A Ubisoft anunciou que fará um showcase dedicado a Assassin&#x27;s Creed Bla...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:09.257548-03:00"></small>
+                <small class="timeago" datetime="2026-04-20T23:34:29.801406-03:00"></small>
             </div>
         </a>
-        <a href="./materia/7f2703d7-c08e-4458-a66d-66aa21ea97be.html" class="noticia-card" data-categoria="Games_IGN">
-            <div class="img-container"><img src="https://sm.ign.com/t/ign_br/screenshot/default/blob_g8fs.640.png" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'"></div>
+        <a href="./materia/70963498-28e3-43cc-8ec5-47e1b9207799.html" class="noticia-card" data-categoria="Games_IGN">
+            <div class="img-container"><img src="https://sm.ign.com/t/ign_br/screenshot/default/blob_g8fs.640.png" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>Counter-Strike: FURIA não vence nos playoffs e Vitality é campeã do IEM Rio 2026</h2>
                 <p>
 Equipe francesa se torna a única bicampeã do ESL Grand Slam...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:10.816824-03:00"></small>
+                <small class="timeago" datetime="2026-04-20T23:34:31.378818-03:00"></small>
             </div>
         </a>
-        <a href="./materia/c6223b07-87ce-49df-bbd7-b8d614ba7253.html" class="noticia-card" data-categoria="Games_IGN">
-            <div class="img-container"><img src="https://sm.ign.com/t/ign_br/screenshot/default/blob_6ghe.640.png" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'"></div>
+        <a href="./materia/4853fbb7-94b4-4980-87db-c7f9ee35cc50.html" class="noticia-card" data-categoria="Games_IGN">
+            <div class="img-container"><img src="https://sm.ign.com/t/ign_br/screenshot/default/blob_6ghe.640.png" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
                 <h2>“Parecia sem sentido que ela estivesse ausente neste capítulo final”: Olivia Colman será substituída em Heartstopper Forever</h2>
                 <p>
 Confira os atores que estarão presentes no capítulo final da obra...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:12.373383-03:00"></small>
+                <small class="timeago" datetime="2026-04-20T23:34:32.952643-03:00"></small>
             </div>
         </a>
-        <a href="./materia/fcbfcbeb-80d4-494a-a4ed-1e95c2f00bea.html" class="noticia-card" data-categoria="Direita_Oeste">
-            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/a-constituicao-e-a-liberdade-20-de-abril.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'"></div>
+        <a href="./materia/807dca14-cffd-4724-9732-d27ee20d2812.html" class="noticia-card" data-categoria="Direita_Oeste">
+            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/tim-cook-apple.jpeg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800'"></div>
             <div class="noticia-body">
                 <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>A Constituição e a Liberdade: assista ao programa de 20/4/2026</h2>
+                <h2>Apple anuncia John Ternus como futuro CEO</h2>
                 <p>
+
+A Apple anunciou que o CEO Tim Cook, de 65 anos, deixará o comando executivo da companhia em 1º de setembro de 2026. Segundo a e...</p>
+                <small class="timeago" datetime="2026-04-20T23:34:33.903675-03:00"></small>
+            </div>
+        </a>
+        <a href="./materia/5eb9feeb-fe25-4a38-8aab-6e3ab622e858.html" class="noticia-card" data-categoria="Direita_Oeste">
+            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/delegado-da-pf-e-expulso-dos-eua.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=800'"></div>
+            <div class="noticia-body">
+                <span class="sentiment-tag bg-neutro">Neutro</span>
+                <h2>EUA pedem que delegado da PF envolvido na prisão de Ramagem deixe o país</h2>
+                <p>
+
+O delegado da Polícia Federal (PF) Marcelo Ivo de Carvalho, que atuou na prisão do ex-deputado federal Alexandre Ramagem, foi ex...</p>
+                <small class="timeago" datetime="2026-04-20T23:34:35.485722-03:00"></small>
+            </div>
+        </a>
+        <a href="./materia/ee4392f4-a7dc-4dc4-b359-1948651897b6.html" class="noticia-card" data-categoria="Direita_Oeste">
+            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-21-at-21.38.20.jpeg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'"></div>
+            <div class="noticia-body">
+                <span class="sentiment-tag bg-neutro">Neutro</span>
+                <h2>Bia Kicis faz visita e diz que Filipe Martins está sereno</h2>
+                <p>
+
+A deputada federal Bia Kicis (PL-DF) fez uma visita neste domingo, 19, a Filipe Martins, na Cadeia Pública de Ponta Grossa (PR)....</p>
+                <small class="timeago" datetime="2026-04-20T23:34:37.075802-03:00"></small>
+            </div>
+        </a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/05703060-5dad-4069-9964-bbe806aa91a8.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'" src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/7c5c/live/426d7f90-3d01-11f1-9d5c-8ba507d7dbde.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Governo Trump manda delegado da PF que ajudou ICE a prender Ramagem deixar os EUA</h2>
+<p>Em nota, Escritório de Assuntos do Hemisfério Ocidental dos EUA não cita o nome de Marcelo Ivo de Carvalho, mas classifica sua atu...</p>
+<small class="timeago" datetime="2026-04-20T20:42:08.804183-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/8f8f081b-9754-4268-b280-81ece77f7d6c.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'" src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/1d8c/live/85077ab0-3cf5-11f1-8633-a9194cd26ecf.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Ataque a tiros em pirâmides do México deixa turista morta e várias pessoas feridas</h2>
+<p>Presidente Claudia Sheinbaum, anunciou uma investigação federal sobre o ataque; atirador tirou a própria vida após os disparos, se...</p>
+<small class="timeago" datetime="2026-04-20T20:42:10.363264-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/f8ffcf7c-0cc5-4bc7-ab01-32d3762ab20d.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'" src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/d2ed/live/7b63b010-0743-11f1-b5e2-dd58fc65f0f6.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>'Minha avó mutilou minha filha às escondidas com apenas 6 meses': o ciclo da mutilação genital que mulheres colombianas lutam para encerrar</h2>
+<p>A Colômbia é o único país da América Latina onde ainda se registram casos de mutilação genital feminina....</p>
+<small class="timeago" datetime="2026-04-20T20:42:11.920427-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Geral_G1" href="./materia/d1688a1e-7769-460b-be2c-72f2399996c1.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800'" src="https://s2-g1.glbimg.com/cv3Z4cC_ioUa-I89gOvZkZ-w8q0=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/k/e/HZbvZHQQeBpXlCIwgcJw/videoframe-6594386.png"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Novos vídeos mostram suspeitos em outra abordagem na Rodovia dos Imigrantes, perto de onde GCM foi morta</h2>
+<p>     Novos vídeos de câmeras de segurança mostram suspeitos em outra abordagem perto de local onde guarda civil foi morta
+Novos ví...</p>
+<small class="timeago" datetime="2026-04-20T20:42:09.516205-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Geral_G1" href="./materia/a3688815-e6b3-40c0-80bc-0958bea2be97.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800'" src="https://s2-g1.glbimg.com/BT_-dFFV5Hi0lgWqb3-5pq_NWPE=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/g/y/n0rLgJSEWYjO0paMqzYg/copia-de-edicao-imagens-g1-19-.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Suspeito de estuprar e engravidar menina de 12 anos é preso quase 10 anos após crime no PI</h2>
+<p>     Suspeito de estuprar e engravidar menina de 12 anos é preso quase 10 anos após crime no PI
+Divulgação/Polícia Civil
+Um homem,...</p>
+<small class="timeago" datetime="2026-04-20T20:42:11.074370-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Geral_G1" href="./materia/c7beca97-0f8c-44d5-a649-6007143188d2.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800'" src="https://s2-g1.glbimg.com/OK1hYjE_Yg5j7hcKtVBIGzLtQaY=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/6/K/fVUiRAQMSK6DQRvZZBbA/caminhonete-atropela-.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Caminhonete invade praça, atropela 4 clientes de quiosque e mata mulher que lanchava com o marido no RJ; vídeo</h2>
+<p>     Vídeo: caminhonete invade praça e atropela 4 clientes de quiosque; mulher morre
+Uma mulher morreu e outras três pessoas ficar...</p>
+<small class="timeago" datetime="2026-04-20T20:42:12.634032-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Hardware_Adrenaline" href="./materia/1f00a18e-ec17-49ab-9e1d-42dd5afacab3.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/dan-mac-reynolds-640x400.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>EXCLUSIVO | Conversamos com Dan Reynolds, um dos criadores do game Last Flag</h2>
+<p>Nesta entrevista exclusiva com Dan Reynolds, mergulhamos nos bastidores da criação e na filosofia "diversão em primeiro lugar" de ...</p>
+<small class="timeago" datetime="2026-04-20T20:42:08.702594-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Hardware_Adrenaline" href="./materia/56696592-de4f-46ed-b833-5cfd6a2a0163.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800'" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/quanto-tempo-leva-para-zerar-pragmata-cover-640x400.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Quanto tempo leva para zerar Pragmata?</h2>
+<p>Veja quanto tempo dura a campanha de Pragmata, como acessar o modo Sinal Desconhecido e o que é necessário para ver o final real!...</p>
+<small class="timeago" datetime="2026-04-20T20:42:10.271748-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Hardware_Adrenaline" href="./materia/b9a94bd0-9461-4604-95a8-9d58adc01d84.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800'" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Playnix-PC-Compacto-Steam-Machine-640x400.jpeg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Playnix lança PC compacto que pode antecipar o preço da Steam Machine</h2>
+<p>O Playnix promete comodidade, mas o preço salgado deve afastar a maioria dos consumidores....</p>
+<small class="timeago" datetime="2026-04-20T20:42:11.831332-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="C#_MS_Blog" href="./materia/79c1b2ac-e79b-49a0-b03f-046ff4e397b1.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Writing Node.js addons with .NET Native AOT</h2>
+<p>The C# Dev Kit team replaced C++ Node.js addons with C# and Native AOT, removing a dependency on Python. This post walks through b...</p>
+<small class="timeago" datetime="2026-04-20T20:42:08.511930-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="C#_MS_Blog" href="./materia/dc22c122-e21d-4dc3-ab22-80b77c7fa9dc.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'" src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Pin Clustering in .NET MAUI Maps</h2>
+<p>.NET MAUI 11 adds pin clustering to the Map control, automatically grouping nearby pins into cluster markers. Learn how to enable ...</p>
+<small class="timeago" datetime="2026-04-20T20:42:10.072892-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="C#_MS_Blog" href="./materia/89235fdc-ad76-40e9-9917-02d943128149.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'" src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>.NET and .NET Framework April 2026 servicing releases updates</h2>
+<p>A recap of the latest servicing updates for .NET and .NET Framework for April 2026.
+The post .NET and .NET Framework April 2026 se...</p>
+<small class="timeago" datetime="2026-04-20T20:42:11.635120-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Games_IGN" href="./materia/8285b8f7-745c-4f7a-9da1-043d48a909ed.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'" src="https://sm.ign.com/t/ign_br/news/u/ubisoft-fi/ubisoft-finally-confirms-assassins-creed-black-flag-resynced_qzea.640.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Assassin’s Creed: Black Flag Resynced terá showcase dedicado a novos detalhes do game nesta quarta-feira (23)</h2>
+<p>Showcase será transmitido pelo YouTube e Twitch da Ubisoft
+A Ubisoft anunciou que fará um showcase dedicado a Assassin's Creed Bla...</p>
+<small class="timeago" datetime="2026-04-20T20:42:09.257548-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Games_IGN" href="./materia/7f2703d7-c08e-4458-a66d-66aa21ea97be.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'" src="https://sm.ign.com/t/ign_br/screenshot/default/blob_g8fs.640.png"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Counter-Strike: FURIA não vence nos playoffs e Vitality é campeã do IEM Rio 2026</h2>
+<p>
+Equipe francesa se torna a única bicampeã do ESL Grand Slam...</p>
+<small class="timeago" datetime="2026-04-20T20:42:10.816824-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Games_IGN" href="./materia/c6223b07-87ce-49df-bbd7-b8d614ba7253.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'" src="https://sm.ign.com/t/ign_br/screenshot/default/blob_6ghe.640.png"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>“Parecia sem sentido que ela estivesse ausente neste capítulo final”: Olivia Colman será substituída em Heartstopper Forever</h2>
+<p>
+Confira os atores que estarão presentes no capítulo final da obra...</p>
+<small class="timeago" datetime="2026-04-20T20:42:12.373383-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Direita_Oeste" href="./materia/fcbfcbeb-80d4-494a-a4ed-1e95c2f00bea.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/a-constituicao-e-a-liberdade-20-de-abril.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>A Constituição e a Liberdade: assista ao programa de 20/4/2026</h2>
+<p>
 
 O programa A Constituição e a Liberdade integra a programação audiovisual da Revista Oeste. Sob comando de Luciano I. de Castro,...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:15.539143-03:00"></small>
-            </div>
-        </a>
-        <a href="./materia/56be1a74-7d0d-4878-a6e2-51f16cff9ef7.html" class="noticia-card" data-categoria="Direita_Oeste">
-            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/janja-na-espanha.jpeg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Janja diz que falta de regulação das redes sociais ‘leva à morte de mulheres’</h2>
-                <p>
+<small class="timeago" datetime="2026-04-20T20:42:15.539143-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Direita_Oeste" href="./materia/56be1a74-7d0d-4878-a6e2-51f16cff9ef7.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/janja-na-espanha.jpeg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Janja diz que falta de regulação das redes sociais ‘leva à morte de mulheres’</h2>
+<p>
 
 A primeira-dama Janja da Silva afirmou que a suposta ausência de controle sobre redes sociais e big techs contribui para a morte...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:17.103441-03:00"></small>
-            </div>
-        </a>
-        <a href="./materia/b6f2c619-d2b7-4a83-a79b-48d3c25cae8b.html" class="noticia-card" data-categoria="Direita_Oeste">
-            <div class="img-container"><img src="https://medias.revistaoeste.com/wp-content/uploads/2025/02/Erika-Hilton.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800'"></div>
-            <div class="noticia-body">
-                <span class="sentiment-tag bg-neutro">Neutro</span>
-                <h2>Com manobra de Motta, CCJ da Câmara vota PEC da Escala 6×1</h2>
-                <p>
+<small class="timeago" datetime="2026-04-20T20:42:17.103441-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Direita_Oeste" href="./materia/b6f2c619-d2b7-4a83-a79b-48d3c25cae8b.html">
+<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800'" src="https://medias.revistaoeste.com/wp-content/uploads/2025/02/Erika-Hilton.jpg"/></div>
+<div class="noticia-body">
+<span class="sentiment-tag bg-neutro">Neutro</span>
+<h2>Com manobra de Motta, CCJ da Câmara vota PEC da Escala 6×1</h2>
+<p>
 
 A Comissão de Constituição e Justiça (CCJ) da Câmara analisa nesta quarta-feira, 22, a Proposta de Emenda à Constituição (PEC) d...</p>
-                <small class="timeago" datetime="2026-04-20T20:42:18.663579-03:00"></small>
-            </div>
-        </a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/9dcad140-0306-42bf-96dd-00d08b880704.html">
+<small class="timeago" datetime="2026-04-20T20:42:18.663579-03:00"></small>
+</div>
+</a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/9dcad140-0306-42bf-96dd-00d08b880704.html">
 <div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'" src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/7c5c/live/426d7f90-3d01-11f1-9d5c-8ba507d7dbde.jpg"/></div>
 <div class="noticia-body">
 <span class="sentiment-tag bg-neutro">Neutro</span>
@@ -293,165 +451,7 @@ O governador em exercício ...</p>
 The post .NET and .NET Framework April 2026 se...</p>
 <small class="timeago" datetime="2026-04-20T19:42:56.103304-03:00"></small>
 </div>
-</a><a class="noticia-card" data-categoria="Games_IGN" href="./materia/7c8a05c5-20d7-4f51-b4a2-8780c3227d2b.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'" src="https://sm.ign.com/t/ign_br/news/u/ubisoft-fi/ubisoft-finally-confirms-assassins-creed-black-flag-resynced_qzea.640.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Assassin’s Creed: Black Flag Resynced terá showcase dedicado a novos detalhes do game nesta quarta-feira (23)</h2>
-<p>Showcase será transmitido pelo YouTube e Twitch da Ubisoft
-A Ubisoft anunciou que fará um showcase dedicado a Assassin's Creed Bla...</p>
-<small class="timeago" datetime="2026-04-20T19:42:54.302535-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Games_IGN" href="./materia/19fe04b8-d29d-4487-9d8f-5f87d340c5cc.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800'" src="https://sm.ign.com/t/ign_br/screenshot/default/blob_g8fs.640.png"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Counter-Strike: FURIA não vence nos playoffs e Vitality é campeã do IEM Rio 2026</h2>
-<p>
-Equipe francesa se torna a única bicampeã do ESL Grand Slam...</p>
-<small class="timeago" datetime="2026-04-20T19:42:55.906189-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Games_IGN" href="./materia/b0c569ff-fb57-422e-9f22-faea28d2404d.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'" src="https://sm.ign.com/t/ign_br/screenshot/default/blob_6ghe.640.png"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>“Parecia sem sentido que ela estivesse ausente neste capítulo final”: Olivia Colman será substituída em Heartstopper Forever</h2>
-<p>
-Confira os atores que estarão presentes no capítulo final da obra...</p>
-<small class="timeago" datetime="2026-04-20T19:42:57.500488-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Direita_Oeste" href="./materia/71364657-4621-4321-a571-acded88052e1.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/a-forca-do-agro-dia-17-de-abril-1930.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>A Força do Agro #723: assista ao programa de 20/4/2026</h2>
-<p>
-
-O programa A Força do Agro vai ao ar, de segunda a sexta-feira, a partir das 19h50. A jornalista Joice Maffezzolli é a apresenta...</p>
-<small class="timeago" datetime="2026-04-20T19:42:58.231008-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Direita_Oeste" href="./materia/a95d4279-58de-4138-983c-4aacc4e55bdb.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800'" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/pint4570.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Inmet prevê chuvas intensas em três regiões do país</h2>
-<p>
-
-O Instituto Nacional de Meteorologia (Inmet) divulgou nesta segunda-feira, 20, a previsão do tempo até o dia 27 de abril. O rela...</p>
-<small class="timeago" datetime="2026-04-20T19:42:59.826238-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Direita_Oeste" href="./materia/e750f2c0-1a1e-4198-b25a-599257ccbdd6.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800'" src="https://medias.revistaoeste.com/wp-content/uploads/2026/04/seu-jorge-capa.jpeg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Justiça reabre disputa sobre autoria de músicas de Seu Jorge</h2>
-<p>
-
-A Justiça do Rio de Janeiro reabriu uma disputa judicial que se arrasta há quase 25 anos sobre a autoria de músicas gravadas por...</p>
-<small class="timeago" datetime="2026-04-20T19:43:01.426263-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/a29d4678-db0b-4e30-8859-d476c8e5a272.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800'" src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/d2ed/live/7b63b010-0743-11f1-b5e2-dd58fc65f0f6.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>'Minha avó mutilou minha filha às escondidas com apenas 6 meses': o ciclo da mutilação genital que mulheres colombianas lutam para encerrar</h2>
-<p>Colombia es el único país de América Latina donde todavía se registra la ablación genital femenina....</p>
-<small class="timeago" datetime="2026-04-20T18:46:31.403209-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/ac43a118-90cb-4e3d-bf1b-751997a0d64e.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'" src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/685f/live/7500bcc0-3cf6-11f1-a60f-41d0a7fcc620.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Por que guerra no Irã virou um teste de resistência - e de tempo</h2>
-<p>Após escalada das tensões no fim de semana, com o fechamento novamente do Estreito de Ormuz e a captura de um navio iraniano pelos...</p>
-<small class="timeago" datetime="2026-04-20T18:46:32.969926-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Mundo_BBC" href="./materia/8b2a8dfd-907e-45a4-8714-779d3c0593f3.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800'" src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/4b64/live/dddf5620-3abc-11f1-8606-05fe34b06e1b.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Guerra assimétrica: a estratégia do Irã no confronto com os EUA</h2>
-<p>Logo após os ataques dos Estados Unidos e de Israel, Teerã decidiu bloquear a passagem pelo Estreito de Ormuz, uma tática que se a...</p>
-<small class="timeago" datetime="2026-04-20T18:46:34.532973-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Geral_G1" href="./materia/05387b14-9fa6-4499-b8b5-ce07d2f68fb1.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'" src="https://s2-g1.glbimg.com/tStvMd60hrdhfCWongtfKkaqR9M=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/6/Y/BT6hpGSziyNOhACaAecQ/whatsapp-image-2026-04-20-at-17.28.07.jpeg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Suspeitos de tráfico de drogas são presos com mais de 23 kg de skunk na estrada entre Parintins e Juruti</h2>
-<p>     Drogas apreendidas pela Polícia Militar em Juruti
-Polícia Civil/Divulgação
-Uma ação integrada de inteligência resultou na apr...</p>
-<small class="timeago" datetime="2026-04-20T18:46:33.097116-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Geral_G1" href="./materia/e4fe4d1a-34ff-46a7-a96c-78acf5efb536.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>EUA mandam delegado brasileiro envolvido na prisão de Ramagem deixar o país</h2>
-<p>Os Estados Unidos mandaram um delegado brasileiro envolvido na prisão do ex-deputado Alexandre Ramagem (PL-RJ) deixar o país. A me...</p>
-<small class="timeago" datetime="2026-04-20T18:46:34.746472-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Geral_G1" href="./materia/e196ba52-650a-4480-bb43-9379785eb1b6.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'" src="https://s2-g1.glbimg.com/7QIzfWIQe81RwoPKU8BEVuWtAlI=/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2026/j/8/mGfBh0TnCeAQmGBO7iog/apple-john-ternus.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Quem é John Ternus, sucessor de Tim Cook no comando da Apple</h2>
-<p>     John Ternus assumirá como novo CEO da Apple
-Divulgação/Apple
-A Apple anunciou nesta segunda-feira (20) que Tim Cook deixará o...</p>
-<small class="timeago" datetime="2026-04-20T18:46:36.315993-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Hardware_Adrenaline" href="./materia/52f35ef4-866b-437d-9ce3-a9c6e837caff.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'" src="https://www.adrenaline.com.br/wp-content/uploads/2026/04/Playnix-PC-Compacto-Steam-Machine-640x400.jpeg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Playnix lança PC compacto que pode antecipar o preço da Steam Machine</h2>
-<p>O Playnix promete comodidade, mas o preço salgado deve afastar a maioria dos consumidores....</p>
-<small class="timeago" datetime="2026-04-20T18:46:31.562032-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Hardware_Adrenaline" href="./materia/80b07182-8ab2-4976-8968-eb14f63bf7c7.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'" src="https://www.adrenaline.com.br/wp-content/uploads/2025/05/SNK-CEO-Vendas-Fatal-Fury-City-Wolves-640x400.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>PRÉVIA | Jogamos com Wolfgang Krauser em Fatal Fury: City of the Wolves</h2>
-<p>Personagem clássico de Fatal Fury é a quarta novidade da segunda temporada do game....</p>
-<small class="timeago" datetime="2026-04-20T18:46:33.181225-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="Hardware_Adrenaline" href="./materia/c7cf7748-3009-4b5a-aa97-880e2dfc8cb2.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'" src="https://www.adrenaline.com.br/wp-content/uploads/2025/12/Dead-Island-3-Confirmado-Previsao-Estreia-640x400.jpg"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Jogos de PlayStation por menos de R$ 40 – confira!</h2>
-<p>Veja a lista com os principais jogos para PS5 e PS4 em oferta na Promoção de Páscoa na PS Store, válida até 22 de abril...</p>
-<small class="timeago" datetime="2026-04-20T18:46:34.796099-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="C#_MS_Blog" href="./materia/45299177-cd92-432e-935b-b891381042d0.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800'" src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Writing Node.js addons with .NET Native AOT</h2>
-<p>The C# Dev Kit team replaced C++ Node.js addons with C# and Native AOT, removing a dependency on Python. This post walks through b...</p>
-<small class="timeago" datetime="2026-04-20T18:46:31.495790-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="C#_MS_Blog" href="./materia/3e09aab2-6dae-4c43-9fb0-d6616bc6ca01.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800'" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>Pin Clustering in .NET MAUI Maps</h2>
-<p>.NET MAUI 11 adds pin clustering to the Map control, automatically grouping nearby pins into cluster markers. Learn how to enable ...</p>
-<small class="timeago" datetime="2026-04-20T18:46:33.110751-03:00"></small>
-</div>
-</a><a class="noticia-card" data-categoria="C#_MS_Blog" href="./materia/a73a4489-cb5b-402f-88b4-91349c61860b.html">
-<div class="img-container"><img class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800'" src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800"/></div>
-<div class="noticia-body">
-<span class="sentiment-tag bg-neutro">Neutro</span>
-<h2>.NET and .NET Framework April 2026 servicing releases updates</h2>
-<p>A recap of the latest servicing updates for .NET and .NET Framework for April 2026.
-The post .NET and .NET Framework April 2026 se...</p>
-<small class="timeago" datetime="2026-04-20T18:46:34.787587-03:00"></small>
-</div>
-</a></div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'><div class="historico-item"><b>Mundo_BBC</b>: Governo Trump manda delegado da PF que ajudou ICE a prender Ramagem deixar os EUA</div><div class="historico-item"><b>Mundo_BBC</b>: Ataque a tiros em pirâmides do México deixa turista morta e várias pessoas feridas</div><div class="historico-item"><b>Mundo_BBC</b>: &#x27;Minha avó mutilou minha filha às escondidas com apenas 6 meses&#x27;: o ciclo da mutilação genital que mulheres colombianas lutam para encerrar</div><div class="historico-item"><b>Geral_G1</b>: Novos vídeos mostram suspeitos em outra abordagem na Rodovia dos Imigrantes, perto de onde GCM foi morta</div><div class="historico-item"><b>Geral_G1</b>: Suspeito de estuprar e engravidar menina de 12 anos é preso quase 10 anos após crime no PI</div><div class="historico-item"><b>Geral_G1</b>: Caminhonete invade praça, atropela 4 clientes de quiosque e mata mulher que lanchava com o marido no RJ; vídeo</div><div class="historico-item"><b>Hardware_Adrenaline</b>: EXCLUSIVO | Conversamos com Dan Reynolds, um dos criadores do game Last Flag</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Quanto tempo leva para zerar Pragmata?</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Playnix lança PC compacto que pode antecipar o preço da Steam Machine</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div><div class="historico-item"><b>C#_MS_Blog</b>: Pin Clustering in .NET MAUI Maps</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET and .NET Framework April 2026 servicing releases updates</div><div class="historico-item"><b>Games_IGN</b>: Assassin’s Creed: Black Flag Resynced terá showcase dedicado a novos detalhes do game nesta quarta-feira (23)</div><div class="historico-item"><b>Games_IGN</b>: Counter-Strike: FURIA não vence nos playoffs e Vitality é campeã do IEM Rio 2026</div><div class="historico-item"><b>Games_IGN</b>: “Parecia sem sentido que ela estivesse ausente neste capítulo final”: Olivia Colman será substituída em Heartstopper Forever</div><div class="historico-item"><b>Direita_Oeste</b>: A Constituição e a Liberdade: assista ao programa de 20/4/2026</div><div class="historico-item"><b>Direita_Oeste</b>: Janja diz que falta de regulação das redes sociais ‘leva à morte de mulheres’</div><div class="historico-item"><b>Direita_Oeste</b>: Com manobra de Motta, CCJ da Câmara vota PEC da Escala 6×1</div><div class="historico-item"><b>Mundo_BBC</b>: Governo Trump manda delegado da PF que ajudou ICE a prender Ramagem deixar os EUA</div><div class="historico-item"><b>Mundo_BBC</b>: 'Minha avó mutilou minha filha às escondidas com apenas 6 meses': o ciclo da mutilação genital que mulheres colombianas lutam para encerrar</div><div class="historico-item"><b>Mundo_BBC</b>: Por que guerra no Irã virou um teste de resistência - e de tempo</div><div class="historico-item"><b>Geral_G1</b>: Conta atrasada de água poderá ser paga aos poucos na fatura mensal após novas regras da Arsesp</div><div class="historico-item"><b>Geral_G1</b>: Couto bloqueia liberação de R$ 730 milhões para municípios aprovada no último dia da gestão Castro</div><div class="historico-item"><b>Geral_G1</b>: Assista ao JAP2 desta segunda (20)</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Quanto tempo leva para zerar Pragmata?</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Playnix lança PC compacto que pode antecipar o preço da Steam Machine</div><div class="historico-item"><b>Hardware_Adrenaline</b>: PRÉVIA | Jogamos com Wolfgang Krauser em Fatal Fury: City of the Wolves</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div><div class="historico-item"><b>C#_MS_Blog</b>: Pin Clustering in .NET MAUI Maps</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET and .NET Framework April 2026 servicing releases updates</div><div class="historico-item"><b>Games_IGN</b>: Assassin’s Creed: Black Flag Resynced terá showcase dedicado a novos detalhes do game nesta quarta-feira (23)</div><div class="historico-item"><b>Games_IGN</b>: Counter-Strike: FURIA não vence nos playoffs e Vitality é campeã do IEM Rio 2026</div><div class="historico-item"><b>Games_IGN</b>: “Parecia sem sentido que ela estivesse ausente neste capítulo final”: Olivia Colman será substituída em Heartstopper Forever</div><div class="historico-item"><b>Direita_Oeste</b>: A Força do Agro #723: assista ao programa de 20/4/2026</div><div class="historico-item"><b>Direita_Oeste</b>: Inmet prevê chuvas intensas em três regiões do país</div><div class="historico-item"><b>Direita_Oeste</b>: Justiça reabre disputa sobre autoria de músicas de Seu Jorge</div><div class="historico-item"><b>Mundo_BBC</b>: 'Minha avó mutilou minha filha às escondidas com apenas 6 meses': o ciclo da mutilação genital que mulheres colombianas lutam para encerrar</div><div class="historico-item"><b>Mundo_BBC</b>: Por que guerra no Irã virou um teste de resistência - e de tempo</div><div class="historico-item"><b>Mundo_BBC</b>: Guerra assimétrica: a estratégia do Irã no confronto com os EUA</div><div class="historico-item"><b>Geral_G1</b>: Suspeitos de tráfico de drogas são presos com mais de 23 kg de skunk na estrada entre Parintins e Juruti</div><div class="historico-item"><b>Geral_G1</b>: EUA mandam delegado brasileiro envolvido na prisão de Ramagem deixar o país</div><div class="historico-item"><b>Geral_G1</b>: Quem é John Ternus, sucessor de Tim Cook no comando da Apple</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Playnix lança PC compacto que pode antecipar o preço da Steam Machine</div><div class="historico-item"><b>Hardware_Adrenaline</b>: PRÉVIA | Jogamos com Wolfgang Krauser em Fatal Fury: City of the Wolves</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Jogos de PlayStation por menos de R$ 40 – confira!</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div><div class="historico-item"><b>C#_MS_Blog</b>: Pin Clustering in .NET MAUI Maps</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET and .NET Framework April 2026 servicing releases updates</div></div></div></div>
+</a></div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'><div class="historico-item"><b>Mundo_BBC</b>: Governo Trump manda delegado da PF que ajudou ICE a prender Ramagem deixar os EUA</div><div class="historico-item"><b>Mundo_BBC</b>: &#x27;Minha avó mutilou minha filha às escondidas com apenas 6 meses&#x27;: o ciclo da mutilação genital que mulheres colombianas lutam para encerrar</div><div class="historico-item"><b>Mundo_BBC</b>: Ataque a tiros em pirâmides do México deixa turista morta e várias pessoas feridas</div><div class="historico-item"><b>Geral_G1</b>: Governo e prefeitura lançam ação emergencial após temporal que afetou 42 mil em Belém</div><div class="historico-item"><b>Geral_G1</b>: BRB anuncia acordo com gestora de fundos para vender R$ 15 bilhões em ativos ligados ao Banco Master</div><div class="historico-item"><b>Geral_G1</b>: Estudante suspeito de fazer delivery de drogas é preso ao tentar fugir de blitz e jogar moto contra policiais</div><div class="historico-item"><b>Hardware_Adrenaline</b>: MSI lança monitores QD-OLED de 32″ que eliminam tom roxo e melhoram pretos em 40%</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Homem é condenado à prisão no Japão por postar spoilers de filmes e séries</div><div class="historico-item"><b>Hardware_Adrenaline</b>: EXCLUSIVO | Conversamos com Dan Reynolds, um dos criadores do game Last Flag</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div><div class="historico-item"><b>C#_MS_Blog</b>: Pin Clustering in .NET MAUI Maps</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET and .NET Framework April 2026 servicing releases updates</div><div class="historico-item"><b>Games_IGN</b>: Assassin’s Creed: Black Flag Resynced terá showcase dedicado a novos detalhes do game nesta quarta-feira (23)</div><div class="historico-item"><b>Games_IGN</b>: Counter-Strike: FURIA não vence nos playoffs e Vitality é campeã do IEM Rio 2026</div><div class="historico-item"><b>Games_IGN</b>: “Parecia sem sentido que ela estivesse ausente neste capítulo final”: Olivia Colman será substituída em Heartstopper Forever</div><div class="historico-item"><b>Direita_Oeste</b>: Apple anuncia John Ternus como futuro CEO</div><div class="historico-item"><b>Direita_Oeste</b>: EUA pedem que delegado da PF envolvido na prisão de Ramagem deixe o país</div><div class="historico-item"><b>Direita_Oeste</b>: Bia Kicis faz visita e diz que Filipe Martins está sereno</div><div class="historico-item"><b>Mundo_BBC</b>: Governo Trump manda delegado da PF que ajudou ICE a prender Ramagem deixar os EUA</div><div class="historico-item"><b>Mundo_BBC</b>: Ataque a tiros em pirâmides do México deixa turista morta e várias pessoas feridas</div><div class="historico-item"><b>Mundo_BBC</b>: 'Minha avó mutilou minha filha às escondidas com apenas 6 meses': o ciclo da mutilação genital que mulheres colombianas lutam para encerrar</div><div class="historico-item"><b>Geral_G1</b>: Novos vídeos mostram suspeitos em outra abordagem na Rodovia dos Imigrantes, perto de onde GCM foi morta</div><div class="historico-item"><b>Geral_G1</b>: Suspeito de estuprar e engravidar menina de 12 anos é preso quase 10 anos após crime no PI</div><div class="historico-item"><b>Geral_G1</b>: Caminhonete invade praça, atropela 4 clientes de quiosque e mata mulher que lanchava com o marido no RJ; vídeo</div><div class="historico-item"><b>Hardware_Adrenaline</b>: EXCLUSIVO | Conversamos com Dan Reynolds, um dos criadores do game Last Flag</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Quanto tempo leva para zerar Pragmata?</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Playnix lança PC compacto que pode antecipar o preço da Steam Machine</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div><div class="historico-item"><b>C#_MS_Blog</b>: Pin Clustering in .NET MAUI Maps</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET and .NET Framework April 2026 servicing releases updates</div><div class="historico-item"><b>Games_IGN</b>: Assassin’s Creed: Black Flag Resynced terá showcase dedicado a novos detalhes do game nesta quarta-feira (23)</div><div class="historico-item"><b>Games_IGN</b>: Counter-Strike: FURIA não vence nos playoffs e Vitality é campeã do IEM Rio 2026</div><div class="historico-item"><b>Games_IGN</b>: “Parecia sem sentido que ela estivesse ausente neste capítulo final”: Olivia Colman será substituída em Heartstopper Forever</div><div class="historico-item"><b>Direita_Oeste</b>: A Constituição e a Liberdade: assista ao programa de 20/4/2026</div><div class="historico-item"><b>Direita_Oeste</b>: Janja diz que falta de regulação das redes sociais ‘leva à morte de mulheres’</div><div class="historico-item"><b>Direita_Oeste</b>: Com manobra de Motta, CCJ da Câmara vota PEC da Escala 6×1</div><div class="historico-item"><b>Mundo_BBC</b>: Governo Trump manda delegado da PF que ajudou ICE a prender Ramagem deixar os EUA</div><div class="historico-item"><b>Mundo_BBC</b>: 'Minha avó mutilou minha filha às escondidas com apenas 6 meses': o ciclo da mutilação genital que mulheres colombianas lutam para encerrar</div><div class="historico-item"><b>Mundo_BBC</b>: Por que guerra no Irã virou um teste de resistência - e de tempo</div><div class="historico-item"><b>Geral_G1</b>: Conta atrasada de água poderá ser paga aos poucos na fatura mensal após novas regras da Arsesp</div><div class="historico-item"><b>Geral_G1</b>: Couto bloqueia liberação de R$ 730 milhões para municípios aprovada no último dia da gestão Castro</div><div class="historico-item"><b>Geral_G1</b>: Assista ao JAP2 desta segunda (20)</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Quanto tempo leva para zerar Pragmata?</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Playnix lança PC compacto que pode antecipar o preço da Steam Machine</div><div class="historico-item"><b>Hardware_Adrenaline</b>: PRÉVIA | Jogamos com Wolfgang Krauser em Fatal Fury: City of the Wolves</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div><div class="historico-item"><b>C#_MS_Blog</b>: Pin Clustering in .NET MAUI Maps</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET and .NET Framework April 2026 servicing releases updates</div></div></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/2.0.2/timeago.min.js"></script>
 <script>
     async function carregarClima(cidadeManual = null) {
