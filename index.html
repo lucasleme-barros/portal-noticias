@@ -1,24 +1,48 @@
-<!DOCTYPE html><html lang='pt-BR'><head><meta charset='UTF-8'><title>Portal IA News</title>
+<!DOCTYPE html><html lang='pt-BR'><head><script>(function(){var s=localStorage.getItem('theme');if(s==='dark')document.documentElement.setAttribute('data-theme','dark');})()</script><meta charset='UTF-8'><title>Portal IA News</title>
 <style>
-    body { font-family: 'Segoe UI', sans-serif; background: #fff; margin: 0; color: #333; }
-    header { background: #fff; padding: 25px; text-align: center; border-bottom: 1px solid #eee; position: relative; }
-    .weather-widget { position: absolute; top: 10px; right: 20px; font-size: 0.85em; color: #555; background: #f9f9f9; padding: 5px 12px; border-radius: 15px; border: 1px solid #eee; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-    .filter-container { padding: 10px; background: #fff; border-bottom: 1px solid #eee; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .filter-btn { background: none; border: none; padding: 5px 12px; margin: 2px; cursor: pointer; font-weight: bold; font-size: 0.75em; color: #d93025; text-transform: uppercase; transition: 0.3s; }
-    .filter-btn.active { background: #d93025; color: #fff; border-radius: 4px; }
-    .main-wrapper { max-width: 1300px; margin: 20px auto; padding: 0 20px; display: flex; gap: 30px; }
-    .content-area { flex: 3; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; align-content: start; }
-    .noticia-card { background: #fff; padding-bottom: 20px; cursor: pointer; transition: 0.3s; position: relative; border-bottom: 1px solid #f0f0f0; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
-    .sentiment-tag { font-size: 0.65em; font-weight: bold; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; margin-bottom: 8px; display: inline-block; color: #fff; width: fit-content; }
-    .bg-positivo { background: #28a745; } .bg-negativo { background: #dc3545; } .bg-neutro { background: #6c757d; }
-    .img-container { width: 100%; aspect-ratio: 16/9; background: #f8f8f8; border-radius: 8px; overflow: hidden; margin-bottom: 12px; border: 1px solid #eee; }
-    .noticia-img { width: 100%; height: 100%; object-fit: cover; }
-    .noticia-body h2 { margin: 0; font-size: 1.2em; line-height: 1.25; font-weight: 700; color: #111; }
-    .noticia-body p { font-size: 0.85em; color: #555; margin: 10px 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; }
-    .sidebar { flex: 1; border-left: 1px solid #eee; padding-left: 20px; max-width: 300px; }
-    @media (max-width: 900px) { .main-wrapper { flex-direction: column; } .content-area { grid-template-columns: 1fr; } .sidebar { border-left: none; padding-left: 0; } }
+:root{--bg:#f0f2f5;--card-bg:#fff;--text:#111827;--text-muted:#6b7280;--border:#e5e7eb;--accent:#e63946;--header-bg:rgba(255,255,255,0.95);--shadow:0 1px 8px rgba(0,0,0,0.07);--shadow-hover:0 8px 28px rgba(0,0,0,0.15)}
+[data-theme="dark"]{--bg:#0f172a;--card-bg:#1e293b;--text:#f1f5f9;--text-muted:#94a3b8;--border:#334155;--header-bg:rgba(15,23,42,0.95);--shadow:0 1px 8px rgba(0,0,0,0.3);--shadow-hover:0 8px 28px rgba(0,0,0,0.5)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);transition:background .3s,color .3s;min-height:100vh}
+header{background:var(--header-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:300;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 28px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{width:38px;height:38px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:1.2em;flex-shrink:0}
+.logo-text{font-size:1.25em;font-weight:800;color:var(--text);letter-spacing:-.5px}
+.logo-text em{color:var(--accent);font-style:normal}
+.header-right{display:flex;align-items:center;gap:12px}
+.weather-widget{font-size:.8em;color:var(--text-muted);background:var(--bg);padding:7px 14px;border-radius:20px;border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;gap:6px;transition:.2s;white-space:nowrap}
+.weather-widget:hover{border-color:var(--accent);color:var(--text)}
+.theme-btn{background:var(--bg);border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.1em;transition:.2s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.theme-btn:hover{border-color:var(--accent)}
+.filter-bar,.filter-container{background:var(--card-bg);border-bottom:1px solid var(--border);padding:10px 28px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;position:sticky;top:64px;z-index:200}
+.filter-group{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.filter-btn{background:transparent;border:1px solid var(--border);color:var(--text-muted);padding:5px 14px;border-radius:20px;cursor:pointer;font-size:.76em;font-weight:600;transition:.2s;white-space:nowrap}
+.filter-btn:hover{border-color:var(--accent);color:var(--accent)}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.main-wrapper{max-width:1440px;margin:24px auto;padding:0 24px;display:flex;gap:28px}
+.content-area{flex:1;min-width:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;align-content:start}
+.noticia-card{background:var(--card-bg);border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:transform .22s,box-shadow .22s}
+.noticia-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-hover)}
+.img-container{width:100%;aspect-ratio:16/9;overflow:hidden;background:var(--border);border:none;border-radius:0;margin:0}
+.noticia-img{width:100%;height:100%;object-fit:cover;transition:transform .35s;display:block}
+.noticia-card:hover .noticia-img{transform:scale(1.05)}
+.noticia-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.sentiment-tag{font-size:.63em;font-weight:700;text-transform:uppercase;padding:3px 8px;border-radius:4px;display:inline-block;color:#fff;width:fit-content;margin-bottom:2px}
+.bg-positivo{background:#16a34a}.bg-negativo{background:#dc2626}.bg-neutro{background:#6b7280}
+.noticia-body h2{font-size:1em;line-height:1.4;font-weight:700;color:var(--text);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.noticia-body p{font-size:.82em;color:var(--text-muted);line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+small.timeago{font-size:.74em;color:var(--text-muted);display:block;margin-top:6px}
+.sidebar{flex:0 0 270px}
+.sidebar-list,.sidebar-inner{background:var(--card-bg);border-radius:14px;border:1px solid var(--border);padding:16px;position:sticky;top:130px;max-height:calc(100vh - 150px);overflow-y:auto}
+.sidebar h3,.sidebar-list>h3{font-size:.78em;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-muted);margin-bottom:12px;padding-bottom:10px;border-bottom:2px solid var(--accent)}
+.historico-item{padding:9px 0;border-bottom:1px solid var(--border);font-size:.8em;line-height:1.4;color:var(--text-muted)}
+.historico-item:last-child{border-bottom:none}
+.historico-item b{font-size:.72em;font-weight:800;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:2px}
+@media(max-width:1200px){.sidebar{display:none}}
+@media(max-width:900px){.main-wrapper{padding:0 16px;margin:16px auto}.filter-bar,.filter-container,header{padding:8px 16px}}
+@media(max-width:600px){.content-area{grid-template-columns:1fr}.logo-text{display:none}}
 </style>
-</head><body><header><div class='weather-widget' id='weather-display' onclick='alterarCidade(event)'>⏳</div><h1>Portal IA News</h1></header><div class="filter-container"><div class="filter-group"><button class="filter-btn active" onclick="filtrarNoticias('todas', this)">🏠 Todas</button><button class="filter-btn" onclick="filtrarNoticias('Esquerda', this)">Esquerda</button><button class="filter-btn" onclick="filtrarNoticias('Centro', this)">Centro</button><button class="filter-btn" onclick="filtrarNoticias('Direita', this)">Direita</button></div><div class="filter-group"><button class="filter-btn" onclick="filtrarNoticias('Hardware', this)">Hardware</button><button class="filter-btn" onclick="filtrarNoticias('Games', this)">Games</button><button class="filter-btn" onclick="filtrarNoticias('C#', this)">C#</button><button class="filter-btn" onclick="filtrarNoticias('Tech', this)">Tech</button><button class="filter-btn" onclick="filtrarNoticias('Mundo', this)">Mundo</button></div></div><div class='main-wrapper'><div class='content-area'>
+</head><body><header><a class='logo' href='./'><div class='logo-icon'>N</div><span class='logo-text'>Portal <em>IA</em> News</span></a><div class='header-right'><div class='weather-widget' id='weather-display' onclick='alterarCidade(event)'>⏳ Carregando...</div><button type="button" class='theme-btn' id='theme-btn' onclick='toggleTheme()' title='Alternar tema'>🌙</button></div></header><div class="filter-bar"><button type="button" class="filter-btn active" onclick="filtrarNoticias('todas',this)">🏠 Todas</button><button type="button" class="filter-btn" onclick="filtrarNoticias('Esportes',this)">⚽ Esportes</button><button type="button" class="filter-btn" onclick="filtrarNoticias('Economia',this)">💰 Economia</button><button type="button" class="filter-btn" onclick="filtrarNoticias('Tech',this)">⚡ Tech</button><button type="button" class="filter-btn" onclick="filtrarNoticias('Games',this)">🎮 Games</button><button type="button" class="filter-btn" onclick="filtrarNoticias('Mundo',this)">🌍 Mundo</button><button type="button" class="filter-btn" onclick="filtrarNoticias('Cyber',this)">🔒 Cyber</button><button type="button" class="filter-btn" onclick="filtrarNoticias('Hardware',this)">🖥️ Hardware</button><button type="button" class="filter-btn" onclick="filtrarNoticias('Saude',this)">❤️ Saúde</button><button type="button" class="filter-btn" onclick="filtrarNoticias('Entret',this)">🎭 Entretenimento</button><button type="button" class="filter-btn" onclick="filtrarNoticias('C#',this)">💻 C#</button><button type="button" class="filter-btn" onclick="filtrarNoticias('Geral',this)">📰 Geral</button><button type="button" class="filter-btn" onclick="filtrarNoticias('Esquerda',this)">⬅ Esquerda</button><button type="button" class="filter-btn" onclick="filtrarNoticias('Centro',this)">⚖️ Centro</button><button type="button" class="filter-btn" onclick="filtrarNoticias('Direita',this)">➡ Direita</button></div><div class='main-wrapper'><div class='content-area'>
         <a href="./materia/c5a43601-2886-4ecd-b673-a9e3abd47358.html" class="noticia-card" data-categoria="Mundo_BBC">
             <div class="img-container"><img src="https://ichef.bbci.co.uk/ace/ws/240/cpsprodpb/6f31/live/22131f90-384a-11f1-acc5-135ce9d317ea.jpg" class="noticia-img" onerror="this.src='https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800'"></div>
             <div class="noticia-body">
@@ -456,34 +480,57 @@ The post .NET 10.0.7 Out-of-Band Securit...</p>
 </a></div><div class='sidebar'><h3>Histórico</h3><div class='sidebar-list'><div class="historico-item"><b>Mundo_BBC</b>: A caneta emagrecedora &#x27;pirata&#x27; que brasileiros se arriscam comprando no Paraguai: &#x27;Tenho mais medo da gordura&#x27;</div><div class="historico-item"><b>Mundo_BBC</b>: Trump diz que não estava preocupado durante ataque em jantar</div><div class="historico-item"><b>Mundo_BBC</b>: &#x27;Eu estava na sala com Trump e ouvi o som dos tiros&#x27;: o relato do correspondente da BBC que testemunhou ataque</div><div class="historico-item"><b>Geral_G1</b>: Jovem é preso por agredir ex-companheira em Três Rios</div><div class="historico-item"><b>Geral_G1</b>: Defesa Civil alerta que frente fria deve provocar queda nas temperaturas e trazer chuva para o Vale e região</div><div class="historico-item"><b>Geral_G1</b>: Vovô Cindo faz sucesso com venda de pão de milho no interior de SP após aprender receita na TV</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Jogos da Bandai Namco em oferta na Nuuvem; até 90% de desconto</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Processador russo-chinês Irtysh roda The Witcher 3, mas desempenho ainda decepciona</div><div class="historico-item"><b>Hardware_Adrenaline</b>: The Elder Scrolls VI: tudo que sabemos até agora sobre o game</div><div class="historico-item"><b>C#_MS_Blog</b>: What’s new for .NET in Ubuntu 26.04</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET 10.0.7 Out-of-Band Security Update</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div><div class="historico-item"><b>Games_IGN</b>: Quantos anos você tinha quando descobriu que os nomes de todos os protagonistas de Evangelion têm um significado militar?</div><div class="historico-item"><b>Games_IGN</b>: Aqueles que nasceram entre 1950 e 1970 têm uma vantagem psicológica sobre as outras gerações: estão entrando em seu &quot;auge&quot;</div><div class="historico-item"><b>Games_IGN</b>: A ciência afirma que jogar Pokémon na infância tem efeitos permanentes no cérebro</div><div class="historico-item"><b>Direita_Oeste</b>: Trem descarrila e afeta operação da Linha 9-Esmeralda em SP</div><div class="historico-item"><b>Direita_Oeste</b>: Casos de câncer de pâncreas avançam entre jovens, diz estudo</div><div class="historico-item"><b>Direita_Oeste</b>: Conselho ligado a ministério de Lula pede investigação contra Nikolas</div><div class="historico-item"><b>Mundo_BBC</b>: A caneta emagrecedora 'pirata' que brasileiros se arriscam comprando no Paraguai: 'Tenho mais medo da gordura'</div><div class="historico-item"><b>Mundo_BBC</b>: Quem é o suspeito de ataque em jantar com Trump</div><div class="historico-item"><b>Mundo_BBC</b>: Suspeito queria 'provavelmente' atingir Trump e integrantes do governo, afirma procurador-geral interino</div><div class="historico-item"><b>Geral_G1</b>: Assista aos telejornais da TV Liberal</div><div class="historico-item"><b>Geral_G1</b>: Como a bicicleta ajudou mulheres indianas a ler, escrever e ter uma vida melhor</div><div class="historico-item"><b>Geral_G1</b>: Dez linhas de ônibus de BH deixam de atender ponto da Avenida Cristiano Machado; saiba quais</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Jogos da Bandai Namco em oferta na Nuuvem; até 90% de desconto</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Processador russo-chinês Irtysh roda The Witcher 3, mas desempenho ainda decepciona</div><div class="historico-item"><b>Hardware_Adrenaline</b>: The Elder Scrolls VI: tudo que sabemos até agora sobre o game</div><div class="historico-item"><b>C#_MS_Blog</b>: What’s new for .NET in Ubuntu 26.04</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET 10.0.7 Out-of-Band Security Update</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div><div class="historico-item"><b>Games_IGN</b>: Quantos anos você tinha quando descobriu que os nomes de todos os protagonistas de Evangelion têm um significado militar?</div><div class="historico-item"><b>Games_IGN</b>: Aqueles que nasceram entre 1950 e 1970 têm uma vantagem psicológica sobre as outras gerações: estão entrando em seu "auge"</div><div class="historico-item"><b>Games_IGN</b>: A ciência afirma que jogar Pokémon na infância tem efeitos permanentes no cérebro</div><div class="historico-item"><b>Direita_Oeste</b>: ‘Pais virtuais’ viralizam na China e expõem desgaste familiar entre jovens</div><div class="historico-item"><b>Direita_Oeste</b>: Trump já destinou mais de R$ 100 bi a confronto com o Irã</div><div class="historico-item"><b>Direita_Oeste</b>: Trump cita segurança e defende salão na Casa Branca depois de tiroteio</div><div class="historico-item"><b>Mundo_BBC</b>: Quem é o suspeito de ataque em jantar com Trump</div><div class="historico-item"><b>Mundo_BBC</b>: Suspeito queria 'provavelmente' atingir Trump e integrantes do governo, afirma procurador-geral interino</div><div class="historico-item"><b>Mundo_BBC</b>: Os jovens chineses solitários e desiludidos que buscam carinho e conexão com 'pais virtuais'</div><div class="historico-item"><b>Geral_G1</b>: Anne Hathaway brasileira? Moradora do ABC viraliza nas redes por semelhança com atriz de 'O Diabo Veste Prada'</div><div class="historico-item"><b>Geral_G1</b>: Com risco de geada, Rio Grande do Sul terá os primeiros dias de frio intenso de 2026 e Inmet emite aviso</div><div class="historico-item"><b>Geral_G1</b>: Buraco do Tatu será interditado para manutenção noturna até a próxima quinta; veja horários</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Jogos da Bandai Namco em oferta na Nuuvem; até 90% de desconto</div><div class="historico-item"><b>Hardware_Adrenaline</b>: Processador russo-chinês Irtysh roda The Witcher 3, mas desempenho ainda decepciona</div><div class="historico-item"><b>Hardware_Adrenaline</b>: The Elder Scrolls VI: tudo que sabemos até agora sobre o game</div><div class="historico-item"><b>C#_MS_Blog</b>: What’s new for .NET in Ubuntu 26.04</div><div class="historico-item"><b>C#_MS_Blog</b>: .NET 10.0.7 Out-of-Band Security Update</div><div class="historico-item"><b>C#_MS_Blog</b>: Writing Node.js addons with .NET Native AOT</div></div></div></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/2.0.2/timeago.min.js"></script>
 <script>
-    async function carregarClima(cidadeManual = null) {
-        const display = document.getElementById('weather-display');
-        let lat, lon, nomeCidade;
-        const cidadeSalva = cidadeManual || localStorage.getItem('user_city');
-        try {
-            if (cidadeSalva) {
-                const geo = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${cidadeSalva}&count=1&language=pt`).then(r => r.json());
-                lat = geo.results[0].latitude; lon = geo.results[0].longitude; nomeCidade = geo.results[0].name;
-                localStorage.setItem('user_city', nomeCidade);
-            } else {
-                const pos = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej));
-                lat = pos.coords.latitude; lon = pos.coords.longitude;
-                const rev = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`).then(r => r.json());
-                nomeCidade = rev.address.city || rev.address.town || "Sua Região";
-            }
-            const w = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`).then(r => r.json());
-            display.innerHTML = `<span onclick="alterarCidade(event)" class="weather-city">📍 ${nomeCidade}</span>: <b>${Math.round(w.current_weather.temperature)}°C</b>`;
-        } catch (e) { display.innerHTML = `<span onclick="alterarCidade(event)">📍 Definir Local</span>`; }
+async function carregarClima(cidadeManual){
+  const display=document.getElementById('weather-display');
+  const cidadeSalva=cidadeManual||localStorage.getItem('user_city');
+  let lat,lon,nomeCidade;
+  try{
+    if(cidadeSalva){
+      const geo=await fetch('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(cidadeSalva)+'&count=1&language=pt').then(r=>r.json());
+      lat=geo.results[0].latitude;lon=geo.results[0].longitude;nomeCidade=geo.results[0].name;
+      localStorage.setItem('user_city',nomeCidade);
+    }else{
+      const pos=await new Promise((res,rej)=>navigator.geolocation.getCurrentPosition(res,rej));
+      lat=pos.coords.latitude;lon=pos.coords.longitude;
+      const rev=await fetch('https://nominatim.openstreetmap.org/reverse?lat='+lat+'&lon='+lon+'&format=json').then(r=>r.json());
+      nomeCidade=rev.address.city||rev.address.town||'Sua Cidade';
     }
-    function alterarCidade(e) { e.stopPropagation(); const n = prompt("Cidade:"); if (n) carregarClima(n); }
-    function filtrarNoticias(cat, btn) {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.noticia-card').forEach(c => {
-            const cardCat = c.getAttribute('data-categoria').toLowerCase();
-            c.style.display = (cat === 'todas' || cardCat.includes(cat.toLowerCase())) ? 'flex' : 'none';
-        });
-    }
-    window.onload = () => { carregarClima(); timeago().render(document.querySelectorAll('.timeago'), 'pt_BR'); };
+    const w=await fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&current_weather=true').then(r=>r.json());
+    display.innerHTML='📍 '+nomeCidade+': <b>'+Math.round(w.current_weather.temperature)+'°C</b>';
+  }catch(e){display.innerHTML='<span onclick="alterarCidade()">📍 Definir Local</span>';}
+}
+function alterarCidade(e){if(e)e.stopPropagation();const n=prompt('Digite sua cidade:');if(n)carregarClima(n);}
+function toggleTheme(){
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  if(isDark){document.documentElement.removeAttribute('data-theme');localStorage.setItem('theme','light');document.getElementById('theme-btn').textContent='🌙';}
+  else{document.documentElement.setAttribute('data-theme','dark');localStorage.setItem('theme','dark');document.getElementById('theme-btn').textContent='☀️';}
+}
+function filtrarNoticias(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  let visiveis=0;
+  document.querySelectorAll('.noticia-card').forEach(c=>{
+    const cc=(c.getAttribute('data-categoria')||'').toLowerCase();
+    const mostrar=cat==='todas'||cc.includes(cat.toLowerCase());
+    c.style.display=mostrar?'':'none';
+    if(mostrar)visiveis++;
+  });
+  let aviso=document.getElementById('sem-resultado');
+  if(!aviso){
+    aviso=document.createElement('div');
+    aviso.id='sem-resultado';
+    aviso.style.cssText='grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-muted);font-size:1em';
+    document.querySelector('.content-area').appendChild(aviso);
+  }
+  aviso.style.display=visiveis===0?'block':'none';
+  aviso.textContent=visiveis===0?'Aguardando próxima atualização automática para esta categoria.':'';
+}
+window.addEventListener('DOMContentLoaded',()=>{
+  const isDark=document.documentElement.getAttribute('data-theme')==='dark';
+  const btn=document.getElementById('theme-btn');
+  if(btn)btn.textContent=isDark?'☀️':'🌙';
+  carregarClima();
+  if(window.timeago)timeago().render(document.querySelectorAll('.timeago'),'pt_BR');
+});
 </script>
 </body></html>

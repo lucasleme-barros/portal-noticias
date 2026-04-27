@@ -157,6 +157,9 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
 .art-container h1 { font-size: 1.8em; line-height: 1.3; font-weight: 800; margin-bottom: 20px; }
 .art-img { width: 100%; border-radius: 14px; margin-bottom: 24px; aspect-ratio: 16/9; object-fit: cover; }
 .art-body { font-size: 1.05em; line-height: 1.75; color: var(--text); }
+.art-body p { margin-bottom: 1.4em; }
+.fonte-btn { display: inline-block; margin-top: 32px; padding: 12px 24px; background: var(--accent); color: #fff; border-radius: 24px; text-decoration: none; font-weight: 700; font-size: 0.9em; transition: opacity 0.2s; }
+.fonte-btn:hover { opacity: 0.85; }
 </style>
 <script>(function(){ const s=localStorage.getItem('theme'); if(s==='dark') document.documentElement.setAttribute('data-theme','dark'); })();</script>"""
 
@@ -199,10 +202,22 @@ function toggleTheme() {
 function filtrarNoticias(cat, btn) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    let visiveis = 0;
     document.querySelectorAll('.noticia-card').forEach(c => {
-        const cardCat = (c.getAttribute('data-categoria') || '').toLowerCase();
-        c.style.display = (cat === 'todas' || cardCat.includes(cat.toLowerCase())) ? '' : 'none';
+        const cc = (c.getAttribute('data-categoria') || '').toLowerCase();
+        const mostrar = cat === 'todas' || cc.includes(cat.toLowerCase());
+        c.style.display = mostrar ? '' : 'none';
+        if (mostrar) visiveis++;
     });
+    let aviso = document.getElementById('sem-resultado');
+    if (!aviso) {
+        aviso = document.createElement('div');
+        aviso.id = 'sem-resultado';
+        aviso.style.cssText = 'grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-muted);font-size:1em';
+        document.querySelector('.content-area').appendChild(aviso);
+    }
+    aviso.style.display = visiveis === 0 ? 'block' : 'none';
+    aviso.textContent = visiveis === 0 ? 'Aguardando próxima atualização automática para esta categoria.' : '';
 }
 window.addEventListener('DOMContentLoaded', () => {
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
@@ -214,21 +229,21 @@ window.addEventListener('DOMContentLoaded', () => {
 </script>"""
 
 FILTROS = """<div class="filter-bar">
-    <button class="filter-btn active" onclick="filtrarNoticias('todas', this)">🏠 Todas</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Esportes', this)">⚽ Esportes</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Economia', this)">💰 Economia</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Tech', this)">⚡ Tech</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Games', this)">🎮 Games</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Mundo', this)">🌍 Mundo</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Cyber', this)">🔒 Cyber</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Hardware', this)">🖥️ Hardware</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Saude', this)">❤️ Saúde</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Entret', this)">🎭 Entretenimento</button>
-    <button class="filter-btn" onclick="filtrarNoticias('C#', this)">💻 C#</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Geral', this)">📰 Geral</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Esquerda', this)">⬅ Esquerda</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Centro', this)">⚖️ Centro</button>
-    <button class="filter-btn" onclick="filtrarNoticias('Direita', this)">➡ Direita</button>
+    <button type="button" class="filter-btn active" onclick="filtrarNoticias('todas', this)">🏠 Todas</button>
+    <button type="button" class="filter-btn" onclick="filtrarNoticias('Esportes', this)">⚽ Esportes</button>
+    <button type="button" class="filter-btn" onclick="filtrarNoticias('Economia', this)">💰 Economia</button>
+    <button type="button" class="filter-btn" onclick="filtrarNoticias('Tech', this)">⚡ Tech</button>
+    <button type="button" class="filter-btn" onclick="filtrarNoticias('Games', this)">🎮 Games</button>
+    <button type="button" class="filter-btn" onclick="filtrarNoticias('Mundo', this)">🌍 Mundo</button>
+    <button type="button" class="filter-btn" onclick="filtrarNoticias('Cyber', this)">🔒 Cyber</button>
+    <button type="button" class="filter-btn" onclick="filtrarNoticias('Hardware', this)">🖥️ Hardware</button>
+    <button type="button" class="filter-btn" onclick="filtrarNoticias('Saude', this)">❤️ Saúde</button>
+    <button type="button" class="filter-btn" onclick="filtrarNoticias('Entret', this)">🎭 Entretenimento</button>
+    <button type="button" class="filter-btn" onclick="filtrarNoticias('C#', this)">💻 C#</button>
+    <button type="button" class="filter-btn" onclick="filtrarNoticias('Geral', this)">📰 Geral</button>
+    <button type="button" class="filter-btn" onclick="filtrarNoticias('Esquerda', this)">⬅ Esquerda</button>
+    <button type="button" class="filter-btn" onclick="filtrarNoticias('Centro', this)">⚖️ Centro</button>
+    <button type="button" class="filter-btn" onclick="filtrarNoticias('Direita', this)">➡ Direita</button>
 </div>"""
 
 
@@ -243,14 +258,26 @@ def get_cat_label(cat):
     return cat.split('_')[0]
 
 def processar_noticia_ai(titulo, resumo, categoria):
+    resumo_limpo = limpar_html(resumo)[:600]
     if not model:
-        return {"manchete": titulo, "materia": limpar_html(resumo)[:500], "sentimento": "Neutro"}
-    resumo_limpo = limpar_html(resumo)[:500]
-    prompt = f"Analista G1. Cat: {categoria}. Titulo: {titulo}. Resumo: {resumo_limpo}. Responda apenas um JSON puro: {{\"manchete\": \"string\", \"materia\": \"string 3 paragrafos\", \"sentimento\": \"Positivo|Negativo|Neutro\"}}"
+        return {"manchete": titulo, "materia": resumo_limpo, "sentimento": "Neutro"}
+    prompt = (
+        f"Você é um jornalista brasileiro da editoria {categoria}. "
+        f"Com base no título e resumo abaixo, escreva uma matéria jornalística completa em português do Brasil.\n"
+        f"Título: {titulo}\n"
+        f"Resumo: {resumo_limpo}\n\n"
+        f"Responda APENAS com JSON puro (sem markdown):\n"
+        f'{{\"manchete\": \"título reescrito, impactante, máx 120 caracteres\", '
+        f'\"materia\": \"exatamente 3 parágrafos separados por \\n\\n, cada parágrafo com no mínimo 3 frases completas e detalhadas\", '
+        f'\"sentimento\": \"Positivo|Negativo|Neutro\"}}'
+    )
     try:
         res = model.generate_content(prompt)
-        clean = res.text.strip().replace('```json', '').replace('```', '')
-        return json.loads(clean)
+        clean = res.text.strip().replace('```json', '').replace('```', '').strip()
+        data = json.loads(clean)
+        if len(data.get('materia', '')) < 150:
+            data['materia'] = resumo_limpo
+        return data
     except:
         return {"manchete": titulo, "materia": resumo_limpo, "sentimento": "Neutro"}
 
@@ -263,10 +290,15 @@ def capturar_imagem(entry):
         if img and img.get("src"): return img.get("src")
     return random.choice(IMAGENS_BACKUP)
 
-def gerar_pagina_individual(id_noticia, data, cat, img):
+def gerar_pagina_individual(id_noticia, data, cat, img, fonte_url=""):
     os.makedirs("materia", exist_ok=True)
     m_esc = html.escape(data['manchete'])
-    mat_esc = html.escape(data['materia']).replace(chr(10), '<br><br>')
+    paragrafos = data['materia'].split('\n\n')
+    mat_esc = "".join(f"<p>{html.escape(p.strip())}</p>" for p in paragrafos if p.strip())
+    fonte_html = (
+        f"<a href='{html.escape(fonte_url)}' target='_blank' rel='noopener' class='fonte-btn'>🔗 Ler artigo original</a>"
+        if fonte_url else ""
+    )
     html_content = (
         "<!DOCTYPE html><html lang='pt-BR'>"
         "<head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
@@ -280,6 +312,7 @@ def gerar_pagina_individual(id_noticia, data, cat, img):
         f"<h1>{m_esc}</h1>"
         f"<img src='{img}' class='art-img' onerror=\"this.style.display='none'\">"
         f"<div class='art-body'>{mat_esc}</div>"
+        f"{fonte_html}"
         "</div></body></html>"
     )
     with open(f"materia/{id_noticia}.html", "w", encoding="utf-8") as f:
@@ -296,7 +329,8 @@ def extrair_noticias(item):
 
         id_n = str(uuid.uuid4())
         img = capturar_imagem(entry)
-        gerar_pagina_individual(id_n, data, cat, img)
+        fonte_url = entry.get('link', '')
+        gerar_pagina_individual(id_n, data, cat, img, fonte_url)
 
         m_esc = html.escape(data['manchete'])
         mat_preview = html.escape(limpar_html(data['materia'])[:130])
