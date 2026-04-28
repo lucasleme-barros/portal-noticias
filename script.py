@@ -258,7 +258,7 @@ def get_cat_label(cat):
     return cat.split('_')[0]
 
 def processar_noticia_ai(titulo, resumo, categoria):
-    resumo_limpo = limpar_html(resumo)[:600]
+    resumo_limpo = limpar_html(resumo)[:2000]
     if not model:
         return {"manchete": titulo, "materia": resumo_limpo, "sentimento": "Neutro"}
     prompt = (
@@ -268,7 +268,7 @@ def processar_noticia_ai(titulo, resumo, categoria):
         f"Resumo: {resumo_limpo}\n\n"
         f"Responda APENAS com JSON puro (sem markdown):\n"
         f'{{\"manchete\": \"título reescrito, impactante, máx 120 caracteres\", '
-        f'\"materia\": \"exatamente 3 parágrafos separados por \\n\\n, cada parágrafo com no mínimo 3 frases completas e detalhadas\", '
+        f'\"materia\": \"entre 5 e 7 parágrafos separados por \\n\\n, cada parágrafo com no mínimo 3 frases completas e detalhadas, desenvolvendo o contexto, os fatos e o impacto da notícia\", '
         f'\"sentimento\": \"Positivo|Negativo|Neutro\"}}'
     )
     try:
@@ -295,10 +295,7 @@ def gerar_pagina_individual(id_noticia, data, cat, img, fonte_url=""):
     m_esc = html.escape(data['manchete'])
     paragrafos = data['materia'].split('\n\n')
     mat_esc = "".join(f"<p>{html.escape(p.strip())}</p>" for p in paragrafos if p.strip())
-    fonte_html = (
-        f"<a href='{html.escape(fonte_url)}' target='_blank' rel='noopener' class='fonte-btn'>🔗 Ler artigo original</a>"
-        if fonte_url else ""
-    )
+    fonte_html = ""
     html_content = (
         "<!DOCTYPE html><html lang='pt-BR'>"
         "<head><meta charset='UTF-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
